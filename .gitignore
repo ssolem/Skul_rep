@@ -1,0 +1,24 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+ipch/
+
+# 빌드 결과물
+x64/
+Debug/
+Release/
+*.pch
+*.pdb
+*.ilk
+*.obj
+*.idb
+*.iobj
+*.ipdb
+*.tlog
+*.log
+
+# ImGui 창 배치 (실행할 때마다 바뀜)
+imgui.ini

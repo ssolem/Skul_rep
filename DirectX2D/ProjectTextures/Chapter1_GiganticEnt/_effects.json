@@ -1,0 +1,52 @@
+{
+  "Effect_Stamp": {
+    "clip": "GiganticEnt_Stamp",
+    "frames": [
+      "GiganticEnt_Stamp_0",
+      "GiganticEnt_Stamp_1",
+      "GiganticEnt_Stamp_2",
+      "GiganticEnt_Stamp_3",
+      "GiganticEnt_Stamp_4",
+      "GiganticEnt_Stamp_5",
+      "GiganticEnt_Stamp_6",
+      "GiganticEnt_Stamp_7",
+      "GiganticEnt_Stamp_8",
+      "GiganticEnt_Stamp_9",
+      "GiganticEnt_Stamp_10",
+      "GiganticEnt_Stamp_11",
+      "GiganticEnt_Stamp_12",
+      "GiganticEnt_Stamp_13",
+      "GiganticEnt_Stamp_14",
+      "GiganticEnt_Stamp_15",
+      "GiganticEnt_Stamp_16",
+      "GiganticEnt_Stamp_17",
+      "GiganticEnt_Stamp_18",
+      "GiganticEnt_Stamp_19",
+      "GiganticEnt_Stamp_20",
+      "GiganticEnt_Stamp_21",
+      "GiganticEnt_Stamp_22"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.9200002,
+    "loop": false
+  },
+  "Projectile_Hit": {
+    "clip": "Hit_GiganticEnt",
+    "frames": [
+      "Hit_GiganticEnt_0",
+      "Hit_GiganticEnt_1",
+      "Hit_GiganticEnt_2",
+      "Hit_GiganticEnt_3",
+      "Hit_GiganticEnt_4",
+      "Hit_GiganticEnt_5",
+      "Hit_GiganticEnt_6"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.35000002,
+    "loop": false
+  },
+  "Projectile": {
+    "sprite": "Projectile_GiganticEnt.png",
+    "source": "Projectile/Static atlas, static single sprite"
+  }
+}

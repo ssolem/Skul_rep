@@ -1,0 +1,38 @@
+{
+  "Effect_Attack": {
+    "clip": "Ent_Attack",
+    "frames": [
+      "Ent_Attack_0",
+      "Ent_Attack_1",
+      "Ent_Attack_2",
+      "Ent_Attack_3",
+      "Ent_Attack_4",
+      "Ent_Attack_5",
+      "Ent_Attack_6",
+      "Ent_Attack_7",
+      "Ent_Attack_8"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 1.7,
+    "loop": false
+  },
+  "Effect_AttackSign": {
+    "clip": "AttackSign",
+    "frames": [
+      "AttackSign_0",
+      "AttackSign_1",
+      "AttackSign_2",
+      "AttackSign_3",
+      "AttackSign_4",
+      "AttackSign_5",
+      "AttackSign_6",
+      "AttackSign_7",
+      "AttackSign_8",
+      "AttackSign_9",
+      "AttackSign_10"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.9999998,
+    "loop": false
+  }
+}

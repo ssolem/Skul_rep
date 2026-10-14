@@ -1,0 +1,73 @@
+{
+  "Idle": {
+    "folder": "Idle",
+    "frames": [
+      "Idle_0",
+      "Idle_1",
+      "Idle_2",
+      "Idle_3",
+      "Idle_4"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 1.0,
+    "loop": true
+  },
+  "Walk": {
+    "folder": "Walk",
+    "frames": [
+      "Walk_0",
+      "Walk_1",
+      "Walk_2",
+      "Walk_3",
+      "Walk_4",
+      "Walk_5"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.6,
+    "loop": true
+  },
+  "Attack_Ready": {
+    "folder": "Attack_Ready",
+    "frames": [
+      "Attack_Ready_0",
+      "Attack_Ready_1",
+      "Attack_Ready_2",
+      "Attack_Ready_3",
+      "Attack_Ready_4",
+      "Attack_Ready_5",
+      "Attack_Ready_6",
+      "Attack_Ready_7",
+      "Attack_Ready_8"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.71999997,
+    "loop": true
+  },
+  "Attack": {
+    "folder": "Attack",
+    "frames": [
+      "Attack_0"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.08,
+    "loop": true
+  },
+  "Hit01": {
+    "folder": "Hit",
+    "frames": [
+      "Hit01_0"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.75,
+    "loop": true
+  },
+  "Hit02": {
+    "folder": "Hit",
+    "frames": [
+      "Hit02_0"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.75,
+    "loop": true
+  }
+}

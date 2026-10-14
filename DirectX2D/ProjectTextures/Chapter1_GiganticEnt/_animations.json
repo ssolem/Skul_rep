@@ -1,0 +1,51 @@
+{
+  "Idle": {
+    "folder": "Idle",
+    "frames": [
+      "Idle_0",
+      "Idle_1",
+      "Idle_2",
+      "Idle_3",
+      "Idle_4"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.75,
+    "loop": true
+  },
+  "Attack_Melee": {
+    "folder": "Attack_Melee",
+    "frames": [
+      "Attack_Melee_0",
+      "Attack_Melee_1",
+      "Attack_Melee_2",
+      "Attack_Melee_3",
+      "Attack_Melee_4",
+      "Attack_Melee_5",
+      "Attack_Melee_6"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 2.0,
+    "loop": true
+  },
+  "Attack_Range": {
+    "folder": "Attack_Range",
+    "frames": [
+      "Attack_Range_0",
+      "Attack_Range_1",
+      "Attack_Range_2",
+      "Attack_Range_3"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 2.5,
+    "loop": true
+  },
+  "Dead": {
+    "folder": "Dead",
+    "frames": [
+      "Dead_0"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 0.0010000002,
+    "loop": true
+  }
+}

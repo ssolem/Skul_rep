@@ -1,0 +1,38 @@
+{
+  "Effect_Attack_Fog": {
+    "clip": "BlossomEnt_Attack",
+    "frames": [
+      "BlossomEnt_Attack_0",
+      "BlossomEnt_Attack_1",
+      "BlossomEnt_Attack_2",
+      "BlossomEnt_Attack_3",
+      "BlossomEnt_Attack_4",
+      "BlossomEnt_Attack_5",
+      "BlossomEnt_Attack_6",
+      "BlossomEnt_Attack_7",
+      "BlossomEnt_Attack_8",
+      "BlossomEnt_Attack_9",
+      "BlossomEnt_Attack_10",
+      "BlossomEnt_Attack_11",
+      "BlossomEnt_Attack_12",
+      "BlossomEnt_Attack_13",
+      "BlossomEnt_Attack_14",
+      "BlossomEnt_Attack_15",
+      "BlossomEnt_Attack_16",
+      "BlossomEnt_Attack_17",
+      "BlossomEnt_Attack_18",
+      "BlossomEnt_Attack_19",
+      "BlossomEnt_Attack_20",
+      "BlossomEnt_Attack_21",
+      "BlossomEnt_Attack_22",
+      "BlossomEnt_Attack_23",
+      "BlossomEnt_Attack_24",
+      "BlossomEnt_Attack_25",
+      "BlossomEnt_Attack_26",
+      "BlossomEnt_Attack_27"
+    ],
+    "sampleRate": 60.0,
+    "stopTime": 1.6900004,
+    "loop": false
+  }
+}
