@@ -130,6 +130,37 @@ void Font::RenderText(string text, Float2 pos, Float2 size)
 		curFormat, &rectF, curBrush);
 }
 
+void Font::RenderText(string text, Float2 pos, Float2 size, const string& styleKey, const string& colorKey, float opacity)
+{
+	if (formats.count(styleKey) < 1 || brushes.count(colorKey) < 1) return;
+
+	IDWriteTextFormat* format = formats[styleKey];
+	ID2D1SolidColorBrush* brush = brushes[colorKey];
+
+	if (size.x == 0.0f && size.y == 0.0f)
+	{
+		size.x = text.size() * format->GetFontSize();
+		size.y = curFormat->GetFontSize();
+	}
+
+	Float2 halfSize = { size.x * 0.5f, size.y * 0.5f };
+
+	pos.y = WIN_HEIGHT - pos.y;
+
+	D2D1_RECT_F rectF;
+	rectF.left = pos.x - halfSize.x;
+	rectF.right = pos.x + halfSize.x;
+	rectF.top = pos.y - halfSize.y;
+	rectF.bottom = pos.y + halfSize.y;
+
+	wstring temp = ChangeWString(text);
+
+	brush->SetOpacity(opacity);
+	context->DrawTextW(temp.c_str(), (UINT32)temp.size(), format, &rectF, brush);
+
+	brush->SetOpacity(1.0f);
+}
+
 wstring Font::ChangeWString(string value)
 {
 	int nLen = MultiByteToWideChar(CP_ACP, 0, &value[0], value.size(), nullptr, 0);

@@ -504,6 +504,8 @@ void Character::OnHit(const HitData& hit)
 		TakeDamage(finalDamage);
 
 		//+ isCritical로 크리 이펙트/UI 표시는 여기서 처리
+		Vector2 damageTextPos = collider->GlobalPos() + Vector2(Random(-10.0f, 10.0f), 10.0f);
+		DamageTextManager::Get()->Play(damageTextPos, finalDamage, hit.damageType, isCritical, isPlayer);
 	}
 
 	//+ 히트 이펙트, 경직 등은 여기서 처리

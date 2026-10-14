@@ -10,6 +10,7 @@ Player::Player()
 	: Character()
 {
 	SetTag("Player");
+	SetPlayer();
 	SetupInput();
 	SetStats();		//플레이어 공통 기본 스탯 (스컬과 무관)
 

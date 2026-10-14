@@ -91,6 +91,7 @@ void TestCharacterScene::Update()
 	}
 
 	EffectManager::Get()->Update();
+	DamageTextManager::Get()->Update();
 	playerInfoUI->Update();
 }
 
@@ -104,6 +105,7 @@ void TestCharacterScene::Render()
 
 void TestCharacterScene::PostRender()
 {
+	DamageTextManager::Get()->Render();
 	playerInfoUI->Render();
 	playerInfoUI->RenderUI();
 	player->PostRender();

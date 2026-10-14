@@ -158,6 +158,7 @@ using namespace GameMath;
 #include "Objects/Manager/CommandManager.h" // 傈开 目盖靛 包府磊
 #include "Objects/Manager/EffectManager.h"
 #include "Objects/Manager/PanelManager.h"
+#include "Objects/Manager/DamageTextManager.h"
 
 //Controller
 #include "GameController/GameController.h"
