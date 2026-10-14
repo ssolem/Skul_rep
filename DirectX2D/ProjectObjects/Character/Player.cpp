@@ -225,8 +225,11 @@ void Player::DoJump()
 		return;
 	}
 
-	Jump();
-	if (jumpCount >= 2)
+	bool wasGrounded = isGrounded;
+
+	if (!Jump()) return;    
+
+	if (!wasGrounded)      
 		EffectManager::Get()->Play("DoubleJump_Smoke", GlobalPos() + jumpEffectOffset);
 }
 

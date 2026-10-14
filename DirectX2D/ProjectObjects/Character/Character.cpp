@@ -168,15 +168,16 @@ void Character::Move()
 	ResetMove();
 }
 
-void Character::Jump()
+bool Character::Jump()
 {
-	if (jumpCount >= maxJumpCount) return;
+	if (jumpCount >= maxJumpCount) return false;
 
 	jumpCount++;
 	velocity.y = sqrt(2.0f * gravity * jumpHeight);	// 점프 순간의 현재 중력으로 초속 역산 (v = √2gh)
 	isGrounded = false;
 	groundFloor = nullptr;
 	jumpIgnoreGroundTime = GROUND_IGNORE_TIME;
+	return true;
 }
 
 void Character::SetJump(float height, float riseTime)

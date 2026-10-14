@@ -12,16 +12,10 @@ cbuffer ColorBuffer : register(b0)  // 컬러 데이터
 	float4 color;
 }
 
-cbuffer FrameBuffer : register(b1)
-{
-	float2 maxFrame;
-	float2 curFrame;
-}
-
 float4 PS(PixelInput input) : SV_TARGET
 {
-	float2 uv = input.uv + (curFrame / maxFrame);
-	float4 tex = map.Sample(samp, uv);				// 합성의 대상화
+	//UV는 Frame 정점에 이미 프레임 영역으로 들어 있음 - 격자 계산 불필요
+	float4 tex = map.Sample(samp, input.uv);
 	
 	return tex * color;								// 화소(색) 합성
 }

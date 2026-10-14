@@ -1,32 +1,15 @@
 ﻿#pragma once
 
-class Effect : public Quad
+// 이펙트는, 2D 월드에서 부딪히는 이벤트 없이 순수 연출용으로만 쓰는, 별도의 클래스
+// 풀링되는 1회 재생 애니메이션 - 프레임은 빌려 씀 (소유: Animator 프레임 캐시 또는 EffectManager)
+class Effect : public GameObject
 {
 private:
 	const float FPS = 10; // 이펙트 재생용 기본 FPS
 
-	// 이펙트 프레임 정보용 버퍼 (셰이더에 "총 프레임수, 현재 프레임"을 넘길 때 씀)
-	class FrameBuffer : public ConstBuffer
-	{
-	private:
-		struct Data
-		{
-			Vector2 maxFrame;	// 이 이펙트의 총 프레임개수
-			Vector2 curFrame;	// 현재 몇 번째 프레임인지
-		};
-
-	public:
-		FrameBuffer() : ConstBuffer(&data, sizeof(Data)) {}
-		void SetFrame(Vector2 maxFrame) { data.maxFrame = maxFrame; }
-		Vector2& GetCurFrame() { return data.curFrame; }
-	private:
-		Data data;
-	};
-
 public:
 	Effect(
-		wstring textureFile,	// 텍스처파일
-		Vector2 maxFrame,		// 최대 프레임수 (-> 최대 프레임)
+		vector<Frame*> frames,	// 재생할 프레임 목록 (.uv 아틀라스 또는 균등 격자로 만든 것)
 		float speed,			// 재생 속도
 		bool isAdditive			// RGB 화면 간 합산 여부
 	);
@@ -42,21 +25,17 @@ public:
 	void SetFrameDelay(UINT frame, float delay);
 	void CopySettings(Effect* source);	//풀 확장 시 기존 이펙트의 크기/색/프레임 시간 복사
 
+	Float4& GetColor() { return colorBuffer->Get(); }
+
 private:
+	vector<Frame*> frames;	   // 빌린 프레임 - 지우지 않음
+	ColorBuffer* colorBuffer;  // Frame에는 색 버퍼가 없어서 Effect가 직접 가짐
 
-	FrameBuffer* frameBuffer; // 셰이더 전달용 + 현재 몇 번
-
-	// 이펙트는, 2D 월드에서 부딪히는 이벤트 없이 순수 연출용으로만 쓰는, 별도의 클래스
-
-	float delayTime = 1 / FPS; // 프레임간 재생 간격
-	float frameTime = 0;	   // 재생 시간
+	float frameTime = 0;	   // 현재 프레임 경과 시간
 	float speed;			   // 재생 속도(배율)
-	vector<float> frameDelays;
+	vector<float> frameDelays; // 프레임별 표시 시간 - 기본 1 / FPS
 
-	UINT curFrameNum = 0;	   // 클립에서 재생하는 프레임 현재 순서
-	UINT maxFrameNum = 0;
-
-	UINT maxFrameX = 0;		   // 가로
+	UINT curFrameNum = 0;	   // 현재 재생 중인 프레임 순서
 
 	bool isAdditive;		   // RGB 합산
 

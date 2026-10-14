@@ -1,6 +1,4 @@
-#pragma once
-
-class AtlasMaker;
+﻿#pragma once
 
 class Animator
 {
@@ -20,6 +18,10 @@ public:
 	Clip* FindClip(const string& key);
 	void PlayClip(const string& key);
 
+	//아틀라스(.png + .uv)의 프레임 목록 - 경로+피벗별로 한 번만 만들고 공유 (소유는 캐시)
+	//파일이 없으면 nullptr
+	static vector<Frame*>* GetAtlasFrames(const wstring& atlasPath, bool isCenterPivot = false);
+
 	static void ClearFrameCache();
 
 	Vector2 GetCurFrameSize() { return curClip ? curClip->GetCurFrame()->GetSize() : Vector2::One; }
@@ -27,8 +29,6 @@ public:
 private:
 	map<string, Clip*> clips;
 	Clip* curClip;
-
-	AtlasMaker* atlas;
 
 	static map<wstring, vector<Frame*>> frameCache;
 };

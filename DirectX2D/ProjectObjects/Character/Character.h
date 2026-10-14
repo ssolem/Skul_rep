@@ -70,7 +70,7 @@ protected:
 	virtual void InitBody();        // defaultSize + collider + groundSensor
 
 	void Move();
-	void Jump();
+	bool Jump();
 	void Fall(); //발판아래로 내려가는
 	void KnockBack(float amount = 0.0f);
 	virtual void StartKnockBack(const HitData& hit);
@@ -145,7 +145,7 @@ protected:
 	float maxFallSpeed = 0.0f;		// SetJump()에서 계산
 
 	int jumpCount = 0;
-	int maxJumpCount = 1000000;
+	int maxJumpCount = 2;
 
 	Vector2 velocity = Vector2::Zero;
 	Vector2 dir = Vector2::Zero;

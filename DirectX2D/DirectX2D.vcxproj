@@ -286,7 +286,7 @@
     <ClInclude Include="Objects\TestObject\TestTracker.h" />
     <ClInclude Include="Scenes\TestMapScene.h" />
     <ClInclude Include="ProjectScenes\TestCharacterScene.h" />
-    <ClInclude Include="ThiefSkul.h" />
+    <ClInclude Include="ProjectObjects\Character\Skuls\ThiefSkul.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Manager\DamageTextManager.cpp" />
@@ -424,7 +424,7 @@
     <ClCompile Include="ProjectObjects\Stage.cpp" />
     <ClCompile Include="ProjectObjects\Character\Stat.cpp" />
     <ClCompile Include="ProjectObjects\StageBackground.cpp" />
-    <ClCompile Include="ThiefSkul.cpp" />
+    <ClCompile Include="ProjectObjects\Character\Skuls\ThiefSkul.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX2D.rc" />

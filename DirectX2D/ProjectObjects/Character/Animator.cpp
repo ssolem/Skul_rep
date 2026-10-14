@@ -8,15 +8,12 @@ map<wstring, vector<Frame*>> Animator::frameCache;
 Animator::Animator():
 	clips(), curClip(nullptr)
 {
-	atlas = new AtlasMaker;
 }
 
 Animator::~Animator()
 {
 	for (pair<string, Clip*> clip : clips)
 		delete clip.second;
-
-	delete atlas;
 }
 
 void Animator::Update()
@@ -78,37 +75,48 @@ void Animator::CreateClipByAtlas(const string& tag, const string& fileName, cons
 	string key = tag + fileName;
 	if (clips.count(key) > 0) return;
 
-	wstring base = path + L"\\" + ToWString(fileName);
-	wstring atlasPath = base + L".png";
-	wstring uvPath = base + L".uv";
-
-	auto cached = frameCache.find(atlasPath);
-	if (cached == frameCache.end())
-	{
-		//처음 쓰는 아틀라스일 때만 .uv 읽고 Frame 생성
-		if (GetFileAttributes(atlasPath.c_str()) == INVALID_FILE_ATTRIBUTES) return;
-		if (GetFileAttributes(uvPath.c_str()) == INVALID_FILE_ATTRIBUTES) return;
-
-		atlas->LoadUVData(uvPath);
-		vector<AtlasMaker::ImageUV> imageUV = atlas->GetImageUVs();
-		int atlasW = atlas->GetAtlasWidth();
-		int atlasH = atlas->GetAtlasHeight();
-
-		vector<Frame*> frames = {};
-
-		for (const auto& img : imageUV)
-		{
-			Vector2 startUV(img.x, img.y);
-			Vector2 endUV(img.x + img.w / atlasW, img.y + img.h / atlasH);
-
-			frames.push_back(new Frame(atlasPath, startUV, endUV, Vector2(0, img.h * 0.5f)));
-		}
-
-		cached = frameCache.emplace(atlasPath, frames).first;
-	}
+	vector<Frame*>* frames = GetAtlasFrames(path + L"\\" + ToWString(fileName) + L".png");
+	if (frames == nullptr) return;
 
 	//Clip은 프레임을 빌려 쓰기만 함 (ownsFrames = false) - 재생 상태/이벤트는 Clip마다 따로
-	clips[key] = new Clip(cached->second, isLoop, speed, false);
+	clips[key] = new Clip(*frames, isLoop, speed, false);
+}
+
+vector<Frame*>* Animator::GetAtlasFrames(const wstring& atlasPath, bool isCenterPivot)
+{
+	//같은 아틀라스라도 피벗이 다르면 정점이 다르므로 캐시 키를 나눔
+	wstring cacheKey = atlasPath + (isCenterPivot ? L"|center" : L"");
+
+	auto cached = frameCache.find(cacheKey);
+	if (cached != frameCache.end()) return &cached->second;
+
+	//처음 쓰는 아틀라스일 때만 .uv 읽고 Frame 생성
+	size_t dot = atlasPath.find_last_of(L'.');
+	wstring uvPath = (dot == wstring::npos ? atlasPath : atlasPath.substr(0, dot)) + L".uv";
+
+	if (GetFileAttributes(atlasPath.c_str()) == INVALID_FILE_ATTRIBUTES) return nullptr;
+	if (GetFileAttributes(uvPath.c_str()) == INVALID_FILE_ATTRIBUTES) return nullptr;
+
+	AtlasMaker atlas;
+	atlas.LoadUVData(uvPath);
+
+	float atlasW = (float)atlas.GetAtlasWidth();
+	float atlasH = (float)atlas.GetAtlasHeight();
+
+	vector<Frame*> frames = {};
+
+	for (const AtlasMaker::ImageUV& img : atlas.GetImageUVs())
+	{
+		Vector2 startUV(img.x, img.y);
+		Vector2 endUV(img.x + img.w / atlasW, img.y + img.h / atlasH);
+
+		//캐릭터: 발밑 기준 (0, h/2) / 이펙트: 프레임 중앙 기준
+		Vector2 pivot = isCenterPivot ? Vector2() : Vector2(0, img.h * 0.5f);
+
+		frames.push_back(new Frame(atlasPath, startUV, endUV, pivot));
+	}
+
+	return &frameCache.emplace(cacheKey, frames).first->second;
 }
 
 void Animator::ClearFrameCache()
@@ -122,23 +130,17 @@ void Animator::ClearFrameCache()
 
 //key: EffectManager에 등록/재생할 이름 (파일 이름과 무관)
 //atlasFile: 아틀라스 png 전체 경로 - uv는 같은 위치, 같은 이름의 .uv
+//격자/한 줄 어떤 배치든 .uv의 프레임별 UV로 재생 (Make Anim Atlas로 구워도 됨)
 void Animator::CreateEffectByAtlas(const string& key, const wstring& atlasFile, UINT poolSize, Vector2 scale,
 	float speed, bool isAdditive)
 {
 	//전역 풀이라 같은 적이 여러 마리여도 한 번만 등록 - uv 읽기 전에 거름
 	if (EffectManager::Get()->HasEffect(key)) return;
 
-	wstring atlasPath = atlasFile;
-	size_t dot = atlasPath.find_last_of(L'.');
-	wstring uvPath = (dot == wstring::npos ? atlasPath : atlasPath.substr(0, dot)) + L".uv";
+	vector<Frame*>* frames = GetAtlasFrames(atlasFile, true);
+	if (frames == nullptr) return;
 
-	if (GetFileAttributes(atlasPath.c_str()) == INVALID_FILE_ATTRIBUTES) return;
-	if (GetFileAttributes(uvPath.c_str()) == INVALID_FILE_ATTRIBUTES) return;
-
-	atlas->LoadUVData(uvPath);
-	Vector2 maxFrame = atlas->GetMaxFrame();
-
-	EffectManager::Get()->Add(key, poolSize, atlasPath, maxFrame.x, maxFrame.y, speed, isAdditive);
+	EffectManager::Get()->Add(key, poolSize, *frames, speed, isAdditive);
 	EffectManager::Get()->SetScale(key, scale);
 }
 

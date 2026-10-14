@@ -7,6 +7,14 @@ EffectManager::~EffectManager()
 		for (Effect* effect : effects.second) // 풀 안의 오브젝트 찾기
 			delete effect;					  // 다 지우기
 	}
+
+	for (pair<string, EffectDesc> desc : descs)
+	{
+		if (!desc.second.ownsFrames) continue;	// 캐시 소유 프레임은 Animator::ClearFrameCache가 정리
+
+		for (Frame* frame : desc.second.frames)
+			delete frame;
+	}
 }
 
 void EffectManager::Update()
@@ -27,22 +35,42 @@ void EffectManager::Render()
 	}
 }
 
+void EffectManager::Add(string key, UINT poolSize, const vector<Frame*>& frames,
+	float speed, bool isAdditive)
+{
+	if (totalEffects.count(key) > 0) return;
+	if (frames.empty()) return;
+
+	Effects effects(poolSize);	// 이펙터생성 (풀 생성)
+
+	for (Effect*& effect : effects)
+		effect = new Effect(frames, speed, isAdditive);
+
+	totalEffects[key] = effects;
+	descs[key] = { frames, speed, isAdditive, false };
+}
+
 void EffectManager::Add(string key, UINT poolSize, wstring textureFile,
 	float maxFrameX, float maxFrameY, float speed,	bool isAdditive)
 {
 	if (totalEffects.count(key) > 0) return;
 
-	Effects effects(poolSize);	// 이펙터생성 (풀 생성)
+	//균등 격자를 행 우선으로 잘라 Frame 목록 생성 (기존 셰이더 계산과 같은 순서)
+	vector<Frame*> frames;
 
-	for (Effect*& effect : effects)
+	for (int y = 0; y < (int)maxFrameY; ++y)
 	{
-		effect = new Effect(textureFile,
-			Vector2(maxFrameX, maxFrameY),
-			speed, isAdditive);
+		for (int x = 0; x < (int)maxFrameX; ++x)
+		{
+			Vector2 startUV(x / maxFrameX, y / maxFrameY);
+			Vector2 endUV((x + 1) / maxFrameX, (y + 1) / maxFrameY);
+
+			frames.push_back(new Frame(textureFile, startUV, endUV));
+		}
 	}
 
-	totalEffects[key] = effects;
-	descs[key] = { textureFile, Vector2(maxFrameX, maxFrameY), speed, isAdditive };
+	Add(key, poolSize, frames, speed, isAdditive);
+	descs[key].ownsFrames = true;
 }
 
 Effect* EffectManager::Expand(const string& key)
@@ -50,7 +78,7 @@ Effect* EffectManager::Expand(const string& key)
 	const EffectDesc& desc = descs[key];
 	Effects& effects = totalEffects[key];
 
-	Effect* effect = new Effect(desc.textureFile, desc.maxFrame, desc.speed, desc.isAdditive);
+	Effect* effect = new Effect(desc.frames, desc.speed, desc.isAdditive);
 
 	//SetScale/SetColor/SetFrameDelay로 바꾼 값은 기존 풀에만 적용돼 있으므로 첫 번째 것에서 복사
 	if (!effects.empty())

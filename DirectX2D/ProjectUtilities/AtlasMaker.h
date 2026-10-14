@@ -22,8 +22,6 @@ public:
 	int GetAtlasWidth() const { return atlasWidth; }
 	int GetAtlasHeight() const { return atlasHeight; }
 
-	Vector2 GetMaxFrame() const { return Vector2((float)imageCount, 1); } // CreateEffectAtlas 결과를 Effect 생성자에 넘길 때 사용
-
 	void SaveUVData(const wstring& filePath);
 	void LoadUVData(const wstring& filePath);
 

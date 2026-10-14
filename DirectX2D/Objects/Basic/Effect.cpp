@@ -1,26 +1,22 @@
 ﻿#include "Framework.h"
 
-Effect::Effect(wstring textureFile, Vector2 maxFrame, float speed, bool isAdditive)
-	: Quad(textureFile, Vector2(), // 그림 파일과 시작 UV
-		Vector2(1 / maxFrame.x, 1 / maxFrame.y)), // 끝 UV
-	speed(speed), isAdditive(isAdditive) // 변수 초기화
+Effect::Effect(vector<Frame*> frames, float speed, bool isAdditive)
+	: frames(frames), speed(speed), isAdditive(isAdditive) // 변수 초기화
 {
-	pixelShader = Shader::AddPS(L"PixelEffect.hlsl"); // 화면합산용
+	//PixelUV는 color를 곱하지 않으므로 SetColor가 적용되도록 Effect 전용 셰이더 사용
+	SetPixelShader(L"Effect.hlsl");
+
+	colorBuffer = new ColorBuffer();
 
 	isActive = false; // 실제 재생하기 전까지는 보이지 않게 (풀링 방식)
 
-	frameBuffer = new FrameBuffer(); // 셰이더 전달용 생성
-	frameBuffer->SetFrame(maxFrame);
-
-	maxFrameNum = (UINT)(maxFrame.x * maxFrame.y);
-	maxFrameX = (UINT)maxFrame.x;
-
-	frameDelays.assign(maxFrameNum, delayTime);
+	frameDelays.assign(frames.size(), 1 / FPS);
 }
 
 Effect::~Effect()
 {
-	delete frameBuffer;
+	delete colorBuffer;
+	//frames는 빌린 것이라 지우지 않음
 }
 
 void Effect::Update()
@@ -30,16 +26,17 @@ void Effect::Update()
 
 	frameTime += speed * DELTA;
 
-	if (frameTime >= delayTime) // 시간 간격이 되면
+	if (frameTime >= frameDelays[curFrameNum]) // 현재 프레임 표시 시간이 지나면
 	{
 		// 다음순서의 애니메이션 재생 처리
 		frameTime -= frameDelays[curFrameNum];
 		curFrameNum++;
 
-		frameBuffer->GetCurFrame().x = (float)(curFrameNum % maxFrameX);
-		frameBuffer->GetCurFrame().y = (float)(curFrameNum / maxFrameX);
-
-		if (curFrameNum >= maxFrameNum) End(); // 마지막 재생 종료처리
+		if (curFrameNum >= frames.size()) // 실제 프레임 수에서 종료 - 빈 칸 재생 없음
+		{
+			End();
+			return;
+		}
 	}
 	UpdateWorld();
 }
@@ -51,11 +48,11 @@ void Effect::Render()
 	if (isAdditive) // 화면 합산 (밝게)
 		Environment::Get()->SetAdditiveBlend(); // 밝게만 그리기 -> 화면 혼합에서 합산해 보이도록
 
-	frameBuffer->SetPS(1);
-	Quad::Render();
+	colorBuffer->SetPS(0);
+	SetRender();
+	frames[curFrameNum]->Render();
 
 	Environment::Get()->SetAlphaBlend(); // 기본값 그리기 -> 렌더링 알파 혼합로 되돌림
-
 }
 
 void Effect::Play(Vector2 position)
@@ -65,7 +62,8 @@ void Effect::Play(Vector2 position)
 
 	frameTime = 0;
 	curFrameNum = 0;
-	frameBuffer->GetCurFrame() = { 0, 0 };
+
+	UpdateWorld(); // 첫 프레임이 이전 위치에 한 번 그려지는 것 방지
 }
 
 void Effect::End()
@@ -82,7 +80,7 @@ void Effect::End()
 
 void Effect::SetFrameDelay(UINT frame, float delay)
 {
-	if (frame >= maxFrameNum) return;
+	if (frame >= frames.size()) return;
 	frameDelays[frame] = delay;
 }
 
