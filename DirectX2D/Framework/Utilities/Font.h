@@ -17,6 +17,8 @@ public:
 
     void RenderText(wstring text, Float2 pos, Float2 size = Float2());
     void RenderText(string text, Float2 pos, Float2 size = Float2());
+    void RenderText(string text, Float2 pos, Float2 size, const string& styleKey
+                , const string& colorKey, float opacity = 1.0f);
 
     ID2D1DeviceContext* GetDC() { return context; }
 

@@ -102,7 +102,13 @@ void GameManager::Create()
     Observer::Get();
 
     Font::Get()->AddColor("White", 1, 1, 1);
+    Font::Get()->AddColor("Orange", 1, 0.55f, 0.1f);
+    Font::Get()->AddColor("Red", 1, 0.3f, 0.3f);
+    Font::Get()->AddColor("Blue", 0.2f, 0.6f, 1);
+
     Font::Get()->AddStyle("Default", L"¸¼Àº °íµñ");
+    Font::Get()->AddStyle("Damage", L"¸¼Àº °íµñ", 28, DWRITE_FONT_WEIGHT_BOLD);
+    Font::Get()->AddStyle("DamageCritical", L"¸¼Àº °íµñ", 36, DWRITE_FONT_WEIGHT_HEAVY);
 
     Font::Get()->SetColor("White");
     Font::Get()->SetStyle("Default");

@@ -99,6 +99,7 @@ protected:
 
 	void MoveVector2(float x, float y);
 	void ResetMove() { dir = Vector2::Zero; }
+	void SetPlayer() { isPlayer = true; }
 
 protected:
 	const float DROP_TIME = 0.2f;	// 아래점프 통과 시간
@@ -159,4 +160,6 @@ protected:
 	float knockBackMoved = 0.0f;
 	float knockBackDirX = 0.0f;
 	bool isLaunched = false;		// 띄워진 넉백 - 착지할 때까지 넉백 유지
+
+	bool isPlayer = false;
 };

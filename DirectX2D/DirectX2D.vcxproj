@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Manager\DamageTextManager.h" />
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\BlossomEntAttack.h" />
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\BlossomEnt.h" />
     <ClInclude Include="Objects\Manager\ProjectileManager.h" />
@@ -287,6 +288,7 @@
     <ClInclude Include="ProjectScenes\TestCharacterScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Manager\DamageTextManager.cpp" />
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\BlossomEntAttack.cpp" />
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\BlossomEnt.cpp" />
     <ClCompile Include="Objects\Manager\ProjectileManager.cpp" />
