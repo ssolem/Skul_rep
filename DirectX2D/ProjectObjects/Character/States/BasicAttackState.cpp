@@ -135,17 +135,25 @@ void BasicAttackState::CheckHit()
 
 	owner->CheckFacing();
 
-	const AttackData& data = combos[curAttackIndex];
-	float finalDamage = owner->GetStatComponent()->CalculateFinalAttack(data.damage, damageType, data.type, AttackActionType::Basic);
-	float critChance = owner->GetStatComponent()->GetStat(Attribute::CriticalChance);
-	float critDamage = owner->GetStatComponent()->GetStat(Attribute::CriticalDamage);
-
-	HitData hitData = { finalDamage, critChance, critDamage, damageType, owner->FacingRight() ? 1.0f : -1.0f, this };
+	HitData hitData;
+	bool hasHitData = false;
 
 	for (IHittable* hit : owner->GetStage()->CheckAllHittableCollision(attackCollider))
 	{
 		if (find(alreadyHit.begin(), alreadyHit.end(), hit) != alreadyHit.end())
 			continue;   // 이번 공격에서 이미 맞춘 적 - 스킵
+
+		//새로 맞힌 대상이 처음 나왔을 때만 스탯 계산
+
+		if (!hasHitData)
+		{
+			const AttackData& data = combos[curAttackIndex];
+			Stat* stat = owner->GetStatComponent();
+			hitData = { stat->CalculateFinalAttack(data.damage, damageType, data.type, AttackActionType::Basic),
+				stat->GetStat(Attribute::CriticalChance), stat->GetStat(Attribute::CriticalDamage),
+				damageType, owner->FacingRight() ? 1.0f : -1.0f, this };
+			hasHitData = true;
+		}
 
 		alreadyHit.push_back(hit);
 		hit->OnHit(hitData);
