@@ -27,7 +27,7 @@ Player::Player()
 
 	CreateEffects();
 	actionComponent = new ActionComponent();
-	actionComponent->CreateActionStates(this, basicSkul->GetActionClipNames(), basicSkul->GetComboAttacks(), basicSkul->GetBasicAttackDamageType());
+	actionComponent->CreateActionStates(this, basicSkul->GetActionClipNames(), basicSkul->GetComboAttacks(), basicSkul->GetJumpAttack(), basicSkul->GetBasicAttackDamageType());
 }
 
 void Player::SetStats()

@@ -81,7 +81,7 @@ bool ActionComponent::CanPreInputJump()
 	}
 }
 
-void ActionComponent::CreateActionStates(Character* owner, const map<ActionType, vector<string>>& actionClips, const vector<AttackData>& basicAttackCombos, DamageType basicAttackDamageType)
+void ActionComponent::CreateActionStates(Character* owner, const map<ActionType, vector<string>>& actionClips, const vector<AttackData>& basicAttackCombos, const AttackData& jumpAttack, DamageType basicAttackDamageType)
 {
 	ActionState* newAction;
 	newAction = new DashState(owner, ActionType::DASH, actionClips.at(ActionType::DASH));
@@ -90,7 +90,7 @@ void ActionComponent::CreateActionStates(Character* owner, const map<ActionType,
 	newAction = new BasicAttackState(owner, ActionType::BASIC_ATTACK, basicAttackCombos, basicAttackDamageType);
 	actions[ActionType::BASIC_ATTACK] = newAction;
 
-	newAction = new JumpAttackState(owner, ActionType::JUMP_ATTACK, actionClips.at(ActionType::JUMP_ATTACK));
+	newAction = new JumpAttackState(owner, ActionType::JUMP_ATTACK, jumpAttack, actionClips.at(ActionType::JUMP_ATTACK));
 	actions[ActionType::JUMP_ATTACK] = newAction;
 
 	newAction = new SkillState(owner, ActionType::SKILL, actionClips.at(ActionType::SKILL));

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../SkulClass.h"
 
 class SkulObject;
@@ -27,6 +27,10 @@ private:
 	virtual void CreateSkills() override;
 	virtual void CreateComboAttacks(Animator* animator) override;
 
+	void ApplyTier(int newTier);	//단계 변경: 태그, 콤보, 아이콘 교체
+
 private:
+	Animator* animator = nullptr;
+	int tier = 0;
 };
 

@@ -36,6 +36,7 @@ public:
 		static vector<AttackData> empty;
 		return empty;
 	}
+	const AttackData& GetJumpAttack() const { return jumpAttack; }
 
 	DamageType GetBasicAttackDamageType() const { return basicAttackDamageType; }
 

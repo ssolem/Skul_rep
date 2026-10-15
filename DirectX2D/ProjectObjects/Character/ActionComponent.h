@@ -21,7 +21,7 @@ public:
 	bool CanJumpCancel();
 	bool CanPreInputJump();
 
-	void CreateActionStates(Character* owner, const map<ActionType, vector<string>>& actionClips, const vector<AttackData>& basicAttackCombos, DamageType basicAttackDamageType);
+	void CreateActionStates(Character* owner, const map<ActionType, vector<string>>& actionClips, const vector<AttackData>& basicAttackCombos, const AttackData& jumpAttack, DamageType basicAttackDamageType);
 	void ResetActionStates(const map<ActionType, vector<string>>& actionClips);
 	ActionType GetCurActionState() { return curActionState; }
 

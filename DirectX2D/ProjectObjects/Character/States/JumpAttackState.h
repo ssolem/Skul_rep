@@ -4,7 +4,7 @@ class JumpAttackState : public ActionState
 {
 public:
 
-	JumpAttackState(Character* character, ActionType type, const vector<string>& clipNames);
+	JumpAttackState(Character* character, ActionType type, const AttackData& data, const vector<string>& clipNames);
 	~JumpAttackState() override;
 
 	virtual void Update() override;
@@ -17,8 +17,16 @@ public:
 	virtual bool IsReady() override;
 
 private:
+	void CheckHit();
+
+private:
+	Collider* attackCollider = nullptr;
+	vector<IHittable*> alreadyHit;
 
 	bool isAttacking;
+
+	AttackData data;
+	DamageType damageType;  
 
 };
 
