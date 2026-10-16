@@ -79,6 +79,8 @@ void BasicSkul::Init(Character* owner, Animator* animator)
 
 	curSkills[0] = skills[0];
 	curSkills[1] = skills[1];
+
+	initialized = true;
 }
 
 void BasicSkul::CreateAnimations(Animator* animator)

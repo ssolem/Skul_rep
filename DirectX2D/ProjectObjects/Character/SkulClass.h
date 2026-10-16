@@ -64,6 +64,7 @@ protected:
 	DamageType basicAttackDamageType = DamageType::Physical;   // 기본값 - Magic/Fixed 무기인 Skul은 SetStats()에서 재설정
 
 	int curSkillIndex = 0;
+	bool initialized = false;
 
 };
 

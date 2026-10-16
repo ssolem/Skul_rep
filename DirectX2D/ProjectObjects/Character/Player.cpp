@@ -5,6 +5,7 @@
 #include "SkulClass.h"
 #include "Stat.h"
 #include "Skuls/BasicSkul.h"
+#include "Skuls/ThiefSkul.h"
 
 Player::Player()
 	: Character()
@@ -17,6 +18,11 @@ Player::Player()
 	SkulClass* basicSkul = new BasicSkul();
 	skuls.push_back(basicSkul);
 	basicSkul->Init(this, animator);	//스컬별 추가 스탯이 SetStats()에서 들어갈 수 있으므로 그 뒤에 체력 초기화
+	
+	SkulClass* thiefSkul = new ThiefSkul();
+	skuls.push_back(thiefSkul);
+	thiefSkul->Init(this, animator);
+	
 	SetMaxHP();
 	SetCurHP(GetMaxHP());
 
