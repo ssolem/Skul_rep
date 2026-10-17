@@ -85,6 +85,15 @@ void ThiefBackRoll::Start()
 	backDir = owner->FacingRight() ? -1.0f : 1.0f;
 	movedDistance = 0.0f;
 
+	Clip* clip = owner->FindClip(clipName);
+	if (clip != nullptr)
+	{
+		clip->SetSpeed(1.0f);
+		float clipDuration = clip->GetDuration();
+		float rollDuration = distance / speed;
+		clip->SetSpeed(clipDuration / rollDuration);
+	}
+
 	switch (curData.smokeType)
 	{
 	case BackRollType::Smoke:       OnSmokeAction();        break;

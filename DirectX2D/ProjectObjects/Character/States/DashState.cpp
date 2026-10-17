@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "DashState.h"
 
 
@@ -66,6 +66,15 @@ void DashState::Start()
 	dashEffectPos = owner->GlobalPos() - (dashDirection * dashEffectLocationOffset);
 	EffectManager::Get()->Play("DashSmoke_Public_Small", dashEffectPos, owner->FacingRight());
 	owner->SetVelocity(Vector2::Zero);
+
+	Clip* clip = owner->FindClip(curClipName);
+	if (clip != nullptr)
+	{
+		clip->SetSpeed(1.0f);
+		float clipDuration = clip->GetDuration();
+		float dashDuration = dashDistance / dashSpeed;
+		clip->SetSpeed(clipDuration / dashDuration);
+	}
 
 	PlayClip();
 }
