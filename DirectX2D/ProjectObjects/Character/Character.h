@@ -33,6 +33,7 @@ public:
 
 	//interface
 	virtual void OnHit(const HitData& hit) override;
+	virtual Vector2 GetHitPos() override { return GlobalPos(); }
 	virtual void TakeDamage(int amount) override;
 
 	//getset

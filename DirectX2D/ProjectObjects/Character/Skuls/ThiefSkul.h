@@ -16,18 +16,18 @@ public:
 	virtual void Init(Character* owner, Animator* animator) override;
 	virtual void CreateAnimations(Animator* animator) override;
 	virtual void SetAnimations() override;
-	virtual void CreateEffects() override;
+	virtual void CreateEffects(Animator* animator) override;
 	virtual void SetEffectDetails() override;
 	virtual void SetStats() override;
 	virtual void SetImages() override;
 
 	virtual const vector<AttackData>& GetComboAttacks() const override { return basicAttackCombos; }
 
+	void ApplyTier(int newTier);	//단계 변경: 태그, 콤보, 아이콘 교체
+
 private:
 	virtual void CreateSkills() override;
 	virtual void CreateComboAttacks(Animator* animator) override;
-
-	void ApplyTier(int newTier);	//단계 변경: 태그, 콤보, 아이콘 교체
 
 private:
 	Animator* animator = nullptr;

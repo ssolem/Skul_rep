@@ -127,15 +127,23 @@ enum class TileHitType
 
 enum class ProjectileTarget { Player, Enemy };
 
+//이펙트 프레임 기준점 - Bottom이면 Play 위치가 이미지 아래 가운데 (발밑 먼지, 착지 연기 등)
+
+enum class EffectPivot { Center, Bottom };
+
 struct ProjectileData
 {
 	string tag;
 	wstring path;	// 아틀라스 폴더 - 투사체가 Init()에서 자기 animator에 클립 생성
+	string flyClip = "Projectile";		//path 안의 비행 클립 파일 이름 (확장자 제외) - 한 폴더에 여러 투사체가 있을 때 구분
+	string hitClip = "Projectile_Hit";	//소멸 클립 - 비우면 소멸 연출 없이 바로 반환
 	float speed;
 	float lifeTime;
 	TileHitType tileHitType = TileHitType::Destroy;
 	bool pierce = false;
 	Vector2 size;
+	float gravity = 0.0f;			//0이면 직선 비행, 값이 있으면 포물선
+	bool rotateToVelocity = true;	//비행 방향으로 회전 (false면 발사 순간 각도 유지)
 };
 
 

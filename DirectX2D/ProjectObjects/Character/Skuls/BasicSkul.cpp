@@ -135,7 +135,7 @@ void BasicSkul::SetAnimations()
 	//BASIC_ATTACK은 콤보 스텝별 클립 이름이 CreateComboAttacks()의 ComboAttackData 안에 들어있어서 여기 map엔 안 넣음
 	actionClips[ActionType::JUMP_ATTACK] = { "JumpAttack" };
 	actionClips[ActionType::DASH] = { "Dash" };
-	actionClips[ActionType::SKILL] = { "Skill" };
+	actionClips[ActionType::SKILL] = { "" };	//스킬 클립은 각 Skill이 가짐
 	actionClips[ActionType::SWITCH] = { "Switch" };
 }
 
@@ -166,7 +166,7 @@ void BasicSkul::CreateComboAttacks(Animator* animator)
 		animator->FindClip(tag + "JumpAttack")->GetFrame(1)->GetSize() };
 }
 
-void BasicSkul::CreateEffects()
+void BasicSkul::CreateEffects(Animator* animator)
 {
 }
 

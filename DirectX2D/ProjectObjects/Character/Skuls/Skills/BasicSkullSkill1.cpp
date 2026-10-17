@@ -11,6 +11,7 @@ BasicSkullSkill1::BasicSkullSkill1(Character* owner, float coolDown, BasicSkul* 
 	: Skill(owner, coolDown), basicSkul(basicSkul)
 {
 	baseDamage = 10;
+	clipName = "Skill";	//머리 던지기 클립 끝에서 SkillState가 End
 }
 
 BasicSkullSkill1::~BasicSkullSkill1()

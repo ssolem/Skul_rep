@@ -132,12 +132,12 @@ void Animator::ClearFrameCache()
 //atlasFile: 아틀라스 png 전체 경로 - uv는 같은 위치, 같은 이름의 .uv
 //격자/한 줄 어떤 배치든 .uv의 프레임별 UV로 재생 (Make Anim Atlas로 구워도 됨)
 void Animator::CreateEffectByAtlas(const string& key, const wstring& atlasFile, UINT poolSize, Vector2 scale,
-	float speed, bool isAdditive)
+	float speed, bool isAdditive, EffectPivot pivot)
 {
 	//전역 풀이라 같은 적이 여러 마리여도 한 번만 등록 - uv 읽기 전에 거름
 	if (EffectManager::Get()->HasEffect(key)) return;
 
-	vector<Frame*>* frames = GetAtlasFrames(atlasFile, true);
+	vector<Frame*>* frames = GetAtlasFrames(atlasFile, pivot == EffectPivot::Center);
 	if (frames == nullptr) return;
 
 	EffectManager::Get()->Add(key, poolSize, *frames, speed, isAdditive);

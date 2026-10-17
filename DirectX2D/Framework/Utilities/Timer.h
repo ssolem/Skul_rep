@@ -3,7 +3,7 @@
 class Timer : public Singleton<Timer>
 {
 private:
-	const float EPSILON = 0.01f;
+	const float EPSILON = 0.1f;
 
 	friend class Singleton;
 

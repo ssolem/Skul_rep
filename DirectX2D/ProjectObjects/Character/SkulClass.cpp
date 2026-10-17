@@ -22,7 +22,7 @@ void SkulClass::Render()
 {
 }
 
-void SkulClass::CreateEffects()
+void SkulClass::CreateEffects(Animator* animator)
 {
 
 }

@@ -13,7 +13,7 @@ public:
 	void CreateClipByFolder(const string& key, const wstring& path, bool isLoop = true, float speed = 1.0f);
 	void CreateClipByAtlas(const string& tag, const string& fileName, const wstring& path, bool isLoop = true, float speed = 1.0f);
 	void CreateEffectByAtlas(const string& key, const wstring& atlasFile, UINT poolSize,
-		Vector2 scale = Vector2::One, float speed = 1.0f, bool isAdditive = false);
+		Vector2 scale = Vector2::One, float speed = 1.0f, bool isAdditive = false, EffectPivot pivot = EffectPivot::Center);
 
 	Clip* FindClip(const string& key);
 	void PlayClip(const string& key);

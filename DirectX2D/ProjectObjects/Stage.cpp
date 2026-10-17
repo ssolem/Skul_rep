@@ -46,6 +46,7 @@ void Stage::Update()
 	}
 
 	ProjectileManager::Get()->Update();
+	ProjectileManager::Get()->CheckTileCollision(this);	//이동 후 타일에 닿았는지 확인
 }
 
 void Stage::Render()

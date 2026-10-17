@@ -41,19 +41,19 @@ bool ProjectileManager::HasData(const string& key)
 	return datas.count(key) > 0;
 }
 
-void ProjectileManager::Fire(const string& key, Vector2 pos, Vector2 dir, const HitData& hit, ProjectileTarget target, unsigned int groupId)
+void ProjectileManager::Fire(const string& key, Vector2 pos, Vector2 dir, const HitData& hit, ProjectileTarget target,
+	unsigned int groupId, function<void(Character*)> onHit)
 {
 	auto it = datas.find(key);
-	if (it == datas.end()) return;  // 등록 안 된 키
+	if (it == datas.end()) return; 
 
 	Projectile* projectile = GetAvailableProjectile();
-	projectile->Init(it->second);	// 종류 세팅 (클립, 콜라이더)
-	projectile->Fire(pos, dir, hit, target);
+	projectile->Init(it->second);	
+	projectile->Fire(pos, dir, hit, target, onHit);
 	projectile->SetGroupId(groupId);
 }
 
 //0은 "그룹 없음"이라 건너뜀 (unsigned라 오버플로우 시 0으로 돌아옴)
-
 unsigned int ProjectileManager::NewGroupId()
 {
 	if (++groupCounter == 0) ++groupCounter;
@@ -80,6 +80,12 @@ void ProjectileManager::CheckCollision(Character* character, ProjectileTarget si
 			if (other != projectile && other->GetGroupId() == group)
 				other->DisableHit();
 	}
+}
+
+void ProjectileManager::CheckTileCollision(Stage* stage)
+{
+	for (Projectile* projectile : projectiles)
+		projectile->CheckTileCollision(stage);
 }
 
 Projectile* ProjectileManager::GetAvailableProjectile()

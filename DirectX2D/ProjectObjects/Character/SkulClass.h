@@ -17,7 +17,7 @@ public:
 	virtual void Init(Character* owner, Animator* animator) = 0;	//owner는 여기서 멤버에 저장하고, 이후 함수들은 멤버를 사용
 	virtual void CreateAnimations(Animator* animator) = 0;
 	virtual void SetAnimations() = 0;
-	virtual void CreateEffects();
+	virtual void CreateEffects(Animator* animator);
 	virtual void SetEffectDetails();
 	virtual void SetStats() = 0;
 	virtual void SetImages() = 0;

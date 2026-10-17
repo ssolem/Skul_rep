@@ -15,13 +15,13 @@ Player::Player()
 	SetupInput();
 	SetStats();		//플레이어 공통 기본 스탯 (스컬과 무관)
 
-	SkulClass* basicSkul = new BasicSkul();
-	skuls.push_back(basicSkul);
-	basicSkul->Init(this, animator);	//스컬별 추가 스탯이 SetStats()에서 들어갈 수 있으므로 그 뒤에 체력 초기화
-	
 	SkulClass* thiefSkul = new ThiefSkul();
 	skuls.push_back(thiefSkul);
 	thiefSkul->Init(this, animator);
+
+	SkulClass* basicSkul = new BasicSkul();
+	skuls.push_back(basicSkul);
+	basicSkul->Init(this, animator);	//스컬별 추가 스탯이 SetStats()에서 들어갈 수 있으므로 그 뒤에 체력 초기화
 	
 	SetMaxHP();
 	SetCurHP(GetMaxHP());
@@ -33,7 +33,7 @@ Player::Player()
 
 	CreateEffects();
 	actionComponent = new ActionComponent();
-	actionComponent->CreateActionStates(this, basicSkul->GetActionClipNames(), basicSkul->GetComboAttacks(), basicSkul->GetJumpAttack(), basicSkul->GetBasicAttackDamageType());
+	actionComponent->CreateActionStates(this, thiefSkul->GetActionClipNames(), thiefSkul->GetComboAttacks(), thiefSkul->GetJumpAttack(), thiefSkul->GetBasicAttackDamageType());
 }
 
 void Player::SetStats()

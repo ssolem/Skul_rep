@@ -2,6 +2,8 @@
 #include "ThiefSkul.h"
 #include "../Animator.h"
 #include "../Character.h"
+#include "../Skill.h"
+#include "Skills/ThiefBackRoll.h"
 
 namespace
 {
@@ -59,12 +61,15 @@ void ThiefSkul::Init(Character* owner, Animator* animator)
 	this->animator = animator;
 
 	CreateAnimations(animator);
+	CreateEffects(animator);	//뒤구르기 연막/가스 이펙트 등록
 	SetAnimations();
 	SetStats();
 	CreateSkills();
 	ApplyTier(0);
 
-	//TODO: CreateSkills() 구현 후 curSkills[0], curSkills[1] 연결 (지금은 skills가 비어 있어서 접근하면 크래시)
+	//TODO: 1번 스킬 생성 후 curSkills[1] 연결 (비어 있으면 SkillState::IsReady가 false라 사용만 안 됨)
+
+	curSkills[0] = skills[0];
 
 	initialized = true;
 }
@@ -95,7 +100,10 @@ void ThiefSkul::ApplyTier(int newTier)
 	SetTag(tiers[tier].tag);
 
 	//태그가 바뀌었으니 프레임 크기도 새 단계 기준으로 다시 계산
-
+	for (Skill* skill : skills)
+	{
+		skill->ApplyTier(tier);	
+	}
 	CreateComboAttacks(animator);
 	SetImages();
 }
@@ -104,12 +112,14 @@ void ThiefSkul::SetAnimations()
 {
 	actionClips[ActionType::JUMP_ATTACK] = { "JumpAttack" };
 	actionClips[ActionType::DASH] = { "Dash" };
-	actionClips[ActionType::SKILL] = { "Skill" };
+	actionClips[ActionType::SKILL] = { "" };
 	actionClips[ActionType::SWITCH] = { "AttackB" };
 }
 
-void ThiefSkul::CreateEffects()
+void ThiefSkul::CreateEffects(Animator* animator)
 {
+	animator->CreateEffectByAtlas("ThiefSmoke", L"ProjectTextures/Thief/Thief_BackRoll/Thief_BackRoll.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Bottom);
+	animator->CreateEffectByAtlas("ThiefPlague", L"ProjectTextures/Thief/Effect_BackRoll_Smoke_PlagueDoctor_Gas/PlagueDoctor_Gas.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);
 }
 
 void ThiefSkul::SetEffectDetails()
@@ -132,6 +142,13 @@ void ThiefSkul::SetImages()
 
 void ThiefSkul::CreateSkills()
 {
+	int index = 0;
+
+	Skill* newSkill = new ThiefBackRoll(owner, this);
+	newSkill->SetIndex(index++);
+	newSkill->Init();
+	newSkill->SetIcon();
+	skills.push_back(newSkill);
 }
 
 void ThiefSkul::CreateComboAttacks(Animator* animator)

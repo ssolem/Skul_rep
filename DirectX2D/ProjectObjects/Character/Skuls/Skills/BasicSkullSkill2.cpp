@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "BasicSkullSkill2.h"
 #include "ProjectObjects/Character/Character.h"
 #include "../BasicSkul.h"
@@ -27,6 +27,8 @@ void BasicSkullSkill2::Start()
 	owner->SetVelocity(Vector2::Zero);
 
 	basicSkul->RetrieveHead();
+
+	Finish();
 }
 
 void BasicSkullSkill2::End()

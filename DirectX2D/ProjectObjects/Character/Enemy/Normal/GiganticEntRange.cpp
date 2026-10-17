@@ -83,7 +83,7 @@ void GiganticEntRange::CreateProjectile()
 	data.lifeTime = 5.0f;
 	data.size = Vector2::Zero;
 	data.speed = 200.0f;
-	data.tileHitType = TileHitType::Destroy;
+	data.tileHitType = TileHitType::Pass;
 	data.pierce = false;
 
 	ProjectileManager::Get()->Register(data.tag, data);
