@@ -28,7 +28,9 @@ void SwitchState::Start()
 {
 	isSwitching = true;
 
-	owner->FindClip(curClipName)->SetEvent([this]() { End(); });
+	Clip* clip = owner->FindClip(curClipName);
+	clip->ClearEvents();
+	clip->SetEvent([this]() { End(); });
 	PlayClip();
 }
 

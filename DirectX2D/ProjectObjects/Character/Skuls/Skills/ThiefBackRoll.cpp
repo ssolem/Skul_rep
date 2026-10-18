@@ -210,7 +210,7 @@ void ThiefBackRoll::CreateCaltrap()
 	data.size = Vector2::Zero;
 	data.speed = caltrapSpeed;
 	data.tileHitType = TileHitType::Stick;
-	data.pierce = false;
+	data.maxHitCount = 1;
 	data.gravity = GRAVITY;
 	data.rotateToVelocity = false;
 

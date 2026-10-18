@@ -34,6 +34,7 @@ public:
 	void SetFrameDelay(int frameIdx, float seconds);	// 해당 프레임만 표시 시간 변경 (speed는 그대로 곱해짐)
 
 	void SetEvent(Event event, int frameIdx = -1);
+	void ClearEvents() { events.clear(); }
 
 private:
 	vector<Frame*> frames;

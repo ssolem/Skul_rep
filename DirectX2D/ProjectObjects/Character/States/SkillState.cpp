@@ -42,7 +42,7 @@ void SkillState::Start()
 	{
 		Clip* curClip = owner->FindClip(curClipName);
 		assert(curClip != nullptr && "스킬 clipName 확인");
-
+		curClip->ClearEvents();
 		curClip->SetEvent([this]() { End(); });
 		PlayClip();
 	}

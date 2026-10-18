@@ -154,9 +154,9 @@ void Projectile::Hit(Character* character)
 	character->OnHit(hitData);
 	if (onHit) onHit(character);
 
-	//관통이면 계속 날아가거나 박힌 채로 남음
+	//아직 더 맞출 수 있으면 계속 날아가거나 박힌 채로 남음
 
-	if (data.pierce) return;
+	if (data.maxHitCount < 0 || (int)alreadyHit.size() < data.maxHitCount) return;
 
 	isFlying = false;
 	Destroy();

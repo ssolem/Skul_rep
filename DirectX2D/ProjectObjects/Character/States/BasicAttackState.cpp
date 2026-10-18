@@ -68,6 +68,7 @@ void BasicAttackState::Start()
 	curComboIndex = (curComboIndex + 1) % maxComboIndex;
 
 	Clip* clip = owner->FindClip(curClipName);
+	clip->ClearEvents();
 	clip->SetEvent([this]() { owner->SetCancellable(true); }, 0);
 	clip->SetEvent([this]() { End(); });
 

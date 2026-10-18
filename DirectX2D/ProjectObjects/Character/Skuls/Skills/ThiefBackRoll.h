@@ -65,6 +65,6 @@ private:
 	float skillUseMaxCooldown = 1.0f;
 	float caltrapSpeed = 300.0f;
 	int caltrapCount = 3;
-	const string caltrapTag = "ThiefCaltrap";	//등록과 발사가 같은 tag를 쓰도록 한 곳에서 관리
+	const string caltrapTag = "ThiefCaltrap";
 };
 

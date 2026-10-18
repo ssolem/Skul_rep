@@ -140,7 +140,7 @@ struct ProjectileData
 	float speed;
 	float lifeTime;
 	TileHitType tileHitType = TileHitType::Destroy;
-	bool pierce = false;
+	int maxHitCount = 1;	//맞출 수 있는 대상 수 - 1이면 관통 없음, -1이면 무제한 관통
 	Vector2 size;
 	float gravity = 0.0f;			//0이면 직선 비행, 값이 있으면 포물선
 	bool rotateToVelocity = true;	//비행 방향으로 회전 (false면 발사 순간 각도 유지)
