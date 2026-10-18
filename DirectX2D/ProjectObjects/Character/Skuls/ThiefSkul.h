@@ -24,6 +24,7 @@ public:
 	virtual const vector<AttackData>& GetComboAttacks() const override { return basicAttackCombos; }
 
 	void ApplyTier(int newTier);	//단계 변경: 태그, 콤보, 아이콘 교체
+	int GetTier() const { return tier; }
 
 private:
 	virtual void CreateSkills() override;
@@ -31,6 +32,6 @@ private:
 
 private:
 	Animator* animator = nullptr;
-	int tier = 0;
+	int tier = 1;
 };
 

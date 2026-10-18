@@ -65,7 +65,7 @@ void ThiefSkul::Init(Character* owner, Animator* animator)
 	SetAnimations();
 	SetStats();
 	CreateSkills();
-	ApplyTier(0);
+	ApplyTier(tier);
 
 	//TODO: 1번 스킬 생성 후 curSkills[1] 연결 (비어 있으면 SkillState::IsReady가 false라 사용만 안 됨)
 

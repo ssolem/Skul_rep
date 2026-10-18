@@ -15,6 +15,7 @@ public:
 	virtual bool CanAttack(Character* target);	
 	virtual void Start(Character* target);
 	virtual void Update() {}
+	virtual void UpdateEffect() {}	//공격이 취소돼도 남는 장판/투사체 갱신 - 넉백 중에도 매 프레임 호출
 	virtual void Cancel() = 0;
 	virtual void Render();
 

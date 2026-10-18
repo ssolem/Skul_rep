@@ -20,6 +20,7 @@ public:
 	void Update();			
 	void Render();			
 	void CancelAttack();   
+	void UpdateAttackEffects();	//curAttack 여부와 관계없이 모든 공격의 이펙트 갱신
 
 	void AddAttack(EnemyAttack* attack) { attacks.push_back(attack); }
 	void SetDetectRange(float range);

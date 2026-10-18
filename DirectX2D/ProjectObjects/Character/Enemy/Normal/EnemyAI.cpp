@@ -72,6 +72,12 @@ void EnemyAI::Render()
 		attack->Render();		//공격별 사거리 + 실행 중인 히트박스
 }
 
+void EnemyAI::UpdateAttackEffects()
+{
+	for (EnemyAttack* attack : attacks)
+		attack->UpdateEffect();
+}
+
 void EnemyAI::CancelAttack()
 {
 	if (curAttack)

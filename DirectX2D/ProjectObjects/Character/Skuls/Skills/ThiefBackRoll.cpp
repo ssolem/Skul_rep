@@ -43,7 +43,7 @@ void ThiefBackRoll::Init()
 
 	CreateCaltrap();
 
-	curData = tierDatas[0];
+	curData = tierDatas[thiefSkul->GetTier()];
 
 	SetCoolDown(curData.coolDown);
 	coolDownTime = coolDownMax;

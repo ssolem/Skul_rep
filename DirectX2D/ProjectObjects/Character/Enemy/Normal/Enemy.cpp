@@ -57,6 +57,8 @@ void Enemy::UpdateControl()
 	else
 		ai->Update();	//판단 결과로 dir이 정해짐 (공격 중이면 0)
 
+	ai->UpdateAttackEffects();	//시전된 장판은 맞아도 계속 진행
+
 	Move();
 }
 

@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "BlossomEntAttack.h"
 #include "Enemy.h"
 #include "ProjectObjects/Character/Stat.h"
@@ -29,11 +29,12 @@ BlossomEntAttack::BlossomEntAttack(Enemy* owner, float coolDown, float range)
 
 	effectClip->SetEvent([this]() { hitbox->SetActive(true); }, 2);
 	effectClip->SetEvent([this]() { hitbox->SetActive(false); }, 23);
-	effectClip->SetEvent([this]() { Finish(); });
+	effectClip->SetEvent([this]() { EndEffect(); EndAction(); });	
 
 	Clip* clip = owner->FindClip(data.clipName);
 	clip->SetEvent([this, owner]() 
 		{
+			isCasted = true;
 			owner->PlayClip("Attack");
 			blossom->Play("Effect_Attack_Fog", castPos);
 		});
@@ -49,6 +50,7 @@ void BlossomEntAttack::Start(Character* target)
 {
 	EnemyAttack::Start(target);
 	alreadyHit = false;
+	isCasted = false;
 	hitbox->SetActive(false);
 
 	castPos = owner->GlobalPos();
@@ -59,9 +61,16 @@ void BlossomEntAttack::Start(Character* target)
 
 void BlossomEntAttack::Update()
 {
+	
+}
+
+void BlossomEntAttack::UpdateEffect()
+{
+	if (!blossom->Active()) return;
+
 	blossom->Update();
 
-	if (alreadyHit || !hitbox->Active()) return;
+	if (alreadyHit || !hitbox->Active() || target == nullptr) return;
 
 	hitbox->UpdateWorld();
 	if (!hitbox->IsCollision(target->GetCollider())) return;
@@ -72,8 +81,11 @@ void BlossomEntAttack::Update()
 
 void BlossomEntAttack::Cancel()
 {
-	blossom->Stop();
-	Finish();
+	//준비 중에 맞으면 장판도 취소, 이미 깔렸으면 몸만 끊김
+	if (!isCasted)
+		EndEffect();
+
+	EndAction();
 }
 
 void BlossomEntAttack::Render()
@@ -88,15 +100,19 @@ void BlossomEntAttack::Render()
 	}
 }
 
-void BlossomEntAttack::Finish()
+void BlossomEntAttack::EndAction()
 {
 	if (finished) return;
 
-	hitbox->SetActive(false);
-	blossom->Stop();
 	if (owner->IsPlayingAction())
 		owner->OnEndAction();
 	finished = true;
+}
+
+void BlossomEntAttack::EndEffect()
+{
+	hitbox->SetActive(false);
+	blossom->Stop();
 }
 
 HitData BlossomEntAttack::MakeHitData()
