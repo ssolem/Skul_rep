@@ -17,7 +17,7 @@ public:
 	void Init(const ProjectileData& data);	//종류 세팅 - 풀에서 꺼낼 때마다
 	void Reset();							//상태 초기화 + 비활성화 = 풀 반환
 
-	virtual void Fire(Vector2 pos, Vector2 dir, const HitData& hit, ProjectileTarget target, OnHitEvent onHit = nullptr);
+	virtual void Fire(Vector2 pos, Vector2 dir, const HitData& hit, ProjectileTarget target, OnHitEvent onHit = nullptr, int maxHitCount = 0);
 	virtual void Destroy();
 	virtual void Hit(Character* character);
 

@@ -19,7 +19,6 @@ void SkillState::Update()
 
 void SkillState::UpdateCoolDown()
 {
-	if (curSkill != nullptr) curSkill->UpdateCoolDown();
 }
 
 

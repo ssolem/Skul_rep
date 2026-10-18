@@ -4,6 +4,7 @@
 #include "../Character.h"
 #include "../Skill.h"
 #include "Skills/ThiefBackRoll.h"
+#include "Skills/ThiefGoldAttack.h"
 
 namespace
 {
@@ -70,6 +71,7 @@ void ThiefSkul::Init(Character* owner, Animator* animator)
 	//TODO: 1번 스킬 생성 후 curSkills[1] 연결 (비어 있으면 SkillState::IsReady가 false라 사용만 안 됨)
 
 	curSkills[0] = skills[0];
+	curSkills[1] = skills[1];
 
 	initialized = true;
 }
@@ -120,6 +122,8 @@ void ThiefSkul::CreateEffects(Animator* animator)
 {
 	animator->CreateEffectByAtlas("ThiefSmoke", L"ProjectTextures/Thief/Thief_BackRoll/Thief_BackRoll.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Bottom);
 	animator->CreateEffectByAtlas("ThiefPlague", L"ProjectTextures/Thief/Effect_BackRoll_Smoke_PlagueDoctor_Gas/PlagueDoctor_Gas.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);
+	animator->CreateEffectByAtlas("ThiefGoldExplosion", L"ProjectTextures/Thief/Thief_GoldExplosion/Thief_GoldExplosion.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);
+
 }
 
 void ThiefSkul::SetEffectDetails()
@@ -149,6 +153,13 @@ void ThiefSkul::CreateSkills()
 	newSkill->Init();
 	newSkill->SetIcon();
 	skills.push_back(newSkill);
+
+	newSkill = new ThiefGoldAttack(owner, this);
+	newSkill->SetIndex(index++);
+	newSkill->Init();
+	newSkill->SetIcon();
+	skills.push_back(newSkill);
+
 }
 
 void ThiefSkul::CreateComboAttacks(Animator* animator)

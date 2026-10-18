@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 class Projectile;
 class Character;
@@ -19,7 +19,7 @@ public:
 	void Register(const string& key, const ProjectileData& data);
 	bool HasData(const string& key);
 	void Fire(const string& key, Vector2 pos, Vector2 dir, const HitData& hit, ProjectileTarget target,
-		unsigned int groupId = 0, function<void(Character*)> onHit = nullptr);
+		unsigned int groupId = 0, function<void(Character*)> onHit = nullptr, int maxHitCount = 0);
 	unsigned int NewGroupId();
 
 	void CheckCollision(Character* character, ProjectileTarget side);

@@ -9,11 +9,14 @@
 ThiefGoldAttack::ThiefGoldAttack(Character* owner, ThiefSkul* thiefSkul)
 	: Skill(owner, 0), thiefSkul(thiefSkul)
 {
+	hitbox = new RectCollider(Vector2::One);
+	hitbox->SetActive(false);
 	clipName = "AttackA";
 }
 
 ThiefGoldAttack::~ThiefGoldAttack()
 {
+	delete hitbox;
 }
 
 void ThiefGoldAttack::Init()
@@ -30,6 +33,8 @@ void ThiefGoldAttack::Init()
 
 	curData = tierDatas[thiefSkul->GetTier()];
 
+	CreateGoldProjectile();
+
 	SetCoolDown(curData.coolDown);
 	coolDownTime = 0.0f;
 }
@@ -42,6 +47,15 @@ void ThiefGoldAttack::UpdateCoolDown()
 {
 	if (coolDownTime > 0.0f)
 		coolDownTime -= DELTA;
+
+	//모션이 끝나도 남은 금화는 계속 발사
+	if (remainShots <= 0) return;
+
+	fireTimer -= DELTA;
+	if (fireTimer > 0.0f) return;
+
+	FireGoldProjectile();
+	fireTimer += fireInterval;
 }
 
 void ThiefGoldAttack::Render()
@@ -53,7 +67,9 @@ void ThiefGoldAttack::Start()
 	coolDownTime = coolDownMax;
 	alreadyHit.clear();
 
-	//TODO: 판정/금화 폭발 처리 (종료는 SkillState가 AttackA 마지막 프레임에서 처리)
+	fireDir = owner->FacingRight() ? 1.0f : -1.0f;
+	remainShots = curData.cost;
+	fireTimer = 0.0f;		
 }
 
 void ThiefGoldAttack::End()
@@ -74,7 +90,6 @@ void ThiefGoldAttack::ApplyTier(int newTier)
 {
 	curData = tierDatas[newTier];
 
-	//쿨다운은 이어서 받음
 	SetCoolDown(curData.coolDown);
 	coolDownTime = min(coolDownTime, coolDownMax);
 }
@@ -101,20 +116,42 @@ void ThiefGoldAttack::CreateGoldProjectile()
 	data.size = Vector2::Zero;
 	data.speed = goldSpeed;
 	data.tileHitType = TileHitType::Destroy;
-	data.maxHitCount = 3;
+	data.maxHitCount = 1;
 
 	ProjectileManager::Get()->Register(data.tag, data);
 }
 
 void ThiefGoldAttack::FireGoldProjectile()
 {
-	HitData hitData = CreateHitData(0.0f);
-	Vector2 pos = owner->GlobalPos() + Vector2(0.0f, owner->GetDefaultSize().y * 0.5f);
+	//높이  랜덤
+	float offsetY = Random(-fireOffsetY, fireOffsetY);
+	Vector2 pos = owner->GlobalPos() + Vector2(0.0f, owner->GetDefaultSize().y * 0.5f + offsetY);
+	Vector2 dir = { fireDir, 0.0f };
 
-	for (int i = 0; i < curData.cost; i++)
+	if (curData.penetrateCount != 0)
+		ProjectileManager::Get()->Fire(goldTag, pos, dir, CreateHitData(0.0f), ProjectileTarget::Enemy,
+			0, nullptr, curData.penetrateCount);
+	else
+		ProjectileManager::Get()->Fire(goldTag, pos, dir, CreateHitData(0.0f), ProjectileTarget::Enemy,
+			0, [this](Character* target) { GoldExplode(target->GetHitPos()); });
+
+	remainShots--;
+}
+
+void ThiefGoldAttack::GoldExplode(Vector2 pos)
+{
+	hitbox->Scale() = Vector2(130.0f, 137.0f);
+	hitbox->Pos() = pos;
+	hitbox->UpdateWorld();
+	hitbox->SetActive(true);
+
+	HitData hitData = CreateHitData(0.0f);
+	for (IHittable* hit : owner->GetStage()->CheckAllHittableCollision(hitbox))
 	{
-		float angle = XMConvertToRadians(30.0f + 20.0f * i);
-		Vector2 dir = { owner->FacingRight()? 1.0f : -1.0f, 0.0f};
-		ProjectileManager::Get()->Fire(goldTag, pos, dir, hitData, ProjectileTarget::Enemy);
+		hitData.attackDir = pos.x < hit->GetHitPos().x ? 1.0f : -1.0f;
+		hit->OnHit(hitData);
 	}
+
+	EffectManager::Get()->Play("ThiefGoldExplosion", pos);
+	hitbox->SetActive(false);
 }

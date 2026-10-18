@@ -91,8 +91,12 @@ void Projectile::Reset()
 	SetActive(false);
 }
 
-void Projectile::Fire(Vector2 pos, Vector2 dir, const HitData& hit, ProjectileTarget target, OnHitEvent onHit)
+void Projectile::Fire(Vector2 pos, Vector2 dir, const HitData& hit, ProjectileTarget target, OnHitEvent onHit, int maxHitCount)
 {
+	//발사마다 관통 수를 바꾸는 스킬용 (단계별 관통 등) - Init이 매번 등록값으로 되돌림
+	if (maxHitCount != 0)
+		data.maxHitCount = maxHitCount;
+
 	Vector2 moveDir = dir.GetNormalized();
 	velocity = moveDir * data.speed;
 	hitData = hit;

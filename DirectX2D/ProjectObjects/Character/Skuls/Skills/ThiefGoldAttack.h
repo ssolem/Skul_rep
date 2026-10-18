@@ -2,6 +2,7 @@
 #include "../../Skill.h"
 class ThiefSkul;
 class IHittable;
+class Projectile;
 
 class ThiefGoldAttack : public Skill
 {
@@ -25,6 +26,7 @@ private:
 	HitData CreateHitData(float attackDir);
 	void CreateGoldProjectile();
 	void FireGoldProjectile();
+	void GoldExplode(Vector2 pos);
 
 private:
 	struct TierData
@@ -42,8 +44,16 @@ private:
 	vector<IHittable*> alreadyHit;
 
 	ThiefSkul* thiefSkul;
+	Collider* hitbox;
 
 	float goldSpeed = 600.0f;
 	const string goldTag = "ThiefGold";
+
+	//연사
+	int remainShots = 0;			//남은 발사 수
+	float fireTimer = 0.0f;
+	float fireInterval = 0.1f;
+	float fireDir = 1.0f;			//시전 순간 바라보던 방향으로 고정
+	float fireOffsetY = 10.0f;		//발사 높이 랜덤 범위 (±)
 
 };

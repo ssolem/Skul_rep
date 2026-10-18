@@ -42,14 +42,14 @@ bool ProjectileManager::HasData(const string& key)
 }
 
 void ProjectileManager::Fire(const string& key, Vector2 pos, Vector2 dir, const HitData& hit, ProjectileTarget target,
-	unsigned int groupId, function<void(Character*)> onHit)
+	unsigned int groupId, function<void(Character*)> onHit, int maxHitCount)
 {
 	auto it = datas.find(key);
 	if (it == datas.end()) return; 
 
 	Projectile* projectile = GetAvailableProjectile();
 	projectile->Init(it->second);	
-	projectile->Fire(pos, dir, hit, target, onHit);
+	projectile->Fire(pos, dir, hit, target, onHit, maxHitCount);
 	projectile->SetGroupId(groupId);
 }
 
