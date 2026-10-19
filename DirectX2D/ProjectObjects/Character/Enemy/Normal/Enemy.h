@@ -52,5 +52,6 @@ private:
 	Vector2 hpBarOffset = Vector2::Zero;
 
 	float stunTime = 0.0f;	//남은 기절 시간 - 그동안 AI 판단 정지
+	float goldMarkTime = 0.0f;	//골드 표식 남은 시간
 };
 

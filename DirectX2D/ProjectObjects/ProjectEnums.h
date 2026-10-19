@@ -116,7 +116,8 @@ struct HitData
 	float attackDir = 0.0f;
 	void* source = nullptr;
 	float launchHeight = 0.0f; 
-	float stunTime = 0.0f;		//0보다 크면 그 시간만큼 기절 (확률 판정은 공격 쪽에서 하고 결과만 넣음)
+	float stunTime = 0.0f;		
+	float goldMarkTime = 0.0f;	
 };
 
 enum class TileHitType
@@ -129,14 +130,13 @@ enum class TileHitType
 enum class ProjectileTarget { Player, Enemy };
 
 //이펙트 프레임 기준점 - Bottom이면 Play 위치가 이미지 아래 가운데 (발밑 먼지, 착지 연기 등)
-
 enum class EffectPivot { Center, Bottom };
 
 struct ProjectileData
 {
 	string tag;
 	wstring path;	// 아틀라스 폴더 - 투사체가 Init()에서 자기 animator에 클립 생성
-	string flyClip = "Projectile";		//path 안의 비행 클립 파일 이름 (확장자 제외) - 한 폴더에 여러 투사체가 있을 때 구분
+	string flyClip = "Projectile";		//path 안의 비행 클립 파일 이름 - 한 폴더에 여러 투사체가 있을 때 구분
 	string hitClip = "Projectile_Hit";	//소멸 클립 - 비우면 소멸 연출 없이 바로 반환
 	float speed;
 	float lifeTime;

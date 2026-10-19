@@ -52,6 +52,9 @@ void Enemy::Render()
 
 void Enemy::UpdateControl()
 {
+	if (goldMarkTime > 0.0f)
+		goldMarkTime -= DELTA;	//넉백/기절 중에도 흐름
+
 	if (isKnockBack)
 		KnockBack();
 	else if (stunTime > 0.0f)
@@ -99,6 +102,19 @@ void Enemy::OnHit(const HitData& hit)
 	{
 		stunTime = max(stunTime, hit.stunTime);
 		ai->CancelAttack();
+	}
+
+	//표식이 있는 상태에서 다른 공격에 맞으면 한 번만 골드 (표식을 거는 공격은 제외)
+	if (goldMarkTime > 0.0f && hit.goldMarkTime <= 0.0f)
+	{
+		//TODO: 골드 시스템 생기면 지급 (양은 ThiefPocketTear가 정함)
+		goldMarkTime = 0.0f;
+	}
+
+	//표식을 거는 공격이면 새로 걸거나 갱신
+	if (hit.goldMarkTime > 0.0f)
+	{
+		goldMarkTime = hit.goldMarkTime;
 	}
 }
 

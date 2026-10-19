@@ -6,6 +6,7 @@
 #include "Skills/ThiefBackRoll.h"
 #include "Skills/ThiefGoldAttack.h"
 #include "Skills/ThiefBackAttack.h"
+#include "Skills/ThiefPocketTear.h"
 
 namespace
 {
@@ -72,7 +73,7 @@ void ThiefSkul::Init(Character* owner, Animator* animator)
 	//TODO: 1번 스킬 생성 후 curSkills[1] 연결 (비어 있으면 SkillState::IsReady가 false라 사용만 안 됨)
 
 	curSkills[0] = skills[0];
-	curSkills[1] = skills[2];
+	curSkills[1] = skills[3];
 
 	initialized = true;
 }
@@ -124,8 +125,11 @@ void ThiefSkul::CreateEffects(Animator* animator)
 	animator->CreateEffectByAtlas("ThiefSmoke", L"ProjectTextures/Thief/Thief_BackRoll/Thief_BackRoll.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Bottom);
 	animator->CreateEffectByAtlas("ThiefPlague", L"ProjectTextures/Thief/Effect_BackRoll_Smoke_PlagueDoctor_Gas/PlagueDoctor_Gas.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);
 	animator->CreateEffectByAtlas("ThiefGoldExplosion", L"ProjectTextures/Thief/Thief_GoldExplosion/Thief_GoldExplosion.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);
-	animator->CreateEffectByAtlas("ThiefBackAttack", L"ProjectTextures/Thief/Thief_BackAttack/Thief_BackAttack.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);	//뒤치기 1~2단계
-	animator->CreateEffectByAtlas("Thief4BackAttack", L"ProjectTextures/Thief/Thief_4_BackAttack/Thief_4_BackAttack.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);	//뒤치기 3~4단계
+	animator->CreateEffectByAtlas("ThiefBackAttack", L"ProjectTextures/Thief/Thief_BackAttack/Thief_BackAttack.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);	
+	animator->CreateEffectByAtlas("Thief4BackAttack", L"ProjectTextures/Thief/Thief_4_BackAttack/Thief_4_BackAttack.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);	
+	animator->CreateEffectByAtlas("ThiefPocketTear", L"ProjectTextures/Thief/Thief_PocketTear_Slash/Thief_PocketTear_Slash.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);	
+	animator->CreateEffectByAtlas("Thief4PocketTear", L"ProjectTextures/Thief/Thief_4_PocketTear/Thief_4_PocketTear.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);	
+	animator->CreateEffectByAtlas("ThiefPocketTearSmoke", L"ProjectTextures/Thief/Thief_PocketTear/Thief_PocketTear.png", 1, SKUL_DEFAULT_ASSET_SIZE, 1.0f, false, EffectPivot::Center);	
 
 }
 
@@ -164,6 +168,12 @@ void ThiefSkul::CreateSkills()
 	skills.push_back(newSkill);
 
 	newSkill = new ThiefBackAttack(owner, this);
+	newSkill->SetIndex(index++);
+	newSkill->Init();
+	newSkill->SetIcon();
+	skills.push_back(newSkill);
+
+	newSkill = new ThiefPocketTear(owner, this);
 	newSkill->SetIndex(index++);
 	newSkill->Init();
 	newSkill->SetIcon();

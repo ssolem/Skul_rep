@@ -27,7 +27,7 @@ void ThiefBackAttack::Init()
 	tierDatas.push_back(data);
 	data = { 20.0f, 12.0f,  6, false, true,  0.0f, false, "ThiefBackAttack",  Vector2(164.0f, 132.0f) };
 	tierDatas.push_back(data);
-	data = { 25.0f, 12.0f,  8, false, true,  0.5f, false, "Thief4BackAttack", Vector2(394.0f, 212.0f) };
+	data = { 25.0f, 12.0f,  8, false, true,  0.5f, false, "ThiefBackAttack", Vector2(164.0f, 132.0f) };
 	tierDatas.push_back(data);
 	data = { 30.0f, 12.0f, 10, false, true,  0.5f, true,  "Thief4BackAttack", Vector2(394.0f, 212.0f) };
 	tierDatas.push_back(data);
