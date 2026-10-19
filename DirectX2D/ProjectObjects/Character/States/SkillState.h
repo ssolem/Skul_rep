@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "ActionState.h"
 
 class Skill;
@@ -19,11 +19,12 @@ public:
 
 	virtual bool IsReady() override;
 
-	void SetSkill(Skill* skill) { curSkill = skill; }
+	void SetSkill(Skill* skill) { nextSkill = skill; }
 
 private:
 
 	bool isAttacking;
-	Skill* curSkill;
+	Skill* curSkill;				//지금 실행 중인 스킬 (End/Update/Render 대상)
+	Skill* nextSkill = nullptr;		//다음에 시작할 스킬
 };
 

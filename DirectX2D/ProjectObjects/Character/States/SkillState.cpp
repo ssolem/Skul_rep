@@ -29,6 +29,7 @@ void SkillState::Render()
 
 void SkillState::Start()
 {
+	curSkill = nextSkill;
 	if (curSkill == nullptr) return;
 
 	isAttacking = true;
@@ -61,8 +62,9 @@ void SkillState::End()
 
 bool SkillState::IsReady()
 {
-	if (curSkill != nullptr)
-		return curSkill->IsReady();
+	//실행 가능 여부는 누르려는 스킬 기준
+	if (nextSkill != nullptr)
+		return nextSkill->IsReady();
 
 	return false;
 }

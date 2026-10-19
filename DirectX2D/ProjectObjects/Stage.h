@@ -40,6 +40,7 @@ public:
 	SkulObject* CheckOtherObjectCollision(SkulObject* mover, Vector2* overlap = nullptr);
 	vector<SkulObject*> CheckAllOtherObjectCollision(SkulObject* mover);	//겹친 오브젝트 전부 (여러 개를 한 번씩 칠 때)
 	Enemy* CheckEnemyCollision(Collider* collider, Vector2* overlap = nullptr);
+	Enemy* FindClosestEnemy(Vector2 pos, float range);	//range 안의 살아있는 적 중 가장 가까운 적 (없으면 nullptr)
 
 	vector<IHittable*> CheckAllHittableCollision(Collider* collider, Vector2* overlap = nullptr);
 

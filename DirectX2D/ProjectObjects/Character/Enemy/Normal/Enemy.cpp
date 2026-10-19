@@ -54,6 +54,11 @@ void Enemy::UpdateControl()
 {
 	if (isKnockBack)
 		KnockBack();
+	else if (stunTime > 0.0f)
+	{
+		stunTime -= DELTA;	//기절 중에는 제자리
+		dir.x = 0.0f;
+	}
 	else
 		ai->Update();	//판단 결과로 dir이 정해짐 (공격 중이면 0)
 
@@ -88,6 +93,13 @@ void Enemy::InitBody()
 void Enemy::OnHit(const HitData& hit)
 {
 	Character::OnHit(hit);
+
+	//넉백이 없는 적(제자리형)도 기절하면 공격이 끊기게 여기서 취소
+	if (hit.stunTime > 0.0f)
+	{
+		stunTime = max(stunTime, hit.stunTime);
+		ai->CancelAttack();
+	}
 }
 
 void Enemy::Die()

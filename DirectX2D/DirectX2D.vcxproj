@@ -289,6 +289,7 @@
     <ClInclude Include="ProjectObjects\Character\Skuls\ThiefSkul.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefBackRoll.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefGoldAttack.h" />
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefBackAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Manager\DamageTextManager.cpp" />
@@ -429,6 +430,7 @@
     <ClCompile Include="ProjectObjects\Character\Skuls\ThiefSkul.cpp" />
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefBackRoll.cpp" />
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefGoldAttack.cpp" />
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefBackAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX2D.rc" />

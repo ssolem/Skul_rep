@@ -33,9 +33,9 @@ private:
 	{
 		float damage;
 		float coolDown;
-		int cost;
+		int cost;				//사용 골드
 		DamageType damageType;
-		int penetrateCount = 0;
+		int penetrateCount = 0;		//관통 수
 		AttackType attackType = AttackType::Projectile;
 	};
 

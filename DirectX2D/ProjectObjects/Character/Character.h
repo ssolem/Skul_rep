@@ -58,6 +58,7 @@ public:
 	void SetOnHPChanged(function<void(float curHP, float maxHP)> callback) { onHPChanged = callback; }
 	void SetJump(float height, float riseTime);	//최고점 높이 + 도달 시간으로 중력/낙하 상한 역산
 	void SetCancellable(bool value) { canCancelAction = value; }
+	void SetInvincible(bool value) { isInvincible = value; }	//무적 - 켜져 있으면 OnHit 무시
 	void SetFacing(bool right);
 	void SetVelocity(Vector2 value) { velocity = value; }
 	void SetStage(Stage* stage) { this->stage = stage; }
@@ -163,4 +164,5 @@ protected:
 	bool isLaunched = false;		// 띄워진 넉백 - 착지할 때까지 넉백 유지
 
 	bool isPlayer = false;
+	bool isInvincible = false;
 };

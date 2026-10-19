@@ -150,6 +150,25 @@ Enemy* Stage::CheckEnemyCollision(Collider* collider, Vector2* overlap)
 	return nullptr;
 }
 
+Enemy* Stage::FindClosestEnemy(Vector2 pos, float range)
+{
+	Enemy* closest = nullptr;
+	float closestDist = range;
+
+	for (Enemy* enemy : enemies)
+	{
+		if (!enemy->Active()) continue;
+
+		float dist = (enemy->GlobalPos() - pos).Length();
+		if (dist > closestDist) continue;
+
+		closestDist = dist;
+		closest = enemy;
+	}
+
+	return closest;
+}
+
 vector<IHittable*> Stage::CheckAllHittableCollision(Collider* collider, Vector2* overlap)
 {
 	vector<IHittable*> hits;

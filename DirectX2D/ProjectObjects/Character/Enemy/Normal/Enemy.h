@@ -50,5 +50,7 @@ private:
 
 	EnemyHealthBar* hpBar = nullptr;
 	Vector2 hpBarOffset = Vector2::Zero;
+
+	float stunTime = 0.0f;	//남은 기절 시간 - 그동안 AI 판단 정지
 };
 

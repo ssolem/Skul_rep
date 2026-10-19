@@ -42,7 +42,7 @@ enum class AttackActionType
 
 enum class DashType
 {
-	INVINCIBLE, SUPER_ARMOR
+	INVINCIBLE, ATTACK
 };
 
 //오브젝트가 중력을 받을지, 다른 방식으로 움직일지
@@ -116,6 +116,7 @@ struct HitData
 	float attackDir = 0.0f;
 	void* source = nullptr;
 	float launchHeight = 0.0f; 
+	float stunTime = 0.0f;		//0보다 크면 그 시간만큼 기절 (확률 판정은 공격 쪽에서 하고 결과만 넣음)
 };
 
 enum class TileHitType

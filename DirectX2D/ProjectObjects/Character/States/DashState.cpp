@@ -59,6 +59,7 @@ void DashState::Start()
 
 	dashCount++;
 	isDashing = true;
+	owner->SetInvincible(true);	//대시 중 무적
 
 	if (dashCount >= maxDashCount)
 		dashCoolDown = dashCoolDownMax;
@@ -82,6 +83,7 @@ void DashState::Start()
 void DashState::End()
 {
 	isDashing = false;
+	owner->SetInvincible(false);	//정상 종료/취소 모두 해제
 	owner->OnEndAction();
 }
 
