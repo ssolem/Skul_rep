@@ -275,6 +275,10 @@
     <ClInclude Include="ProjectObjects\Objects\AnimObject.h" />
     <ClInclude Include="ProjectObjects\Objects\Projectile.h" />
     <ClInclude Include="ProjectObjects\Objects\SkulObject.h" />
+    <ClInclude Include="ProjectObjects\Objects\DropItem.h" />
+    <ClInclude Include="ProjectObjects\Objects\GoldItem.h" />
+    <ClInclude Include="ProjectObjects\Objects\BoneItem.h" />
+    <ClInclude Include="ProjectObjects\Objects\DarkQuartzItem.h" />
     <ClInclude Include="ProjectObjects\Character\Stat.h" />
     <ClInclude Include="ProjectObjects\StageBackground.h" />
     <ClInclude Include="targetver.h" />
@@ -425,6 +429,10 @@
     <ClCompile Include="ProjectObjects\Objects\AnimObject.cpp" />
     <ClCompile Include="ProjectObjects\Objects\Projectile.cpp" />
     <ClCompile Include="ProjectObjects\Objects\SkulObject.cpp" />
+    <ClCompile Include="ProjectObjects\Objects\DropItem.cpp" />
+    <ClCompile Include="ProjectObjects\Objects\GoldItem.cpp" />
+    <ClCompile Include="ProjectObjects\Objects\BoneItem.cpp" />
+    <ClCompile Include="ProjectObjects\Objects\DarkQuartzItem.cpp" />
     <ClCompile Include="ProjectObjects\Stage.cpp" />
     <ClCompile Include="ProjectObjects\Character\Stat.cpp" />
     <ClCompile Include="ProjectObjects\StageBackground.cpp" />

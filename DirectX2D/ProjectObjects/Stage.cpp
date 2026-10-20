@@ -4,6 +4,7 @@
 #include "ProjectObjects/Objects/SkulObject.h"
 #include "ProjectObjects/Character/Enemy/Normal/Enemy.h"
 #include "ProjectObjects/StageBackground.h"
+#include "ProjectObjects/Objects/DropItem.h"
 
 Stage::Stage(string mapFile, Vector2 mapPos)
 {
@@ -16,6 +17,9 @@ Stage::~Stage()
 
 	for (Enemy* enemy : enemies)
 		delete enemy;
+
+	for (DropItem* item : items)
+		delete item;
 }
 
 void Stage::Update()
@@ -47,6 +51,18 @@ void Stage::Update()
 
 	ProjectileManager::Get()->Update();
 	ProjectileManager::Get()->CheckTileCollision(this);	//이동 후 타일에 닿았는지 확인
+
+	for (DropItem* item : items)
+		item->Update();
+
+	//획득되어 꺼진 아이템 정리
+	for (auto it = items.begin(); it != items.end();)
+	{
+		if ((*it)->Active()) { ++it; continue; }
+
+		delete *it;
+		it = items.erase(it);
+	}
 }
 
 void Stage::Render()
@@ -60,6 +76,9 @@ void Stage::Render()
 
 	for (Enemy* enemy : enemies)
 		if (enemy->Active()) enemy->Render();
+
+	for (DropItem* item : items)
+		item->Render();
 
 	ProjectileManager::Get()->Render();
 }
@@ -89,6 +108,12 @@ void Stage::UnregisterObject(SkulObject* obj)
 	vector<SkulObject*>::iterator it = find(objects.begin(), objects.end(), obj);
 	if (it != objects.end())
 		objects.erase(it);
+}
+
+void Stage::SpawnItem(DropItem* item, Vector2 pos)
+{
+	item->Spawn(this, pos);
+	items.push_back(item);
 }
 
 void Stage::RegisterEnemy(Enemy* enemy)

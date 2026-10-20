@@ -6,6 +6,7 @@ class Enemy;
 class Character;
 class IHittable;
 class StageBackground;
+class DropItem;
 
 //맵 하나의 생명주기를 통째로 담당하는 클래스
 //타일맵과 그 위에 떠 있는 스컬 오브젝트를 한 곳에서 관리
@@ -44,6 +45,9 @@ public:
 
 	vector<IHittable*> CheckAllHittableCollision(Collider* collider, Vector2* overlap = nullptr);
 
+	//DropItem
+	void SpawnItem(DropItem* item, Vector2 pos);
+
 	void SetCameraBounds();
 	void SetBackground(StageBackground* background) { this->background = background; }
 
@@ -60,5 +64,6 @@ private:
 	Character* player = nullptr;
 	vector<SkulObject*> objects;
 	vector<Enemy*> enemies;
+	vector<DropItem*> items;
 	Vector2 backgroundOffset = Vector2::Zero;
 };
