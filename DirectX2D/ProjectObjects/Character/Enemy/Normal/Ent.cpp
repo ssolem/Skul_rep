@@ -28,6 +28,10 @@ void Ent::SetStats()
 {
 	stat->AddStat({ StatType::BaseStat, Attribute::Health, 30.0f });
 	stat->AddStat({ StatType::BaseStat, Attribute::MovementSpeed, 200.0f });
+
+	//드랍 보상
+	dropTable.goldCount = 2;
+	dropTable.goldAmount = 2;
 }
 
 void Ent::InitBody()

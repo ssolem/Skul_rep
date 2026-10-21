@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../../Character.h"
+#include "ProjectObjects/Objects/DropTable.h"
 
 class EnemyHealthBar;
 class EnemyAI;
@@ -39,6 +40,9 @@ protected:
 	virtual void EndKnockBack() override;
 
 	bool CannotMoveForward();
+
+protected:
+	DropTable dropTable;	//SetStats()에서 적마다 채움 - 죽을 때 떨어뜨림
 
 private:
 	void SetHPBar();

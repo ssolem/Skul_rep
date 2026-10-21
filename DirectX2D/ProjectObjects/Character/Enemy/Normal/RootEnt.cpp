@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "RootEnt.h"
 #include "../../Animator.h"
 #include "../../Stat.h"
@@ -28,6 +28,10 @@ void RootEnt::SetStats()
 {
 	stat->AddStat({ StatType::BaseStat, Attribute::Health, 40.0f });
 	stat->AddStat({ StatType::BaseStat, Attribute::MovementSpeed, 180.0f });
+
+	//드랍 보상
+	dropTable.goldCount = 3;
+	dropTable.goldAmount = 2;
 }
 
 void RootEnt::InitBody()

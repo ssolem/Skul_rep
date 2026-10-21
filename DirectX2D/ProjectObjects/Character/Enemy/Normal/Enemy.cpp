@@ -121,6 +121,8 @@ void Enemy::OnHit(const HitData& hit)
 void Enemy::Die()
 {
 	Character::Die();
+
+	dropTable.Spawn(stage, GlobalPos() + Vector2(0.0f, defaultSize.y * 0.5f));
 }
 
 void Enemy::StartKnockBack(const HitData& hit)

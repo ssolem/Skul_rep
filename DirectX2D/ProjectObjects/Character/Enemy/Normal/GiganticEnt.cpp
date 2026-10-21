@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "GiganticEnt.h"
 #include "../../Animator.h"
 #include "../../Stat.h"
@@ -28,6 +28,13 @@ void GiganticEnt::CreateAnimations(Animator* animator)
 void GiganticEnt::SetStats()
 {
 	stat->AddStat({ StatType::BaseStat, Attribute::Health, 150.0f });
+
+	//드랍 보상
+	dropTable.goldCount = 5;
+	dropTable.goldAmount = 4;
+	dropTable.quartzCount = 2;
+	dropTable.quartzAmount = 1;
+	dropTable.quartzChance = 0.5f;
 }
 
 void GiganticEnt::InitBody()

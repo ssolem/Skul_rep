@@ -60,8 +60,8 @@ protected:
 
 	//튀어나오기
 	float spreadAngle = 70.0f;		
-	float minPower = 300.0f;
-	float maxPower = 500.0f;
+	float minPower = 100.0f;
+	float maxPower = 300.0f;
 
 	//튕김
 	float bounceRate = 0.4f;		
