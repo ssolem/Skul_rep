@@ -8,6 +8,13 @@ Tile::Tile(Data data)
 	Rot().z = data.angle;
 }	
 
+Tile::Tile(Vector2 size, Type type)
+	: Button(size)
+{
+	data.type = type;
+	data.angle = 0.0f;
+}
+
 Tile::~Tile()
 {
 }

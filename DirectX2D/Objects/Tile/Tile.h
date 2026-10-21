@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 class Tile : public Button
 {
@@ -23,6 +23,7 @@ public:
 
 public:
 	Tile(Data data);
+	Tile(Vector2 size, Type type);
 	~Tile();
 
 	void SetTexture(wstring file);

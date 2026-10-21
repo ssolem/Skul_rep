@@ -60,11 +60,15 @@ public:
 	Vector2 GetGroundPos(Vector2 pos);
 
 private:
+	void CreateBoundWalls();	//맵 범위 바깥 좌우에 보이지 않는 벽
+
+private:
 	StageBackground* background = nullptr;
 	SkulTileMap* tileMap = nullptr;
 	Character* player = nullptr;
 	vector<SkulObject*> objects;
 	vector<Enemy*> enemies;
 	vector<DropItem*> items;
+	vector<Tile*> boundWalls;
 	Vector2 backgroundOffset = Vector2::Zero;
 };

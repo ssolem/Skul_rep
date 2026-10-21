@@ -9,6 +9,7 @@
 Stage::Stage(string mapFile, Vector2 mapPos)
 {
 	tileMap = new SkulTileMap(mapFile, mapPos);
+	CreateBoundWalls();
 }
 
 Stage::~Stage()
@@ -20,6 +21,9 @@ Stage::~Stage()
 
 	for (DropItem* item : items)
 		delete item;
+
+	for (Tile* wall : boundWalls)
+		delete wall;
 }
 
 void Stage::Update()
@@ -71,6 +75,9 @@ void Stage::Render()
 
 	tileMap->Render();
 
+	for (Tile* wall : boundWalls)
+		wall->GetCollider()->Render();	
+
 	for (SkulObject* obj : objects)
 		if (obj->Active()) obj->Render();
 
@@ -95,7 +102,36 @@ Tile* Stage::CheckStairTileCollision(Collider* collider, Vector2* overlap)
 
 Tile* Stage::CheckWallTileCollision(Collider* collider, Vector2* overlap)
 {
-	return tileMap->CheckWallTileCollision(collider, overlap);
+	if (Tile* wall = tileMap->CheckWallTileCollision(collider, overlap))
+		return wall;
+
+	for (Tile* wall : boundWalls)
+		if (wall->GetCollider()->IsCollision(collider, overlap))
+			return wall;
+
+	return nullptr;
+}
+
+void Stage::CreateBoundWalls()
+{
+	Vector2 leftBottom = tileMap->GetLeftBottom();
+	Vector2 rightTop = tileMap->GetRightTop();
+
+	float thickness = 200.0f;		
+	float extraTop = WIN_HEIGHT;	
+	float height = (rightTop.y - leftBottom.y) + extraTop;
+	float centerY = leftBottom.y + height * 0.5f;
+
+	//맵 범위 바로 바깥에 붙여서 안쪽 면 = 맵 끝
+	float xs[2] = { leftBottom.x - thickness * 0.5f, rightTop.x + thickness * 0.5f };
+	for (float x : xs)
+	{
+		Tile* wall = new Tile(Vector2(thickness, height), Tile::Type::WALL);
+		wall->Pos() = Vector2(x, centerY);
+		wall->UpdateWorld();
+		wall->GetCollider()->UpdateWorld();
+		boundWalls.push_back(wall);
+	}
 }
 
 void Stage::RegisterObject(SkulObject* obj)
