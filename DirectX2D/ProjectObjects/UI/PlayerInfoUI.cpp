@@ -5,6 +5,7 @@
 #include "ProjectObjects/Character/Player.h"
 #include "ProjectObjects/Character/SkulClass.h"
 #include "ProjectObjects/Character/Skill.h"
+#include "ProjectObjects/Stage.h"
 
 static const Vector2 MAIN_PORTRAIT_SIZE(45.0f, 45.0f);
 static const Vector2 SUB_PORTRAIT_SIZE(21.0f, 21.0f);
@@ -74,6 +75,8 @@ PlayerInfoUI::PlayerInfoUI(Player* player)
 
 	Refresh();
 	//정수는 구현 후
+
+	CreateCounters();
 }
 
 PlayerInfoUI::~PlayerInfoUI()
@@ -87,6 +90,10 @@ PlayerInfoUI::~PlayerInfoUI()
 	delete firstSubSkillIcon;
 	delete secondSubSkillIcon;
 	delete essenceIcon;
+
+	for (Quad* icon : counterIcons)
+		delete icon;
+	delete counterRoot;
 }
 
 void PlayerInfoUI::Update()
@@ -102,6 +109,8 @@ void PlayerInfoUI::Update()
 	firstSubSkillIcon->Update();
 	secondSubSkillIcon->Update();
 	essenceIcon->Update();
+
+	UpdateCounters();
 }
 
 void PlayerInfoUI::Render()
@@ -122,6 +131,8 @@ void PlayerInfoUI::Render()
 	firstSubSkillIcon->Render(showAllSlots);
 	secondSubSkillIcon->Render(showAllSlots);
 	essenceIcon->Render(showAllSlots);
+
+	RenderCounters();
 }
 
 void PlayerInfoUI::RenderUI()
@@ -141,6 +152,10 @@ void PlayerInfoUI::RenderUI()
 	secondSubSkillIcon->RenderUI();
 	essenceIcon->RenderUI();
 
+	counterRoot->RenderUI();
+	ImGui::DragFloat("Counter Row Gap", &counterRowGap, 0.5f);
+	ImGui::DragFloat2("Counter Text Offset", (float*)&counterTextOffset, 0.5f);
+
 	ImGui::TreePop();
 }
 
@@ -158,6 +173,55 @@ void PlayerInfoUI::Refresh()
 	secondSubSkillIcon->SetIcon(GetSkillIcon(subSkul, 1));
 
 	essenceIcon->SetIcon(nullptr);  //정수 구현 후 연결
+}
+
+void PlayerInfoUI::CreateCounters()
+{
+	counterRoot = new Transform();
+	counterRoot->SetTag("PlayerInfo_Counters");
+	counterRoot->Scale() = SKUL_DEFAULT_ASSET_SIZE;
+	counterRoot->Pos() = Vector2(WIN_WIDTH - 110.0f, 30.0f);	//오른쪽 아래 - 맨 아래 줄 아이콘 중심
+
+	wstring path = L"ProjectTextures/Common/UI/";
+	const wstring files[COUNTER_MAX] = { L"Enemy_Icon.png", L"Gold_Icon.png", L"DarkQuartz_Icon.png", L"BoneChip_Icon.png" };
+
+	for (int i = 0; i < COUNTER_MAX; i++)
+	{
+		counterIcons[i] = new Quad(path + files[i]);
+		counterIcons[i]->SetParent(counterRoot);
+	}
+}
+
+void PlayerInfoUI::UpdateCounters()
+{
+	Stage* stage = player->GetStage();
+	counterValues[ENEMY] = stage ? stage->GetRemainEnemyCount() : 0;
+	counterValues[GOLD] = player->GetGold();
+	counterValues[DARK_QUARTZ] = player->GetDarkQuartz();
+	counterValues[BONE_CHIP] = player->GetBoneChip();
+
+	counterRoot->UpdateWorld();
+
+	for (int i = 0; i < COUNTER_MAX; i++)
+	{
+		counterIcons[i]->Pos() = Vector2(0.0f, (COUNTER_MAX - 1 - i) * counterRowGap);
+		counterIcons[i]->UpdateWorld();
+	}
+}
+
+void PlayerInfoUI::RenderCounters()
+{
+	for (int i = 0; i < COUNTER_MAX; i++)
+	{
+		counterIcons[i]->Render();
+
+		//RenderText는 pos를 사각형 중심으로 씀 -> 왼쪽 위 기준으로 바꿔서 넘김
+		Vector2 leftTop = counterIcons[i]->GlobalPos() + Vector2(counterTextOffset.x, counterTextOffset.y);
+		Float2 center = { leftTop.x + counterTextSize.x * 0.5f, leftTop.y - counterTextSize.y * 0.5f };
+
+		Font::Get()->RenderText(to_string(counterValues[i]), center,
+			{ counterTextSize.x, counterTextSize.y }, "Default", "White");
+	}
 }
 
 Texture* PlayerInfoUI::GetSkillIcon(SkulClass* skul, int index)

@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 #include "DarkQuartzItem.h"
-#include "ProjectObjects/Character/Character.h"
+#include "ProjectObjects/Character/Player.h"
 
 DarkQuartzItem::DarkQuartzItem(int amount)
 	: amount(amount)
@@ -15,5 +15,6 @@ DarkQuartzItem::~DarkQuartzItem()
 
 void DarkQuartzItem::OnAcquire(Character* player)
 {
-	//TODO: 다크쿼츠 시스템 생기면 player에게 amount 지급
+	if (Player* owner = (Player*)player)
+		owner->AddDarkQuartz(amount);
 }

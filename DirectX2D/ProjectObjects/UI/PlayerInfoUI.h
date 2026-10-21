@@ -26,6 +26,10 @@ private:
 	void Refresh();
 	Texture* GetSkillIcon(SkulClass* skul, int index);
 
+	void CreateCounters();
+	void UpdateCounters();
+	void RenderCounters();
+
 private:
 	Player* player;
 	Quad* mainFrame = nullptr;
@@ -46,5 +50,14 @@ private:
 	bool isEssenceActive = false;
 
 	bool showAllSlots = false;	//디버그: 빈 슬롯도 프레임을 그려서 위치 확인
+
+	enum CounterType { ENEMY, GOLD, DARK_QUARTZ, BONE_CHIP, COUNTER_MAX };
+
+	Transform* counterRoot = nullptr;
+	Quad* counterIcons[COUNTER_MAX] = {};
+	int counterValues[COUNTER_MAX] = {};
+	float counterRowGap = 12.0f;					
+	Vector2 counterTextOffset = Vector2(16.0f, 12.0f);	
+	Vector2 counterTextSize = Vector2(100.0f, 24.0f);
 };
 

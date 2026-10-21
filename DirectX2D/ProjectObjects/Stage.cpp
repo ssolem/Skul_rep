@@ -175,6 +175,15 @@ Enemy* Stage::CheckEnemyCollision(Collider* collider, Vector2* overlap)
 	return nullptr;
 }
 
+int Stage::GetRemainEnemyCount()
+{
+	int count = 0;
+	for (Enemy* enemy : enemies)
+		if (enemy->Active()) count++;
+
+	return count;
+}
+
 Enemy* Stage::FindClosestEnemy(Vector2 pos, float range)
 {
 	Enemy* closest = nullptr;

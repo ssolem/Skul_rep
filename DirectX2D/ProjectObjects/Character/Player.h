@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Character.h"
 
 class ObjectController;
@@ -33,6 +33,14 @@ public:
 		else return skuls[(curSkulIndex + 1) % 2];
 	}
 	//virtual Skill* GetCurSkill() override;
+
+	//재화 - 드랍 아이템 획득 시 증가, HUD가 읽어감
+	void AddGold(int amount) { gold += amount; }
+	void AddDarkQuartz(int amount) { darkQuartz += amount; }
+	void AddBoneChip(int amount) { boneChip += amount; }
+	int GetGold() { return gold; }
+	int GetDarkQuartz() { return darkQuartz; }
+	int GetBoneChip() { return boneChip; }
 
 protected:
 	void UpdateControl() override;
@@ -79,4 +87,8 @@ private:
 	PreInput preInput;
 	float preInputTime = 0.4f;
 	Vector2 jumpEffectOffset = Vector2::Zero;
+
+	int gold = 0;
+	int darkQuartz = 0;
+	int boneChip = 0;
 };
