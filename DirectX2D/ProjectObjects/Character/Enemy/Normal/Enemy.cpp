@@ -121,6 +121,7 @@ void Enemy::OnHit(const HitData& hit)
 void Enemy::Die()
 {
 	Character::Die();
+	state = State::Dead;
 
 	dropTable.Spawn(stage, GlobalPos() + Vector2(0.0f, defaultSize.y * 0.5f));
 }
@@ -168,9 +169,17 @@ void Enemy::FaceTo(Character* target)
 void Enemy::Spawn(Vector2 pos)
 {
 	SetActive(false);
+	state = State::Spawning;
 
 	Vector2 effectPos = pos + Vector2(0.0f, defaultSize.y * 0.5f);
 	Effect* effect = EffectManager::Get()->Play("Enemy_Appearance", effectPos);
+
+	//이펙트가 등록 안 돼 있으면 연출 없이 바로 등장
+	if (effect == nullptr)
+	{
+		Appear(pos);
+		return;
+	}
 
 	effect->OnEnd([this, pos]()
 		{

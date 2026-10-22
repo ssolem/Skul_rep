@@ -2,10 +2,7 @@
 #include "TestCharacterScene.h"
 #include "ProjectObjects/Character/Player.h"
 #include "ProjectObjects/Character/Enemy/Normal/Enemy.h"
-#include "ProjectObjects/Character/Enemy/Normal/Ent.h"
-#include "ProjectObjects/Character/Enemy/Normal/RootEnt.h"
-#include "ProjectObjects/Character/Enemy/Normal/GiganticEnt.h"
-#include "ProjectObjects/Character/Enemy/Normal/BlossomEnt.h"
+#include "ProjectObjects/Character/Enemy/EnemyFactory.h"
 #include "ProjectObjects/Stage.h"
 #include "ProjectObjects/UI/PlayerInfoUI.h"
 #include "ProjectObjects/StageBackground.h"
@@ -26,22 +23,24 @@ TestCharacterScene::TestCharacterScene()
 	player->SetStage(stage);
 	stage->SetPlayer(player);
 
-	//enemy 임시
-	ent = new Ent();
-	ent->Pos() = { CENTER_X + 200.0f , 1010.0f };
-	stage->RegisterEnemy(ent);
+	//enemy 임시 - 스폰 파일(.spawn)이 생기면 이 블록이 통째로 빠짐
+	struct TestSpawn { string type; Vector2 pos; };
+	TestSpawn testSpawns[] =
+	{
+		{ "Ent",         { CENTER_X + 200.0f, 1010.0f } },
+		{ "RootEnt",     { CENTER_X + 100.0f, 1010.0f } },
+		{ "GiganticEnt", { CENTER_X + 100.0f, 1010.0f } },
+		{ "BlossomEnt",  { CENTER_X + 300.0f, 1010.0f } },
+	};
 
-	ent2 = new RootEnt();
-	ent2->Pos() = { CENTER_X + 100.0f , 1010.0f };
-	stage->RegisterEnemy(ent2);
+	for (TestSpawn& spawn : testSpawns)
+	{
+		Enemy* enemy = EnemyFactory::Create(spawn.type);
+		if (enemy == nullptr) continue;
 
-	ent3 = new GiganticEnt();
-	ent3->Pos() = { CENTER_X + 100.0f , 1010.0f };
-	stage->RegisterEnemy(ent3);
-
-	ent4 = new BlossomEnt();
-	ent4->Pos() = { CENTER_X + 300.0f , 1010.0f };
-	stage->RegisterEnemy(ent4);
+		stage->RegisterEnemy(enemy);
+		enemy->Spawn(spawn.pos);
+	}
 
 	playerInfoUI = new PlayerInfoUI(player);
 	playerInfoUI->Scale() = SKUL_DEFAULT_ASSET_SIZE;
@@ -62,11 +61,6 @@ TestCharacterScene::TestCharacterScene()
 	background->Pos() = stage->GetBackgroundPos();
 	background->UpdateWorld();
 	stage->SetBackground(background);
-
-	ent->Spawn(ent->Pos());
-	ent2->Spawn(ent2->Pos());
-	ent3->Spawn(ent3->Pos());
-	ent4->Spawn(ent4->Pos());
 }
 
 TestCharacterScene::~TestCharacterScene()

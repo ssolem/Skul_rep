@@ -215,7 +215,7 @@ int Stage::GetRemainEnemyCount()
 {
 	int count = 0;
 	for (Enemy* enemy : enemies)
-		if (enemy->Active()) count++;
+		if (enemy->IsRemaining()) count++;	//등장 이펙트 중인 적도 포함
 
 	return count;
 }

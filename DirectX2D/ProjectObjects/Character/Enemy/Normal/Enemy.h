@@ -8,6 +8,15 @@ class EnemyAI;
 class Enemy : public Character
 {
 public:
+	enum class State
+	{
+		Pending,	//아직 Spawn 전
+		Spawning,	//비활성이지만 남은 적
+		Alive,
+		Dead
+	};
+
+public:
 	Enemy();
 	~Enemy() override;
 
@@ -21,6 +30,9 @@ public:
 	void MoveToward(float dirX);		//낭떠러지/벽 앞이면 방향만 돌리고 정지
 	void FaceTo(Character* target);		//이동 없이 타겟 쪽으로 돌아봄
 	void Spawn(Vector2 pos);
+
+	State GetState() { return state; }
+	bool IsRemaining() { return state == State::Spawning || state == State::Alive; }	//웨이브/남은 적 카운트 기준
 
 protected:
 
@@ -46,9 +58,11 @@ protected:
 
 private:
 	void SetHPBar();
-	void Appear(Vector2 pos) { Pos() = pos; SetActive(true); }
+	void Appear(Vector2 pos) { Pos() = pos; SetActive(true); state = State::Alive; }
 
 private:
+	State state = State::Pending;
+
 	Collider* frontSensor = nullptr;
 	EnemyAI* ai = nullptr;
 

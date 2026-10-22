@@ -23,10 +23,6 @@ public:
 
 private:
 	Player* player;
-	Enemy* ent;
-	Enemy* ent2;
-	Enemy* ent3;
-	Enemy* ent4;
 	Stage* stage;
 	StageBackground* background;
 
