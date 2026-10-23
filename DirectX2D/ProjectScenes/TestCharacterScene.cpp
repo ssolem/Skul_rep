@@ -30,15 +30,13 @@ TestCharacterScene::TestCharacterScene()
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer02.png", 0.05f);
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer01.png", -0.1f);
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer00.png", 0.2f);
-
-	//스테이지는 Start()에서 만듦 - 툴에서 저장한 json을 씬에 들어올 때마다 다시 읽음
 }
 
 TestCharacterScene::~TestCharacterScene()
 {
 	delete playerInfoUI;
-	delete stage;		//보통은 End()에서 이미 지워져 nullptr
-	delete background;	//Stage는 배경을 빌려 쓰기만 함
+	delete stage;		
+	delete background;	
 	delete player;
 }
 

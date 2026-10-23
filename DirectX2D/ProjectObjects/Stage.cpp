@@ -142,7 +142,7 @@ void Stage::CreateBoundWalls()
 
 void Stage::RegisterObject(SkulObject* obj)
 {
-	//이미 등록돼 있으면 무시 - 등록하는 쪽이 "이 스테이지에 했는지"를 따로 기억하지 않아도 됨
+	//이미 등록돼 있으면 무시
 	if (find(objects.begin(), objects.end(), obj) != objects.end())
 		return;
 
