@@ -450,6 +450,12 @@
     <ClInclude Include="ProjectObjects\Character\Enemy\EnemyFactory.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectObjects\StageData.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\WaveSpawner.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\BlossomEntAttack.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -849,6 +855,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectObjects\Character\Enemy\EnemyFactory.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\StageData.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\WaveSpawner.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\BlossomEntAttack.cpp">

@@ -7,6 +7,7 @@ class Character;
 class IHittable;
 class StageBackground;
 class DropItem;
+class WaveSpawner;
 
 //맵 하나의 생명주기를 통째로 담당하는 클래스
 //타일맵과 그 위에 떠 있는 스컬 오브젝트를 한 곳에서 관리
@@ -49,6 +50,9 @@ public:
 	//DropItem
 	void SpawnItem(DropItem* item, Vector2 pos);
 
+	//웨이브 - StageData로 Build 후 Start
+	WaveSpawner* GetWaveSpawner() { return waveSpawner; }
+
 	void SetCameraBounds();
 	void SetBackground(StageBackground* background) { this->background = background; }
 
@@ -71,4 +75,5 @@ private:
 	vector<DropItem*> items;
 	vector<Tile*> boundWalls;
 	Vector2 backgroundOffset = Vector2::Zero;
+	WaveSpawner* waveSpawner = nullptr;
 };

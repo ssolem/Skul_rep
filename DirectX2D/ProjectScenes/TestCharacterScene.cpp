@@ -1,9 +1,9 @@
 ﻿#include "Framework.h"
 #include "TestCharacterScene.h"
 #include "ProjectObjects/Character/Player.h"
-#include "ProjectObjects/Character/Enemy/Normal/Enemy.h"
-#include "ProjectObjects/Character/Enemy/EnemyFactory.h"
 #include "ProjectObjects/Stage.h"
+#include "ProjectObjects/StageData.h"
+#include "ProjectObjects/WaveSpawner.h"
 #include "ProjectObjects/UI/PlayerInfoUI.h"
 #include "ProjectObjects/StageBackground.h"
 #include "ProjectObjects/Objects/GoldItem.h"
@@ -13,34 +13,32 @@
 
 TestCharacterScene::TestCharacterScene()
 {
-	player = new Player();
-	player->Pos() = { CENTER_X, 1010.0f };
+	player = new Player();	//"Enemy_Appearance" 이펙트를 등록하므로 적 생성(Build)보다 먼저
 
 	CAM->SetTarget(player);
 
-	stage = new Stage("ProjectMaps/Chapter1_02.map");
+	//스테이지 데이터 - 읽기 실패하면 적 없이 기본 맵으로
+	StageData stageData;
+	if (!StageDataIO::Load("ProjectMaps/Chapter1_02.stage.json", stageData))
+	{
+		stageData.mapFile = "ProjectMaps/Chapter1_02.map";
+		stageData.playerSpawn = { CENTER_X, 1010.0f };
+	}
+
+	stage = new Stage(stageData.mapFile);
 
 	player->SetStage(stage);
 	stage->SetPlayer(player);
+	player->Pos() = stage->GetGroundPos(stageData.playerSpawn);	//Pos()가 발 위치라 바닥에 바로 세움
 
-	//enemy 임시 - 스폰 파일(.spawn)이 생기면 이 블록이 통째로 빠짐
-	struct TestSpawn { string type; Vector2 pos; };
-	TestSpawn testSpawns[] =
-	{
-		{ "Ent",         { CENTER_X + 200.0f, 1010.0f } },
-		{ "RootEnt",     { CENTER_X + 100.0f, 1010.0f } },
-		{ "GiganticEnt", { CENTER_X + 100.0f, 1010.0f } },
-		{ "BlossomEnt",  { CENTER_X + 300.0f, 1010.0f } },
-	};
-
-	for (TestSpawn& spawn : testSpawns)
-	{
-		Enemy* enemy = EnemyFactory::Create(spawn.type);
-		if (enemy == nullptr) continue;
-
-		stage->RegisterEnemy(enemy);
-		enemy->Spawn(spawn.pos);
-	}
+	WaveSpawner* spawner = stage->GetWaveSpawner();
+	spawner->Build(stageData);
+	spawner->SetOnClear([]()
+		{
+			//TODO: 문 열기, 보상 드랍
+			OutputDebugStringA("[Stage] 클리어\n");
+		});
+	spawner->Start();
 
 	playerInfoUI = new PlayerInfoUI(player);
 	playerInfoUI->Scale() = SKUL_DEFAULT_ASSET_SIZE;

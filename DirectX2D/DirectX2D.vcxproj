@@ -144,6 +144,8 @@
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\BlossomEntAttack.h" />
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\BlossomEnt.h" />
     <ClInclude Include="ProjectObjects\Character\Enemy\EnemyFactory.h" />
+    <ClInclude Include="ProjectObjects\StageData.h" />
+    <ClInclude Include="ProjectObjects\WaveSpawner.h" />
     <ClInclude Include="Objects\Manager\ProjectileManager.h" />
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\GiganticEntRange.h" />
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\GiganticEntMelee.h" />
@@ -303,6 +305,8 @@
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\BlossomEntAttack.cpp" />
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\BlossomEnt.cpp" />
     <ClCompile Include="ProjectObjects\Character\Enemy\EnemyFactory.cpp" />
+    <ClCompile Include="ProjectObjects\StageData.cpp" />
+    <ClCompile Include="ProjectObjects\WaveSpawner.cpp" />
     <ClCompile Include="Objects\Manager\ProjectileManager.cpp" />
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\GiganticEntRange.cpp" />
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\GiganticEntMelee.cpp" />

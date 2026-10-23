@@ -15,3 +15,17 @@ Enemy* EnemyFactory::Create(string type)
 
 	return nullptr;
 }
+
+//툴용 - 위 if와 같은 순서
+vector<string> EnemyFactory::GetTypeNames()
+{
+	return { "Ent", "RootEnt", "GiganticEnt", "BlossomEnt" };
+}
+
+bool EnemyFactory::IsValidType(string type)
+{
+	for (const string& name : GetTypeNames())
+		if (type == name) return true;
+
+	return false;
+}

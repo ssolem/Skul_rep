@@ -5,15 +5,19 @@
 #include "ProjectObjects/Character/Enemy/Normal/Enemy.h"
 #include "ProjectObjects/StageBackground.h"
 #include "ProjectObjects/Objects/DropItem.h"
+#include "ProjectObjects/WaveSpawner.h"
 
 Stage::Stage(string mapFile, Vector2 mapPos)
 {
 	tileMap = new SkulTileMap(mapFile, mapPos);
 	CreateBoundWalls();
+
+	waveSpawner = new WaveSpawner(this);
 }
 
 Stage::~Stage()
 {
+	delete waveSpawner;	//적 포인터만 들고 있음 - 적 삭제는 아래 enemies에서
 	delete tileMap;
 
 	for (Enemy* enemy : enemies)
@@ -38,6 +42,8 @@ void Stage::Update()
 		obj->Update();
 		obj->ResolveTileCollision(this);
 	}
+
+	waveSpawner->Update();	//이번 프레임에 나올 적 Spawn + 웨이브 전환 판정
 
 	for (Enemy* enemy : enemies)
 	{

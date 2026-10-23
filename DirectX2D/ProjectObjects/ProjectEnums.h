@@ -132,6 +132,12 @@ enum class ProjectileTarget { Player, Enemy };
 //이펙트 프레임 기준점 - Bottom이면 Play 위치가 이미지 아래 가운데 (발밑 먼지, 착지 연기 등)
 enum class EffectPivot { Center, Bottom };
 
+//웨이브가 언제 시작되는가 - 필요해지면 추가 (StageDataIO 문자열 변환도 같이)
+enum class WaveStart
+{
+	PrevCleared,	//이전 웨이브 전멸
+};
+
 struct ProjectileData
 {
 	string tag;

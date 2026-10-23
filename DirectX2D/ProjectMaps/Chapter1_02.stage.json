@@ -1,0 +1,22 @@
+{
+  "map": "ProjectMaps/Chapter1_02.map",
+  "playerSpawn": [640, 1010],
+  "waves": [
+    {
+      "start": "PrevCleared",
+      "value": 0,
+      "spawns": [
+        { "type": "Ent", "pos": [840, 1010], "delay": 0.0 },
+        { "type": "RootEnt", "pos": [740, 1010], "delay": 0.3 }
+      ]
+    },
+    {
+      "start": "PrevCleared",
+      "value": 0,
+      "spawns": [
+        { "type": "GiganticEnt", "pos": [740, 1010], "delay": 0.0 },
+        { "type": "BlossomEnt", "pos": [940, 1010], "delay": 0.5 }
+      ]
+    }
+  ]
+}
