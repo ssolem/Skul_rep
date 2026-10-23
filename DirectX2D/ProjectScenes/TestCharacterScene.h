@@ -20,10 +20,13 @@ public:
 	virtual void End() override;
 	virtual void Reset() override;
 
+private:
+	void BuildStage();
+	void ClearStage();
 
 private:
 	Player* player;
-	Stage* stage;
+	Stage* stage = nullptr;
 	StageBackground* background;
 
 	PlayerInfoUI* playerInfoUI;

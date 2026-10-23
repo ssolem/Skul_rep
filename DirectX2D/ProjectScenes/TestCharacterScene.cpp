@@ -15,8 +15,36 @@ TestCharacterScene::TestCharacterScene()
 {
 	player = new Player();	//"Enemy_Appearance" 이펙트를 등록하므로 적 생성(Build)보다 먼저
 
-	CAM->SetTarget(player);
+	playerInfoUI = new PlayerInfoUI(player);
+	playerInfoUI->Scale() = SKUL_DEFAULT_ASSET_SIZE;
+	playerInfoUI->Pos() = Vector2(168.0f, 66.0f);
 
+	player->SetOnHPChanged([this](float curHP, float maxHP)
+		{
+			playerInfoUI->SetMaxHP(maxHP);
+			playerInfoUI->SetHP(curHP);
+		});
+
+	background = new StageBackground();
+	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer03.png", 0.0f);
+	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer02.png", 0.05f);
+	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer01.png", -0.1f);
+	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer00.png", 0.2f);
+
+	//스테이지는 Start()에서 만듦 - 툴에서 저장한 json을 씬에 들어올 때마다 다시 읽음
+}
+
+TestCharacterScene::~TestCharacterScene()
+{
+	delete playerInfoUI;
+	delete stage;		//보통은 End()에서 이미 지워져 nullptr
+	delete background;	//Stage는 배경을 빌려 쓰기만 함
+	delete player;
+}
+
+//json을 읽어 맵/플레이어 위치/웨이브를 새로 구성
+void TestCharacterScene::BuildStage()
+{
 	//스테이지 데이터 - 읽기 실패하면 적 없이 기본 맵으로
 	StageData stageData;
 	if (!StageDataIO::Load("ProjectMaps/Chapter1_02.stage.json", stageData))
@@ -40,32 +68,19 @@ TestCharacterScene::TestCharacterScene()
 		});
 	spawner->Start();
 
-	playerInfoUI = new PlayerInfoUI(player);
-	playerInfoUI->Scale() = SKUL_DEFAULT_ASSET_SIZE;
-	playerInfoUI->Pos() = Vector2(168.0f, 66.0f);
-
-	player->SetOnHPChanged([this](float curHP, float maxHP)
-		{
-			playerInfoUI->SetMaxHP(maxHP);
-			playerInfoUI->SetHP(curHP);
-		});
-
-	background = new StageBackground();
-	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer03.png", 0.0f);
-	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer02.png", 0.05f);
-	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer01.png", -0.1f);
-	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer00.png", 0.2f);
 	stage->SetBackgroundOffset(Vector2(0.0f, 90.0f));
 	background->Pos() = stage->GetBackgroundPos();
 	background->UpdateWorld();
 	stage->SetBackground(background);
 }
 
-TestCharacterScene::~TestCharacterScene()
+//적/아이템/타일맵을 지움 - 등장 중인 적의 이펙트 콜백은 Enemy 소멸자가 끊음
+void TestCharacterScene::ClearStage()
 {
-	delete playerInfoUI;
+	player->SetStage(nullptr);
+
 	delete stage;
-	delete player;
+	stage = nullptr;
 }
 
 void TestCharacterScene::Update()
@@ -131,12 +146,15 @@ void TestCharacterScene::PostRender()
 
 void TestCharacterScene::Start()
 {
+	BuildStage();
+
 	CAM->SetTarget(player);
 	stage->SetCameraBounds();
 }
 
 void TestCharacterScene::End()
 {
+	ClearStage();
 }
 
 void TestCharacterScene::Reset()

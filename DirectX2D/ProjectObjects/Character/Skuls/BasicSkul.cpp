@@ -233,8 +233,6 @@ void BasicSkul::CreateHead()
 
 void BasicSkul::RegisterHeadToStage(Stage* stage)
 {
-	if (headRegistered) return;
-
+	//스테이지가 새로 만들어지면 다시 등록해야 해서 bool 플래그 대신 Stage가 중복을 거름
 	stage->RegisterObject(head);	//head를 Stage에 등록해서 매 프레임 갱신/충돌 처리를 시킴
-	headRegistered = true;
 }

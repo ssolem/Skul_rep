@@ -12,6 +12,8 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
+	CancelSpawnEffect();	//등장 이펙트가 끝날 때 지워진 this를 부르지 않도록
+
 	delete hpBar;
 	delete ai;
 	delete frontSensor;
@@ -168,6 +170,8 @@ void Enemy::FaceTo(Character* target)
 
 void Enemy::Spawn(Vector2 pos)
 {
+	CancelSpawnEffect();
+
 	SetActive(false);
 	state = State::Spawning;
 
@@ -181,10 +185,29 @@ void Enemy::Spawn(Vector2 pos)
 		return;
 	}
 
+	spawnEffect = effect;
 	effect->OnEnd([this, pos]()
 		{
 			Appear(pos);
 		});
+}
+
+void Enemy::Appear(Vector2 pos)
+{
+	spawnEffect = nullptr;	//이펙트가 끝나면 반납
+
+	Pos() = pos;
+	SetActive(true);
+	state = State::Alive;
+}
+
+void Enemy::CancelSpawnEffect()
+{
+	if (spawnEffect == nullptr) return;
+
+	spawnEffect->OnEnd(nullptr);
+	spawnEffect->End();
+	spawnEffect = nullptr;
 }
 
 bool Enemy::CannotMoveForward()

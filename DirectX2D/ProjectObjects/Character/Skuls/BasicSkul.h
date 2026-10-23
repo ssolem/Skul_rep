@@ -39,7 +39,6 @@ private:
 private:
 	SkulObject* head = nullptr;
 	BasicSkullSkill1* throwSkill = nullptr;	//머리가 적에 맞았을 때 데미지 처리를 맡길 1번 스킬
-	bool headRegistered = false;	//head를 Stage에 한 번만 등록
 	bool canRetrieveHead = false;	//던진 직후엔 캐릭터와 겹쳐 있으므로, 한 번 떨어진 뒤부터 닿으면 회수
 };
 
