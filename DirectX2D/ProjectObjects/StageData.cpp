@@ -108,6 +108,7 @@ string StageDataIO::WaveStartToString(WaveStart start)
 	switch (start)
 	{
 	case WaveStart::PrevCleared: return "PrevCleared";
+	case WaveStart::PlayerPassX: return "PlayerPassX";
 	}
 
 	return "PrevCleared";
@@ -116,6 +117,7 @@ string StageDataIO::WaveStartToString(WaveStart start)
 bool StageDataIO::StringToWaveStart(string text, WaveStart& out)
 {
 	if (text == "PrevCleared") { out = WaveStart::PrevCleared; return true; }
+	if (text == "PlayerPassX") { out = WaveStart::PlayerPassX; return true; }
 
 	out = WaveStart::PrevCleared;
 	return false;

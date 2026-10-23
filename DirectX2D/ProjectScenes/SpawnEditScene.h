@@ -7,6 +7,8 @@ class SpawnEditScene : public Scene
 {
 private:
 	enum class Mode { Player, Enemy };
+
+	const Vector2 MARKER_SIZE = { 30.0f, 30.0f };
 public:
 	SpawnEditScene();
 	~SpawnEditScene();
@@ -28,6 +30,15 @@ private:
 
 	void CheckClick();
 
+	void RenderMarker(Vector2 groundPos, Float4 color);
+	void RenderLabels();
+
+	void FileUI();
+	void BrushUI();
+	void WaveUI();
+	void SpawnUI();
+	bool TypeCombo(const char* label, string& type);
+
 private:
 	Stage* stage = nullptr;
 	StageData data;
@@ -40,6 +51,9 @@ private:
 	string brushType = "Ent";
 
 	RectCollider* marker;
+	RectCollider* passLine;
 	float zoom = 1.0f;
+
+	string status;
 };
 

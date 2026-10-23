@@ -1,21 +1,52 @@
 {
   "map": "ProjectMaps/Chapter1_02.map",
-  "playerSpawn": [640, 1010],
+  "playerSpawn": [
+    640.0,
+    1010.0
+  ],
   "waves": [
     {
       "start": "PrevCleared",
-      "value": 0,
+      "value": 0.0,
       "spawns": [
-        { "type": "Ent", "pos": [840, 1010], "delay": 0.0 },
-        { "type": "RootEnt", "pos": [740, 1010], "delay": 0.3 }
+        {
+          "type": "Ent",
+          "pos": [
+            840.0,
+            1010.0
+          ],
+          "delay": 0.0
+        },
+        {
+          "type": "RootEnt",
+          "pos": [
+            740.0,
+            1010.0
+          ],
+          "delay": 0.30000001192092896
+        }
       ]
     },
     {
       "start": "PrevCleared",
-      "value": 0,
+      "value": 0.0,
       "spawns": [
-        { "type": "GiganticEnt", "pos": [740, 1010], "delay": 0.0 },
-        { "type": "BlossomEnt", "pos": [940, 1010], "delay": 0.5 }
+        {
+          "type": "GiganticEnt",
+          "pos": [
+            740.0,
+            1010.0
+          ],
+          "delay": 0.0
+        },
+        {
+          "type": "BlossomEnt",
+          "pos": [
+            940.0,
+            1010.0
+          ],
+          "delay": 0.5
+        }
       ]
     }
   ]

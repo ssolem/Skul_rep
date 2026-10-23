@@ -342,6 +342,9 @@
     <ClInclude Include="ProjectScenes\SkulMapEditScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectScenes\SpawnEditScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="ProjectObjects\Tile\SkulEditTileMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -756,6 +759,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectScenes\SkulMapEditScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectScenes\SpawnEditScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectObjects\Tile\SkulEditTileMap.cpp">

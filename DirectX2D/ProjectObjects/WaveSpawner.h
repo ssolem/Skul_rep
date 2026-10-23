@@ -39,15 +39,16 @@ private:
 	void StartWave(int index);
 	void SpawnDueEnemies();		
 	bool IsAllSpawned();		
-	bool CanStartNextWave();	
+	bool CanStartWave(int index);
 	bool IsStageCleared();
 
 private:
 	Stage* stage;
 	vector<WaveInfo> waves;
 
-	int curWave = -1;		//-1: 아직 시작 안 함
-	float waveTime = 0.0f;	
+	int curWave = -1;		//-1: 아직 첫 웨이브 전
+	float waveTime = 0.0f;
+	bool isRunning = false;	//Start() 이후 true - 첫 웨이브도 시작 조건을 기다릴 수 있음
 	bool isCleared = false;
 
 	function<void()> onClear;

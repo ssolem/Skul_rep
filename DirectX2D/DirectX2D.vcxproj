@@ -285,6 +285,7 @@
     <ClInclude Include="ProjectObjects\Objects\DropTable.h" />
     <ClInclude Include="ProjectObjects\Character\Stat.h" />
     <ClInclude Include="ProjectObjects\StageBackground.h" />
+    <ClInclude Include="ProjectScenes\SpawnEditScene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\TestObject\TestQuad.h" />
     <ClInclude Include="Objects\TestObject\TestTarget.h" />
@@ -449,6 +450,7 @@
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefGoldAttack.cpp" />
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefBackAttack.cpp" />
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefPocketTear.cpp" />
+    <ClCompile Include="ProjectScenes\SpawnEditScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX2D.rc" />

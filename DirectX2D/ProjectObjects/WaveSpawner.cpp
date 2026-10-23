@@ -44,7 +44,7 @@ void WaveSpawner::Start()
 {
 	if (waves.empty()) return;
 
-	StartWave(0);
+	isRunning = true;	//첫 웨이브도 Update에서 조건을 보고 시작
 }
 
 void WaveSpawner::StartWave(int index)
@@ -55,16 +55,19 @@ void WaveSpawner::StartWave(int index)
 
 void WaveSpawner::Update()
 {
-	if (curWave < 0 || isCleared) return;
+	if (!isRunning || isCleared) return;
 
-	waveTime += DELTA;
-	SpawnDueEnemies();
+	if (curWave >= 0)
+	{
+		waveTime += DELTA;
+		SpawnDueEnemies();
+	}
 
 	bool hasNextWave = curWave + 1 < (int)waves.size();
 
 	if (hasNextWave)
 	{
-		if (CanStartNextWave())
+		if (CanStartWave(curWave + 1))
 			StartWave(curWave + 1);
 	}
 	else if (IsStageCleared())
@@ -88,20 +91,31 @@ void WaveSpawner::SpawnDueEnemies()
 
 bool WaveSpawner::IsAllSpawned()
 {
+	if (curWave < 0) return true;	//첫 웨이브 전 - 나올 적 없음
+
 	for (SpawnInfo& info : waves[curWave].spawns)
 		if (!info.spawned) return false;
 
 	return true;
 }
 
-bool WaveSpawner::CanStartNextWave()
+//이전 웨이브가 다 나오기 전에는 시작하지 않음 - 안 그러면 남은 적이 영영 안 나옴
+bool WaveSpawner::CanStartWave(int index)
 {
-	WaveInfo& next = waves[curWave + 1];
+	if (!IsAllSpawned()) return false;
 
-	switch (next.start)
+	WaveInfo& wave = waves[index];
+
+	switch (wave.start)
 	{
 	case WaveStart::PrevCleared:
-		return IsAllSpawned() && stage->GetRemainEnemyCount() == 0;
+		return stage->GetRemainEnemyCount() == 0;
+
+	case WaveStart::PlayerPassX:
+	{
+		Character* player = stage->GetPlayer();
+		return player && player->GlobalPos().x >= wave.value;	//오른쪽으로 진행하는 맵 기준
+	}
 	}
 
 	return false;

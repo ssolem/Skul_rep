@@ -136,6 +136,7 @@ enum class EffectPivot { Center, Bottom };
 enum class WaveStart
 {
 	PrevCleared,	//이전 웨이브 전멸
+	PlayerPassX,	//플레이어가 x좌표(value)를 넘으면 - 이전 웨이브가 다 나온 뒤에만
 };
 
 struct ProjectileData

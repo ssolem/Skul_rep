@@ -21,3 +21,4 @@
 #include "Scenes/TankScene.h"
 #include "Scenes/TestMapScene.h"
 #include "ProjectScenes/SkulMapEditScene.h"
+#include "ProjectScenes/SpawnEditScene.h"

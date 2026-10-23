@@ -28,6 +28,7 @@ GameManager::GameManager()
     SceneManager::Get()->Create("TestCharacter Scene", new TestCharacterScene());
     SceneManager::Get()->Create("Atlas Scene", new AtlasMakerScene());
 	SceneManager::Get()->Create("SkulMapEdit Scene", new SkulMapEditScene());
+	SceneManager::Get()->Create("SpawnEdit Scene", new SpawnEditScene());
 
     //원하는 씬을 골라 시작
     SceneManager::Get()->Add("TestCharacter Scene"); // 탱크 씬 예약 -> 실행 -> 시작

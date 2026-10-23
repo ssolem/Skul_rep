@@ -84,6 +84,11 @@ void TestCharacterScene::Update()
 		SceneManager::Get()->Add("SkulMapEdit Scene");
 		SceneManager::Get()->Remove("TestCharacter Scene");
 	}
+	if (KEY_DOWN(VK_F4))
+	{
+		SceneManager::Get()->Add("SpawnEdit Scene");
+		SceneManager::Get()->Remove("TestCharacter Scene");
+	}
 
 	//테스트: 플레이어 위에 골드 뿌리기
 	if (KEY_DOWN(VK_F5))
