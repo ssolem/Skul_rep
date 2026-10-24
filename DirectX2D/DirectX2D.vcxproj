@@ -186,6 +186,7 @@
     <ClInclude Include="GameManager\SceneManager.h" />
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\RootEnt.h" />
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\RootEntAttack.h" />
+    <ClInclude Include="ProjectObjects\Objects\RewardDoors.h" />
     <ClInclude Include="Scenes\AStarScene.h" />
     <ClInclude Include="Objects\Tile\GameTileMap.h" />
     <ClInclude Include="Objects\Navigation\AStar.h" />
@@ -343,6 +344,7 @@
     <ClCompile Include="GameManager\SceneManager.cpp" />
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\RootEnt.cpp" />
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\RootEntAttack.cpp" />
+    <ClCompile Include="ProjectObjects\Objects\RewardDoors.cpp" />
     <ClCompile Include="Scenes\AStarScene.cpp" />
     <ClCompile Include="Objects\Tile\GameTileMap.cpp" />
     <ClCompile Include="Objects\Navigation\AStar.cpp" />

@@ -25,6 +25,7 @@ private:
 
 public:
 	WaveSpawner(Stage* stage) : stage(stage) {}
+	~WaveSpawner() {}
 
 	void Build(const StageData& data);	
 	void Start();						

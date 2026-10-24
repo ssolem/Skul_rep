@@ -375,6 +375,9 @@
     <ClInclude Include="ProjectObjects\Objects\AnimObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectObjects\Objects\RewardDoors.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="ProjectObjects\Objects\Projectile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -789,6 +792,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectObjects\Objects\AnimObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Objects\RewardDoors.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectObjects\Objects\Projectile.cpp">

@@ -30,9 +30,9 @@ void AnimObject::Render()
 	animator->Render();
 }
 
-void AnimObject::AddClip(const string& fileName, const wstring& folder, bool isLoop, float speed)
+void AnimObject::AddClip(const string& fileName, const wstring& folder, bool isLoop, float speed, const string& tag)
 {
-	animator->CreateClipByAtlas("", fileName, folder, isLoop, speed);
+	animator->CreateClipByAtlas(tag, fileName, folder, isLoop, speed);	//등록 키 = tag + fileName
 }
 
 Clip* AnimObject::FindClip(const string& key)

@@ -154,4 +154,8 @@ struct ProjectileData
 	bool rotateToVelocity = true;	//비행 방향으로 회전 (false면 발사 순간 각도 유지)
 };
 
+//방 종류
+enum class RoomType { Combat, Shop, Elite, Boss };
 
+//보상 종류
+enum class RewardType { None, Gold, Skul, Item, Max };

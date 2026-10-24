@@ -41,6 +41,7 @@ bool StageDataIO::Load(string file, StageData& out)
 			WaveData wave;
 
 			string startText = jw.value("start", "PrevCleared");
+			StringToWaveStart(startText, wave.start);
 
 			wave.value = jw.value("value", 0.0f);
 

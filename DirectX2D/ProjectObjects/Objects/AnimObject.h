@@ -11,7 +11,7 @@ public:
 	void Update();
 	void Render();
 
-	void AddClip(const string& fileName, const wstring& folder, bool isLoop = false, float speed = 1.0f);
+	void AddClip(const string& fileName, const wstring& folder, bool isLoop = false, float speed = 1.0f, const string& tag = "");
 	Clip* FindClip(const string& key);
 
 	void Play(const string& key, Vector2 pos);	
