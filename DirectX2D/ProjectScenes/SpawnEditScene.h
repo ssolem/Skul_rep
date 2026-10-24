@@ -1,12 +1,13 @@
-#pragma once
+﻿#pragma once
 #include "ProjectObjects/StageData.h"
 
 class Stage;
+class RewardDoors;
 
 class SpawnEditScene : public Scene
 {
 private:
-	enum class Mode { Player, Enemy };
+	enum class Mode { Player, Enemy, Door };
 
 	const Vector2 MARKER_SIZE = { 30.0f, 30.0f };
 public:
@@ -52,6 +53,7 @@ private:
 
 	RectCollider* marker;
 	RectCollider* passLine;
+	RewardDoors* doorPreview = nullptr;
 	float zoom = 1.0f;
 
 	string status;

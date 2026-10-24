@@ -16,7 +16,6 @@ namespace
 	{
 		return Vector2(j.at(0).get<float>(), j.at(1).get<float>());
 	}
-
 }
 
 bool StageDataIO::Load(string file, StageData& out)
@@ -35,6 +34,10 @@ bool StageDataIO::Load(string file, StageData& out)
 
 		data.mapFile = j.at("map").get<string>();
 		data.playerSpawn = ToVector2(j.at("playerSpawn"));
+		//door는 선택 항목 - 없으면 문 없는 방
+		data.hasDoor = j.contains("door");
+		if (data.hasDoor)
+			data.door = ToVector2(j.at("door"));
 
 		for (const json& jw : j.at("waves"))
 		{
@@ -72,6 +75,8 @@ bool StageDataIO::Save(string file, const StageData& data)
 	json j;
 	j["map"] = data.mapFile;
 	j["playerSpawn"] = ToJson(data.playerSpawn);
+	if (data.hasDoor)
+		j["door"] = ToJson(data.door);
 	j["waves"] = json::array();
 
 	for (const WaveData& wave : data.waves)

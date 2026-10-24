@@ -3,6 +3,7 @@
 #include "ProjectObjects/Stage.h"
 #include "ProjectObjects/StageData.h"
 #include "ProjectObjects/Character/Enemy/EnemyFactory.h"
+#include "ProjectObjects/Objects/RewardDoors.h"
 #include <algorithm>
 
 SpawnEditScene::SpawnEditScene()
@@ -17,6 +18,8 @@ SpawnEditScene::SpawnEditScene()
 	passLine = new RectCollider(Vector2(2.0f, WIN_HEIGHT));
 	passLine->GetColor() = { 1.0f, 0.5f, 0.0f, 1.0f };
 
+	doorPreview = new RewardDoors();
+
 	LoadStageFile("ProjectMaps/Chapter1_02.stage.json");
 
 	if (data.waves.empty())
@@ -28,11 +31,18 @@ SpawnEditScene::~SpawnEditScene()
 	delete stage;
 	delete marker;
 	delete passLine;
+	delete doorPreview;
 }
 
 void SpawnEditScene::Update()
 {
 	CheckClick();
+
+	if (data.hasDoor)
+	{
+		doorPreview->SetGroundPos(data.door);
+		doorPreview->Update();
+	}
 
 	if (KEY_DOWN(VK_F1))
 	{
@@ -45,6 +55,9 @@ void SpawnEditScene::Render()
 {
 	if (stage)
 		stage->Render();
+
+	if (data.hasDoor)
+		doorPreview->Render();
 
 	for (int w = 0; w < (int)data.waves.size(); w++)
 	{
@@ -71,6 +84,8 @@ void SpawnEditScene::Render()
 	}
 
 	RenderMarker(data.playerSpawn, { 0.0f, 0.6f, 1.0f, 1.0f });	//플레이어: 파랑
+	if (data.hasDoor)
+		RenderMarker(data.door, { 0.7f, 0.3f, 1.0f, 1.0f }); //문
 }
 
 void SpawnEditScene::PostRender()
@@ -172,6 +187,11 @@ void SpawnEditScene::CheckClick()
 
 	if (mode == Mode::Player)
 		data.playerSpawn = groundPos;
+	else if (mode == Mode::Door)
+	{
+		data.door = groundPos;
+		data.hasDoor = true;
+	}
 	else
 	{
 		SpawnData spawn;
@@ -260,10 +280,20 @@ void SpawnEditScene::BrushUI()
 	ImGui::RadioButton("Player", &modeIndex, (int)Mode::Player);
 	ImGui::SameLine();
 	ImGui::RadioButton("Enemy", &modeIndex, (int)Mode::Enemy);
+	ImGui::SameLine();
+	ImGui::RadioButton("Door", &modeIndex, (int)Mode::Door);
 	mode = (Mode)modeIndex;
 
 	if (mode == Mode::Enemy)
 		TypeCombo("Brush", brushType);
+
+	if (mode == Mode::Door && data.hasDoor)
+	{
+		ImGui::Text("Door: (%.0f, %.0f)", data.door.x, data.door.y);
+		ImGui::SameLine();
+		if (ImGui::Button("Clear Door"))
+			data.hasDoor = false;	
+	}
 }
 
 //웨이브 추가/삭제/선택, 시작 조건

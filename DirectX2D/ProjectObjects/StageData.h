@@ -20,6 +20,8 @@ struct StageData
 {
 	string mapFile;
 	Vector2 playerSpawn;
+	Vector2 door;			//보상 문 바닥 위치
+	bool hasDoor = false;	//false면 문 없는 방 - (0,0)과 구분하려고 따로 둠
 	vector<WaveData> waves;
 };
 

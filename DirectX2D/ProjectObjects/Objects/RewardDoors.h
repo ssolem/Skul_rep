@@ -2,8 +2,6 @@
 
 class AnimObject;
 
-//보상 방 입구: 벽 + 테이블 + 문 2개
-//문마다 RewardType 하나 - None이면 파괴된 문(Terminal_Destroyed)이라 들어갈 수 없음
 class RewardDoors
 {
 public:
@@ -13,9 +11,10 @@ public:
 	void Update();
 	void Render();
 
-	Vector2& Pos();	//벽 위치 - 나머지는 벽의 자식이라 같이 움직임
+	Vector2& Pos() { return gateWall->Pos(); }
+	void SetGroundPos(Vector2 groundPos);
 
-	void Open();	//스테이지 클리어 시 호출 - 파괴되지 않은 문만 Activate
+	void Open();
 
 	RewardType GetLeftReward() { return leftReward; }
 	RewardType GetRightReward() { return rightReward; }
@@ -29,11 +28,14 @@ private:
 	string GetGateTag(RewardType reward);
 
 private:
+	const Vector2 LEFT_DOOR_POS = Vector2(-150.0f, -65.0f);
+	const Vector2 RIGHT_DOOR_POS = Vector2(150.0f, -65.0f);
+	const Vector2 TABLE_POS = Vector2(0.0f, -55.0f);
+
 	AnimObject* leftDoor = nullptr;
 	AnimObject* rightDoor = nullptr;
 	Quad* gateWall = nullptr;
 	Quad* gateTable = nullptr;
-	Quad* gateChoiceTable = nullptr;
 
 	RewardType leftReward = RewardType::None;
 	RewardType rightReward = RewardType::None;
