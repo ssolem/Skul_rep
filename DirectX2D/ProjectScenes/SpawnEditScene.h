@@ -2,7 +2,7 @@
 #include "ProjectObjects/StageData.h"
 
 class Stage;
-class RewardDoors;
+class ExitDoors;
 
 class SpawnEditScene : public Scene
 {
@@ -36,6 +36,7 @@ private:
 
 	void FileUI();
 	void BrushUI();
+	void SetupDoorPreview();
 	void WaveUI();
 	void SpawnUI();
 	bool TypeCombo(const char* label, string& type);
@@ -53,7 +54,8 @@ private:
 
 	RectCollider* marker;
 	RectCollider* passLine;
-	RewardDoors* doorPreview = nullptr;
+	ExitDoors* doorPreview = nullptr;
+	int doorPreviewType = 0;
 	float zoom = 1.0f;
 
 	string status;

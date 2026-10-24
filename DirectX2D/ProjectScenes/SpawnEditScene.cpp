@@ -3,7 +3,7 @@
 #include "ProjectObjects/Stage.h"
 #include "ProjectObjects/StageData.h"
 #include "ProjectObjects/Character/Enemy/EnemyFactory.h"
-#include "ProjectObjects/Objects/RewardDoors.h"
+#include "ProjectObjects/Objects/ExitDoors.h"
 #include <algorithm>
 
 SpawnEditScene::SpawnEditScene()
@@ -18,7 +18,7 @@ SpawnEditScene::SpawnEditScene()
 	passLine = new RectCollider(Vector2(2.0f, WIN_HEIGHT));
 	passLine->GetColor() = { 1.0f, 0.5f, 0.0f, 1.0f };
 
-	doorPreview = new RewardDoors();
+	doorPreview = new ExitDoors();
 
 	LoadStageFile("ProjectMaps/Chapter1_02.stage.json");
 
@@ -292,7 +292,27 @@ void SpawnEditScene::BrushUI()
 		ImGui::Text("Door: (%.0f, %.0f)", data.door.x, data.door.y);
 		ImGui::SameLine();
 		if (ImGui::Button("Clear Door"))
-			data.hasDoor = false;	
+			data.hasDoor = false;
+
+		//배치 확인용 미리보기
+		const char* previews[] = { "Reward (2 + frame)", "Shop Exit (2)", "Boss (1)" };
+		if (ImGui::Combo("Preview", &doorPreviewType, previews, IM_ARRAYSIZE(previews)))
+			SetupDoorPreview();
+	}
+}
+
+void SpawnEditScene::SetupDoorPreview()
+{
+	DoorInfo normal;
+
+	DoorInfo boss;
+	boss.room = RoomType::Boss;
+
+	switch (doorPreviewType)
+	{
+	case 0: doorPreview->Setup(ExitDoors::RandomRewardDoors(), true); break;
+	case 1: doorPreview->Setup({ normal, normal }, false); break;
+	case 2: doorPreview->Setup({ boss }, false); break;
 	}
 }
 
