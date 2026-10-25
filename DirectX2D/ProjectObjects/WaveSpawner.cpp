@@ -42,9 +42,14 @@ void WaveSpawner::Build(const StageData& data)
 
 void WaveSpawner::Start()
 {
-	if (waves.empty()) return;
+	if (waves.empty())
+	{
+		isCleared = true;
+		if (onClear) onClear();
+		return;
+	}
 
-	isRunning = true;	//첫 웨이브도 Update에서 조건을 보고 시작
+	isRunning = true;
 }
 
 void WaveSpawner::StartWave(int index)

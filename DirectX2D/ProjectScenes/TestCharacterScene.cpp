@@ -30,10 +30,13 @@ TestCharacterScene::TestCharacterScene()
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer02.png", 0.05f);
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer01.png", -0.1f);
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer00.png", 0.2f);
+
+	exitDoors = new ExitDoors();
 }
 
 TestCharacterScene::~TestCharacterScene()
 {
+	delete exitDoors;
 	delete playerInfoUI;
 	delete stage;		
 	delete background;	
@@ -57,12 +60,21 @@ void TestCharacterScene::BuildStage()
 	stage->SetPlayer(player);
 	player->Pos() = stage->GetGroundPos(stageData.playerSpawn);	//Pos()가 발 위치라 바닥에 바로 세움
 
+	hasExit = stageData.hasDoor;
+	if (hasExit)
+	{
+		exitDoors->SetGroundPos(stageData.door);
+		SetExitDoors();
+	}
+
 	WaveSpawner* spawner = stage->GetWaveSpawner();
 	spawner->Build(stageData);
-	spawner->SetOnClear([]()
+	spawner->SetOnClear([this]()
 		{
-			//TODO: 문 열기, 보상 드랍
-			OutputDebugStringA("[Stage] 클리어\n");
+			//문 열기, 보상 드랍
+			if (hasExit) exitDoors->Open();
+			SpawnReward(curDoor.reward);
+			exitDoors->Update();
 		});
 	spawner->Start();
 
@@ -81,11 +93,77 @@ void TestCharacterScene::ClearStage()
 	stage = nullptr;
 }
 
+void TestCharacterScene::SetExitDoors()
+{
+	RoomType nextRoom = GetNextRoom();
+
+	if (nextRoom != RoomType::Combat)
+	{
+		DoorInfo door;
+		door.room = nextRoom;
+		exitDoors->Setup({ door }, false);
+		return;
+	}
+
+	if (curDoor.room == RoomType::Shop)
+	{
+		DoorInfo door;
+		exitDoors->Setup({ door, door }, false);
+		return;
+	}
+
+	exitDoors->Setup(ExitDoors::RandomRewardDoors(), true);
+}
+
+void TestCharacterScene::SpawnReward(RewardType reward)
+{
+	//상자,골드더미,무덤 소환
+
+	Vector2 spawnPos = exitDoors->RewardPos();
+
+	switch (reward)
+	{
+	case RewardType::Gold:
+		break;
+	case RewardType::Skul:
+		break;
+	case RewardType::Item:
+		break;
+	}
+}
+
+void TestCharacterScene::ChangeStage()
+{
+	if (!changeStage) return;
+	changeStage = false;
+
+	ClearStage();
+
+	roomCount++;
+	curDoor = nextDoor;
+
+	BuildStage();
+	stage->SetCameraBounds();
+}
+
+RoomType TestCharacterScene::GetNextRoom()
+{
+	auto it = chapterOne.find(roomCount);
+	if (it != chapterOne.end())
+		return it->second;
+
+	return RoomType::Combat;
+}
+
 void TestCharacterScene::Update()
 {
 	player->UpdateWorld();
 	player->Update();
 	stage->Update();	//등록된 스컬 오브젝트(head 등)를 액션 상태와 무관하게 매 프레임 갱신
+
+	if (hasExit)
+		exitDoors->Update();
+
 
 	if (KEY_DOWN(VK_F2))
 	{
@@ -101,6 +179,17 @@ void TestCharacterScene::Update()
 	{
 		SceneManager::Get()->Add("SpawnEdit Scene");
 		SceneManager::Get()->Remove("TestCharacter Scene");
+	}
+
+	if (hasExit && KEY_DOWN('F'))
+	{
+		int index = exitDoors->GetEnterDoor(player->GetCollider());
+		if (index >= 0)
+		{
+			nextDoor = exitDoors->GetDoors()[index];
+			nextDoor.room = GetNextRoom();
+			changeStage = true;
+		}
 	}
 
 	//테스트: 플레이어 위에 골드 뿌리기
@@ -124,11 +213,16 @@ void TestCharacterScene::Update()
 	EffectManager::Get()->Update();
 	DamageTextManager::Get()->Update();
 	playerInfoUI->Update();
+
+	ChangeStage();
 }
 
 void TestCharacterScene::Render()
 {
 	stage->Render();
+
+	if (hasExit)
+		exitDoors->Render();
 
 	player->Render();
 	EffectManager::Get()->Render();
@@ -144,6 +238,10 @@ void TestCharacterScene::PostRender()
 
 void TestCharacterScene::Start()
 {
+	roomCount = 1;
+	curDoor = DoorInfo();
+	changeStage = false;
+
 	BuildStage();
 
 	CAM->SetTarget(player);

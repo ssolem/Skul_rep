@@ -15,10 +15,16 @@ ExitDoors::ExitDoors()
 	gateTable->SetParent(gateWall);
 	gateTable->Pos() = TABLE_POS;
 
+	doorSize = Vector2(60.0f, 80.0f);
+
 	for (int i = 0; i < MAX_DOORS; i++)
 	{
 		doorObjects[i] = new AnimObject();
 		CreateDoorAnim(doorObjects[i]);
+
+		doorColliders[i] = new RectCollider(doorSize);
+		doorColliders[i]->SetParent(doorObjects[i]);
+		doorColliders[i]->Pos() = Vector2(0.0f, doorSize.y * 0.5f);
 	}
 
 	Setup(RandomRewardDoors(), true);
@@ -26,6 +32,9 @@ ExitDoors::ExitDoors()
 
 ExitDoors::~ExitDoors()
 {
+	for (RectCollider* collider : doorColliders)
+		delete collider;
+
 	for (AnimObject* door : doorObjects)
 		delete door;
 
@@ -42,6 +51,9 @@ void ExitDoors::Update()
 
 	for (AnimObject* door : doorObjects)
 		door->Update();	
+
+	for (RectCollider* collider : doorColliders)
+		collider->UpdateWorld();
 }
 
 void ExitDoors::Render()
@@ -51,6 +63,9 @@ void ExitDoors::Render()
 	for (AnimObject* door : doorObjects)
 		door->Render();
 
+	for (int i = 0; i < (int)infos.size(); i++)
+		doorColliders[i]->Render();
+
 	if (withFrame) gateTable->Render();
 }
 
@@ -58,6 +73,7 @@ void ExitDoors::Setup(const vector<DoorInfo>& doors, bool withFrame)
 {
 	this->withFrame = withFrame;
 
+	isOpen = false;
 	infos = doors;
 	if (infos.size() > MAX_DOORS)
 		infos.resize(MAX_DOORS);
@@ -84,6 +100,8 @@ void ExitDoors::Setup(const vector<DoorInfo>& doors, bool withFrame)
 
 void ExitDoors::Open()
 {
+	isOpen = true;
+
 	for (int i = 0; i < (int)infos.size(); i++)
 	{
 		if (!infos[i].destroyed)
@@ -105,6 +123,21 @@ vector<DoorInfo> ExitDoors::RandomRewardDoors()
 	doors[1].reward = (RewardType)second;
 
 	return doors;
+}
+
+int ExitDoors::GetEnterDoor(Collider* collider)
+{
+	if (!isOpen) return -1;
+
+	for (int i = 0; i < (int)infos.size(); i++)
+	{
+		if (infos[i].destroyed) continue;
+
+		if (doorColliders[i]->IsCollision(collider))
+			return i;
+	}
+
+	return -1;
 }
 
 void ExitDoors::CreateDoorAnim(AnimObject* door)
