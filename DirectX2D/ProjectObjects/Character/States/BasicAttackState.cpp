@@ -17,6 +17,17 @@ BasicAttackState::~BasicAttackState()
 {
 }
 
+//스컬 교체 시 콤보 데이터 통째로 교체 - 진행 중이던 콤보는 처음부터
+void BasicAttackState::ResetCombos(const vector<AttackData>& combos, DamageType damageType)
+{
+	this->combos = combos;
+	this->damageType = damageType;
+	maxComboIndex = (int)combos.size();
+	curComboIndex = 0;
+
+	ResetActions(ExtractClipNames(combos));
+}
+
 void BasicAttackState::Update()
 {
 	CheckHit();

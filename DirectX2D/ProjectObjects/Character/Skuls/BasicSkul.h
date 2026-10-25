@@ -26,7 +26,8 @@ public:
 	//머리(SkulObject)는 1번 스킬(던지기)과 2번 스킬(머리 위치로 이동)이 공유해야 해서 BasicSkul이 소유한다
 	SkulObject* GetHead() { return head; }
 	void RegisterHeadToStage(Stage* stage);
-	void RetrieveHead();	//머리 회수 (직접 닿았을 때, 2번 스킬 사용 시 공통)
+	void RetrieveHead();	//머리 회수 
+	virtual void OnSwitchOut() override;
 
 	virtual const vector<AttackData>& GetComboAttacks() const override { return basicAttackCombos; }
 

@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "ActionComponent.h"
 #include "States/DashState.h"
 #include "States/BasicAttackState.h"
@@ -90,7 +90,7 @@ void ActionComponent::CreateActionStates(Character* owner, const map<ActionType,
 	newAction = new BasicAttackState(owner, ActionType::BASIC_ATTACK, basicAttackCombos, basicAttackDamageType);
 	actions[ActionType::BASIC_ATTACK] = newAction;
 
-	newAction = new JumpAttackState(owner, ActionType::JUMP_ATTACK, jumpAttack, actionClips.at(ActionType::JUMP_ATTACK));
+	newAction = new JumpAttackState(owner, ActionType::JUMP_ATTACK, jumpAttack, basicAttackDamageType, actionClips.at(ActionType::JUMP_ATTACK));
 	actions[ActionType::JUMP_ATTACK] = newAction;
 
 	newAction = new SkillState(owner, ActionType::SKILL, actionClips.at(ActionType::SKILL));
@@ -100,11 +100,25 @@ void ActionComponent::CreateActionStates(Character* owner, const map<ActionType,
 	actions[ActionType::SWITCH] = newAction;
 }
 
-void ActionComponent::ResetActionStates(const map<ActionType, vector<string>>& actionClips)
+//스컬 교체 - 상태 객체는 그대로 두고 데이터만 교체 (대시 횟수 등 진행 상태 유지)
+void ActionComponent::ResetActionStates(const map<ActionType, vector<string>>& actionClips, const vector<AttackData>& basicAttackCombos, const AttackData& jumpAttack, DamageType basicAttackDamageType)
 {
-	for (auto pair : actions)
+	for (auto& pair : actions)
 	{
-		pair.second->ResetActions(actionClips.at(pair.first));
+		switch (pair.first)
+		{
+		case ActionType::BASIC_ATTACK:
+			((BasicAttackState*)pair.second)->ResetCombos(basicAttackCombos, basicAttackDamageType);
+			continue;	//클립 이름은 콤보 데이터 안에 있어서 actionClips엔 없음
+
+		case ActionType::JUMP_ATTACK:
+			((JumpAttackState*)pair.second)->ResetData(jumpAttack, basicAttackDamageType);
+			break;
+		}
+
+		auto it = actionClips.find(pair.first);
+		if (it != actionClips.end())
+			pair.second->ResetActions(it->second);
 	}
 }
 

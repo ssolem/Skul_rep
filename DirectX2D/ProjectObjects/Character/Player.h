@@ -61,6 +61,7 @@ private:
 	void DoAction(ActionType type);
 	void CancelAction();
 	bool CanAction(ActionType type);
+	void SwitchSkul();
 
 	void UpdatePreInput();
 

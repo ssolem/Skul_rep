@@ -17,6 +17,8 @@ public:
 
 	virtual bool IsReady() override;
 
+	void ResetCombos(const vector<AttackData>& combos, DamageType damageType);
+
 private:
 
 	void AttackMovement();

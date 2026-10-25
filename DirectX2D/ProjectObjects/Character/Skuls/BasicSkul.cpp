@@ -62,6 +62,13 @@ void BasicSkul::RetrieveHead()
 	owner->RefreshMoveClip();
 }
 
+//던져둔 머리는 교체 시 바로 회수
+void BasicSkul::OnSwitchOut()
+{
+	if (head->Active())
+		RetrieveHead();
+}
+
 void BasicSkul::Render()
 {
 	SkulClass::Render();

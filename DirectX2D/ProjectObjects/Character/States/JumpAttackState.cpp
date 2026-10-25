@@ -3,8 +3,8 @@
 #include "../../Stage.h"
 #include "../Stat.h"
 
-JumpAttackState::JumpAttackState(Character* character, ActionType type, const AttackData& data, const vector<string>& clipNames)
-	: ActionState(character, type, clipNames), data(data)
+JumpAttackState::JumpAttackState(Character* character, ActionType type, const AttackData& data, DamageType damageType, const vector<string>& clipNames)
+	: ActionState(character, type, clipNames), data(data), damageType(damageType)
 {
 	isAttacking = false;
 	attackCollider = character->GetAttackCollider();
@@ -13,6 +13,12 @@ JumpAttackState::JumpAttackState(Character* character, ActionType type, const At
 
 JumpAttackState::~JumpAttackState()
 {
+}
+
+void JumpAttackState::ResetData(const AttackData& data, DamageType damageType)
+{
+	this->data = data;
+	this->damageType = damageType;
 }
 
 void JumpAttackState::Update()

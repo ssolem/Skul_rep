@@ -39,6 +39,6 @@ void ActionState::End()
 
 void ActionState::ResetActions(const vector<string>& clips)
 {
-	clipNames.clear();
 	clipNames = clips;
+	curClipName = clipNames.empty() ? "" : clipNames[0];
 }

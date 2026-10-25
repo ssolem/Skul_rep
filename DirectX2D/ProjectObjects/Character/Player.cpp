@@ -174,9 +174,23 @@ void Player::DoAction(ActionType type)
 		return;
 	}
 
+	//교체 먼저 - SWITCH 클립은 새 스컬 것
+	if (type == ActionType::SWITCH)
+		SwitchSkul();
+
 	OnStartAction();
 
 	actionComponent->Start(type);
+}
+
+//빠지는 스컬 정리 → 인덱스 교체 → 액션 상태를 새 스컬 데이터로 교체
+void Player::SwitchSkul()
+{
+	skuls[curSkulIndex]->OnSwitchOut();
+	curSkulIndex = (curSkulIndex + 1) % (int)skuls.size();
+
+	SkulClass* skul = skuls[curSkulIndex];
+	actionComponent->ResetActionStates(skul->GetActionClipNames(), skul->GetComboAttacks(), skul->GetJumpAttack(), skul->GetBasicAttackDamageType());
 }
 
 void Player::CancelAction()
@@ -187,6 +201,7 @@ void Player::CancelAction()
 bool Player::CanAction(ActionType type)
 {
 	if (isKnockBack) return false;
+	if (type == ActionType::SWITCH && GetSubSkul() == nullptr) return false;	//스컬 하나면 교체 불가
 
 	if (type == ActionType::JUMP)
 	{
