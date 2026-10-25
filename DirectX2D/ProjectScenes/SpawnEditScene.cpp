@@ -333,6 +333,13 @@ void SpawnEditScene::WaveUI()
 			curWave = (int)data.waves.size() - 1;
 		spawnNum = -1;
 	}
+	ImGui::SameLine();
+	if (ImGui::Button("Wave Clear"))
+	{
+		data.waves[curWave].spawns.clear();
+		spawnNum = -1;
+	}
+
 
 	for (int w = 0; w < (int)data.waves.size(); w++)
 	{

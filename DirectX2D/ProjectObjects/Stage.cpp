@@ -281,11 +281,14 @@ void Stage::SetCameraBounds()
 	Vector2 leftBottom = tileMap->GetLeftBottom();
 	Vector2 rightTop = tileMap->GetRightTop();
 
+	rightTop.y += 200.0f;
+
 	Vector2 mapSize = rightTop - leftBottom;
 	Vector2 camSize = CAM->deviceSize;
 
 	if (mapSize.x < camSize.x) rightTop.x = leftBottom.x + camSize.x;
 	if (mapSize.y < camSize.y) rightTop.y = leftBottom.y + camSize.y;
+
 
 	CAM->SetLeftBottom(leftBottom.x, leftBottom.y);
 	CAM->SetRightTop(rightTop.x, rightTop.y);
