@@ -43,6 +43,7 @@ public:
 	int GetBoneChip() { return boneChip; }
 
 	void SetRefreshPlayerInfo(Event event) { refreshPlayerInfo = event; }
+	float GetSwitchCoolDownRatio();
 
 protected:
 	void UpdateControl() override;

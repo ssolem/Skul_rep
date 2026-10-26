@@ -132,3 +132,8 @@ void ActionComponent::SetSwitchStateSkill(Skill* skill)
 {
 	((SwitchState*)actions[ActionType::SWITCH])->SetSkill(skill);
 }
+
+float ActionComponent::GetSwitchCoolDownRatio()
+{
+	return ((SwitchState*)actions[ActionType::SWITCH])->GetCoolDownRatio();
+}

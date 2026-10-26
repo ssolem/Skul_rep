@@ -275,7 +275,7 @@ void PlayerInfoUI::UpdateCoolDowns()
 	SkulClass* main = player->GetCurSkul();
 	SkulClass* sub = player->GetSubSkul();
 
-	portraitCoolBuffer->Get()[0] = 1.0f; 
+	portraitCoolBuffer->Get()[0] = player->GetSwitchCoolDownRatio();
 	skill1CoolBuffer->Get()[0] = GetSkillCoolRatio(main, 0);
 	secondSkillIcon->SetCoolDown(GetSkillCoolRatio(main, 1));
 	firstSubSkillIcon->SetCoolDown(GetSkillCoolRatio(sub, 0));

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 class Character;
 class ActionState;
@@ -27,6 +27,7 @@ public:
 
 	void SetSkillStateSkill(Skill* skill);
 	void SetSwitchStateSkill(Skill* skill);
+	float GetSwitchCoolDownRatio();	//교대 쿨타임 (스컬 공용)
 
 private:
 	map<ActionType, ActionState*> actions;

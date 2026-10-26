@@ -19,6 +19,8 @@ void SwitchState::Update()
 
 void SwitchState::UpdateCoolDown()
 {
+	if (coolDownTime > 0.0f)
+		coolDownTime -= DELTA;
 }
 
 
@@ -30,6 +32,7 @@ void SwitchState::Render()
 void SwitchState::Start()
 {
 	isSwitching = true;
+	coolDownTime = COOL_DOWN_MAX;
 
 	//교대 스킬 없는 스컬 - 클립만 재생
 	if (switchSkill == nullptr)
@@ -57,5 +60,5 @@ void SwitchState::End()
 
 bool SwitchState::IsReady()
 {
-	return !isSwitching;
+	return !isSwitching && coolDownTime <= 0.0f;
 }

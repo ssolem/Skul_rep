@@ -21,9 +21,13 @@ public:
 
 	void SetSkill(Skill* skill) { switchSkill = skill; }
 
+	float GetCoolDownRatio() { return 1.0f - max(0.0f, min(coolDownTime / COOL_DOWN_MAX, 1.0f)); }
+
 private:
+	const float COOL_DOWN_MAX = 8.0f;
 
 	bool isSwitching;
-	Skill* switchSkill = nullptr;	
+	Skill* switchSkill = nullptr;
+	float coolDownTime = 0.0f;
 };
 

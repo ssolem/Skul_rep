@@ -197,6 +197,11 @@ void Player::SwitchSkul()
 	refreshPlayerInfo();
 }
 
+float Player::GetSwitchCoolDownRatio()
+{
+	return actionComponent->GetSwitchCoolDownRatio();
+}
+
 void Player::CancelAction()
 {
 	actionComponent->End();
