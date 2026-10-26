@@ -390,6 +390,12 @@
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\BasicSkullSkill2.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\BasicSkulSwitch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefSkulSwitch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\Enemy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -807,6 +813,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\BasicSkullSkill2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\BasicSkulSwitch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefSkulSwitch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\Enemy.cpp">

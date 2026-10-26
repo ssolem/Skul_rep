@@ -12,6 +12,8 @@ SkulClass::~SkulClass()
 	for (Skill* skill : skills)
 		if (skill != nullptr)
 			delete skill;
+
+	delete switchSkill;
 }
 
 void SkulClass::Update()

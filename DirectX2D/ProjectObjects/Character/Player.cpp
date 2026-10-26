@@ -34,6 +34,7 @@ Player::Player()
 	CreateEffects();
 	actionComponent = new ActionComponent();
 	actionComponent->CreateActionStates(this, thiefSkul->GetActionClipNames(), thiefSkul->GetComboAttacks(), thiefSkul->GetJumpAttack(), thiefSkul->GetBasicAttackDamageType());
+	actionComponent->SetSwitchStateSkill(thiefSkul->GetSwitchSkill());
 }
 
 void Player::SetStats()
@@ -191,6 +192,7 @@ void Player::SwitchSkul()
 
 	SkulClass* skul = skuls[curSkulIndex];
 	actionComponent->ResetActionStates(skul->GetActionClipNames(), skul->GetComboAttacks(), skul->GetJumpAttack(), skul->GetBasicAttackDamageType());
+	actionComponent->SetSwitchStateSkill(skul->GetSwitchSkill());
 }
 
 void Player::CancelAction()

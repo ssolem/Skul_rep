@@ -26,6 +26,7 @@ public:
 	const string& GetTag() { return tag; }
 	const map<ActionType, vector<string>>& GetActionClipNames() const { return actionClips; }
 	vector<Skill*>& GetCurSkill() { return curSkills; }
+	Skill* GetSwitchSkill() { return switchSkill; }
 
 	Texture* GetMainPortrait() { return mainPortrait; }
 	Texture* GetSubPortrait() { return subPortrait; }
@@ -53,6 +54,7 @@ protected:
 	map<ActionType, vector<string>> actionClips;
 	vector<Skill*> curSkills;
 	vector<Skill*> skills;
+	Skill* switchSkill = nullptr;	
 
 	Stat* stat;
 	vector<AttackData> basicAttackCombos;

@@ -301,6 +301,8 @@
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefGoldAttack.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefBackAttack.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefPocketTear.h" />
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\BasicSkulSwitch.h" />
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefSkulSwitch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Manager\DamageTextManager.cpp" />
@@ -452,6 +454,8 @@
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefGoldAttack.cpp" />
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefBackAttack.cpp" />
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefPocketTear.cpp" />
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\BasicSkulSwitch.cpp" />
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefSkulSwitch.cpp" />
     <ClCompile Include="ProjectScenes\SpawnEditScene.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,7 @@ public:
 	ActionType GetCurActionState() { return curActionState; }
 
 	void SetSkillStateSkill(Skill* skill);
+	void SetSwitchStateSkill(Skill* skill);
 
 private:
 	map<ActionType, ActionState*> actions;

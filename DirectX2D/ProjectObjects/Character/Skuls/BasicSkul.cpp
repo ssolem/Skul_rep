@@ -4,6 +4,7 @@
 #include "../Character.h"
 #include "ProjectObjects/Character/Skuls/Skills/BasicSkullSkill1.h"
 #include "ProjectObjects/Character/Skuls/Skills/BasicSkullSkill2.h"
+#include "ProjectObjects/Character/Skuls/Skills/BasicSkulSwitch.h"
 #include "ProjectObjects/Objects/SkulObject.h"
 #include "ProjectObjects/Stage.h"
 #include "../Stat.h"
@@ -208,19 +209,21 @@ void BasicSkul::CreateSkills()
 {
 	int index = 0;
 
-	throwSkill = new BasicSkullSkill1(owner, 0.0f, this);
+	throwSkill = new BasicSkullSkill1(owner, 6.0f, this);
 	Skill* newSkill = throwSkill;
 	newSkill->SetIndex(index++);
 	newSkill->Init();
 	newSkill->SetIcon();
 	skills.push_back(newSkill);
 
-	newSkill = new BasicSkullSkill2(owner, 0.0f, this);
+	newSkill = new BasicSkullSkill2(owner, 3.0f, this);
 	newSkill->SetIndex(index++);
 	newSkill->Init();
 	newSkill->SetIcon();
 	skills.push_back(newSkill);
 
+	switchSkill = new BasicSkulSwitch(owner);
+	switchSkill->Init();
 }
 
 void BasicSkul::CreateHead()

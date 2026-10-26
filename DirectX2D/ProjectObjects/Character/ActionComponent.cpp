@@ -127,3 +127,8 @@ void ActionComponent::SetSkillStateSkill(Skill* skill)
 	if (skill == nullptr) return;
 	((SkillState*)actions[ActionType::SKILL])->SetSkill(skill);
 }
+
+void ActionComponent::SetSwitchStateSkill(Skill* skill)
+{
+	((SwitchState*)actions[ActionType::SWITCH])->SetSkill(skill);
+}

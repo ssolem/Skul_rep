@@ -1,5 +1,7 @@
-#pragma once
+﻿#pragma once
 #include "ActionState.h"
+
+class Skill;
 
 class SwitchState : public ActionState
 {
@@ -17,8 +19,11 @@ public:
 
 	virtual bool IsReady() override;
 
+	void SetSkill(Skill* skill) { switchSkill = skill; }
+
 private:
 
 	bool isSwitching;
+	Skill* switchSkill = nullptr;	
 };
 

@@ -7,6 +7,7 @@
 #include "Skills/ThiefGoldAttack.h"
 #include "Skills/ThiefBackAttack.h"
 #include "Skills/ThiefPocketTear.h"
+#include "Skills/ThiefSkulSwitch.h"
 
 namespace
 {
@@ -179,6 +180,8 @@ void ThiefSkul::CreateSkills()
 	newSkill->SetIcon();
 	skills.push_back(newSkill);
 
+	switchSkill = new ThiefSkulSwitch(owner);
+	switchSkill->Init();
 }
 
 void ThiefSkul::CreateComboAttacks(Animator* animator)
