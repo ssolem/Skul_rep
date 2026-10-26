@@ -11,13 +11,14 @@ public:
 	void RenderUI();						//슬롯 위치 + 슬롯 안 아이콘 위치
 
 	void SetIcon(Texture* texture);
+	Quad* GetIcon() { return icon; }
 	void SetDim(bool dimmed);
-	//void SetCoolDown(float cooldown) { this->cooldown = cooldown; }
+	void SetCoolDown(float rate) { amountBuffer->Get()[0] = rate; }
 
 private:
 	Quad* frame;
 	Quad* icon;
 
-	//float cooldown;
+	FloatValueBuffer* amountBuffer;
 };
 

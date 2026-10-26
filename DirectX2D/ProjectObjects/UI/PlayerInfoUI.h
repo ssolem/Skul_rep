@@ -22,8 +22,11 @@ public:
 	void SetMaxHP(float maxHP);
 	void SetShield(float shield);           // 연출 없음
 
-private:
+	void UpdateCoolDowns();
+	float GetSkillCoolRatio(SkulClass* skul, int index);
+
 	void Refresh();
+private:
 	Texture* GetSkillIcon(SkulClass* skul, int index);
 
 	void CreateCounters();
@@ -59,5 +62,8 @@ private:
 	float counterRowGap = 12.0f;					
 	Vector2 counterTextOffset = Vector2(16.0f, 12.0f);	
 	Vector2 counterTextSize = Vector2(100.0f, 24.0f);
+
+	FloatValueBuffer* portraitCoolBuffer = nullptr; 
+	FloatValueBuffer* skill1CoolBuffer = nullptr;
 };
 

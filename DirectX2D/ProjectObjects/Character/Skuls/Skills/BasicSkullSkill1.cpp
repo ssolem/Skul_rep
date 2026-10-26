@@ -54,8 +54,7 @@ void BasicSkullSkill1::OnHeadHitObject(SkulObject* object)
 
 void BasicSkullSkill1::Start()
 {
-	isReady = false;
-	usedSkill = true;
+	StartCoolDown();
 	alreadyHit.clear();
 
 	basicSkul->RegisterHeadToStage(owner->GetStage());

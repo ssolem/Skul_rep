@@ -193,6 +193,8 @@ void Player::SwitchSkul()
 	SkulClass* skul = skuls[curSkulIndex];
 	actionComponent->ResetActionStates(skul->GetActionClipNames(), skul->GetComboAttacks(), skul->GetJumpAttack(), skul->GetBasicAttackDamageType());
 	actionComponent->SetSwitchStateSkill(skul->GetSwitchSkill());
+
+	refreshPlayerInfo();
 }
 
 void Player::CancelAction()

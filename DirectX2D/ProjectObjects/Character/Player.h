@@ -42,6 +42,8 @@ public:
 	int GetDarkQuartz() { return darkQuartz; }
 	int GetBoneChip() { return boneChip; }
 
+	void SetRefreshPlayerInfo(Event event) { refreshPlayerInfo = event; }
+
 protected:
 	void UpdateControl() override;
 	void PostUpdate() override;
@@ -92,4 +94,6 @@ private:
 	int gold = 0;
 	int darkQuartz = 0;
 	int boneChip = 0;
+
+	Event refreshPlayerInfo;
 };

@@ -27,6 +27,11 @@ public:
 	DamageType GetDamageType() { return skillDamageType; }
 	void SetIndex(int x) { index = x; }
 	void SetCoolDown(float coolDown) { coolDownMax = coolDown; }
+	virtual float GetCoolDownRatio()
+	{
+		if (coolDownMax <= 0.0f) return 1.0f;
+		return 1.0f - max(0.0f, min(coolDownTime / coolDownMax, 1.0f));
+	}
 
 	//비어 있으면 스킬이 클립 재생/종료를 직접 관리
 	const string& GetClipName() { return clipName; }
@@ -39,6 +44,9 @@ public:
 protected:
 	//clipName이 빈 스킬은 끝나는 시점에 직접 호출
 	void Finish() { if (onFinish) onFinish(); }
+
+	//사용 시 호출 - 기본 UpdateCoolDown을 쓰는 스킬용
+	void StartCoolDown() { isReady = false; usedSkill = true; coolDownTime = coolDownMax; }
 
 protected:
 	Character* owner;

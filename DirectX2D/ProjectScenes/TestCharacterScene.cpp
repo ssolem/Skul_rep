@@ -24,6 +24,7 @@ TestCharacterScene::TestCharacterScene()
 			playerInfoUI->SetMaxHP(maxHP);
 			playerInfoUI->SetHP(curHP);
 		});
+	player->SetRefreshPlayerInfo([this]() {playerInfoUI->Refresh(); });
 
 	background = new StageBackground();
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer03.png", 0.0f);

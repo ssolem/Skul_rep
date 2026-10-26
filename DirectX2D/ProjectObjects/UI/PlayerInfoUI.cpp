@@ -73,6 +73,13 @@ PlayerInfoUI::PlayerInfoUI(Player* player)
 	essenceIcon->SetTag("PlayerInfo_Essence");
 	essenceIcon->Pos() += Vector2(91.5f, -14.0f);
 
+	mainPortrait->SetPixelShader(L"CoolDown.hlsl");
+	firstSkillIcon->SetPixelShader(L"CoolDown.hlsl");
+	portraitCoolBuffer = new FloatValueBuffer();
+	portraitCoolBuffer->Get()[0] = 1.0f;
+	skill1CoolBuffer = new FloatValueBuffer();
+	skill1CoolBuffer->Get()[0] = 1.0f;
+
 	Refresh();
 	//정수는 구현 후
 
@@ -81,6 +88,8 @@ PlayerInfoUI::PlayerInfoUI(Player* player)
 
 PlayerInfoUI::~PlayerInfoUI()
 {
+	delete portraitCoolBuffer;
+	delete skill1CoolBuffer;
 	delete gauge;
 	delete mainFrame;
 	delete mainPortrait;
@@ -121,9 +130,15 @@ void PlayerInfoUI::Render()
 	mainFrame->Render();
 	//텍스처가 없는 Quad를 그리면 PSSet에서 크래시 - 비어 있으면 건너뜀
 	if (mainPortrait->GetTexture())
+	{
+		portraitCoolBuffer->SetPS(1);
 		mainPortrait->Render();
+	}
 	if (firstSkillIcon->GetTexture())
+	{
+		skill1CoolBuffer->SetPS(1);
 		firstSkillIcon->Render();
+	}
 
 	//슬롯은 아이콘이 없으면 스스로 Render를 건너뜀
 	secondSkillIcon->Render(showAllSlots);
@@ -133,6 +148,7 @@ void PlayerInfoUI::Render()
 	essenceIcon->Render(showAllSlots);
 
 	RenderCounters();
+	UpdateCoolDowns();
 }
 
 void PlayerInfoUI::RenderUI()
@@ -252,4 +268,26 @@ void PlayerInfoUI::SetMaxHP(float maxHP)
 void PlayerInfoUI::SetShield(float shield)
 {
 	gauge->SetShield(shield);
+}
+
+void PlayerInfoUI::UpdateCoolDowns()
+{
+	SkulClass* main = player->GetCurSkul();
+	SkulClass* sub = player->GetSubSkul();
+
+	portraitCoolBuffer->Get()[0] = 1.0f; 
+	skill1CoolBuffer->Get()[0] = GetSkillCoolRatio(main, 0);
+	secondSkillIcon->SetCoolDown(GetSkillCoolRatio(main, 1));
+	firstSubSkillIcon->SetCoolDown(GetSkillCoolRatio(sub, 0));
+	secondSubSkillIcon->SetCoolDown(GetSkillCoolRatio(sub, 1));
+}
+
+float PlayerInfoUI::GetSkillCoolRatio(SkulClass* skul, int index)
+{
+	if (skul == nullptr) return 1.0f;
+
+	vector<Skill*>& skills = skul->GetCurSkill();
+	if (index >= skills.size() || skills[index] == nullptr) return 1.0f;
+
+	return skills[index]->GetCoolDownRatio();
 }

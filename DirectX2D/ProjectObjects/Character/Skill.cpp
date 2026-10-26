@@ -17,17 +17,14 @@ void Skill::Update()
 
 void Skill::UpdateCoolDown()
 {
-	if (usedSkill)
-	{
-		if (coolDownTime <= 0.0f)
-		{
-			usedSkill = false;
-			isReady = true;
-			coolDownTime = coolDownMax;
-			return;
-		}
-		coolDownTime -= DELTA;
-	}
+    if (!usedSkill) return;
+
+    coolDownTime -= DELTA;
+    if (coolDownTime > 0.0f) return;
+
+    coolDownTime = 0.0f;
+    usedSkill = false;
+    isReady = true;
 }
 
 void Skill::Render()

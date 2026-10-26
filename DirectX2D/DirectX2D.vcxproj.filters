@@ -471,6 +471,39 @@
     <ClInclude Include="ProjectObjects\Character\Enemy\Normal\BlossomEntAttack.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Manager\DamageTextManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Objects\DropItem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Objects\GoldItem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Objects\BoneItem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Objects\DarkQuartzItem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Objects\DropTable.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Character\Skuls\ThiefSkul.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefBackRoll.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefGoldAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefBackAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefPocketTear.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX2D.cpp">
@@ -890,6 +923,39 @@
     <ClCompile Include="ProjectObjects\Character\Enemy\Normal\BlossomEntAttack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Manager\DamageTextManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Objects\DropItem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Objects\GoldItem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Objects\BoneItem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Objects\DarkQuartzItem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Objects\DropTable.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Character\Skuls\ThiefSkul.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefBackRoll.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefGoldAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefBackAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefPocketTear.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX2D.rc">
@@ -919,6 +985,7 @@
     <FxCompile Include="Shaders\PixelProgressBar.hlsl" />
     <FxCompile Include="Shaders\PixelImageFont.hlsl" />
     <FxCompile Include="Shaders\PixelHpbar.hlsl" />
+    <FxCompile Include="Shaders\PixelCoolDown.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\DirectXTex\DirectXTex.inl">

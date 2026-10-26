@@ -9,6 +9,10 @@ PlayerInfoSlot::PlayerInfoSlot(wstring frameFile, Vector2 iconOffset, Vector2 ic
 	icon->SetParent(this);
 	icon->Pos() += iconOffset;
 
+	amountBuffer = new FloatValueBuffer();
+	amountBuffer->Get()[0] = 1.0f;
+	icon->SetPixelShader(L"CoolDown.hlsl");
+
 	SetActive(false);
 }
 
@@ -16,6 +20,7 @@ PlayerInfoSlot::~PlayerInfoSlot()
 {
 	delete frame;
 	delete icon;
+	delete amountBuffer;
 }
 
 void PlayerInfoSlot::Update()
@@ -30,7 +35,10 @@ void PlayerInfoSlot::Render(bool forceShow)
 	if (!Active() && !forceShow) return;
 	frame->Render();
 	if (icon->GetTexture())
+	{
+		amountBuffer->SetPS(1);
 		icon->Render();
+	}
 }
 
 void PlayerInfoSlot::RenderUI()

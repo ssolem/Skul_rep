@@ -20,8 +20,7 @@ void BasicSkullSkill2::Init()
 
 void BasicSkullSkill2::Start()
 {
-	isReady = false;
-	usedSkill = true;
+	StartCoolDown();
 
 	owner->Pos() = head->Pos();
 	owner->SetVelocity(Vector2::Zero);

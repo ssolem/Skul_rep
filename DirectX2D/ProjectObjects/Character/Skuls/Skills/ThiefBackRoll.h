@@ -21,6 +21,13 @@ public:
 
 	virtual void ApplyTier(int newTier) override;
 
+	//충전이 1회라도 남아 있으면 밝게, 0회일 때만 재충전 진행 표시
+	virtual float GetCoolDownRatio() override
+	{
+		if (curCharges > 0) return 1.0f;
+		return Skill::GetCoolDownRatio();
+	}
+
 private:
 	void Move();
 	void CheckHit();
