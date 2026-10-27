@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "ProjectObjects/Objects/ExitDoors.h"
 
 class Player;
@@ -30,6 +30,9 @@ private:
 	void ChangeStage();
 	RoomType GetNextRoom();
 
+	string GetStageFile(RoomType room);	
+	void ResetStagePool();			
+
 private:
 	Player* player;
 	Stage* stage = nullptr;
@@ -44,6 +47,13 @@ private:
 	DoorInfo nextDoor;
 	bool changeStage = false;
 
-	map<int, RoomType> chapterOne = { {4, RoomType::Shop}, {8, RoomType::Boss} };
+	//엘리트/보스/상점 맵이 아직 없어서 비워 둠
+	map<int, RoomType> chapterOne = {
+		//{4, RoomType::Elite},
+		//{8, RoomType::Boss},
+	};
+
+	map<RoomType, vector<string>> stageFiles;
+	vector<string> combatPool;
 };
 

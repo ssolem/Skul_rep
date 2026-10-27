@@ -33,6 +33,19 @@ TestCharacterScene::TestCharacterScene()
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer00.png", 0.2f);
 
 	exitDoors = new ExitDoors();
+
+	//스테이지 등록 
+	for (int i = 1; i <= 23; i++)
+	{
+		char name[64];
+		sprintf_s(name, "ProjectMaps/Chapter1_%02d.stage.json", i);
+		stageFiles[RoomType::Combat].push_back(name);
+	}
+
+	//json 만들면 주석 해제 (.map만 있고 적/문 위치가 없음)
+	//stageFiles[RoomType::Elite] = { "ProjectMaps/Chapter1_elite.stage.json" };
+	//stageFiles[RoomType::Boss] = { "ProjectMaps/Chapter1_boss.stage.json" };
+	//stageFiles[RoomType::Shop] = { "ProjectMaps/Chapter1_shop.stage.json" };
 }
 
 TestCharacterScene::~TestCharacterScene()
@@ -47,12 +60,20 @@ TestCharacterScene::~TestCharacterScene()
 //json을 읽어 맵/플레이어 위치/웨이브를 새로 구성
 void TestCharacterScene::BuildStage()
 {
-	//스테이지 데이터 - 읽기 실패하면 적 없이 기본 맵으로
 	StageData stageData;
-	if (!StageDataIO::Load("ProjectMaps/Chapter1_02.stage.json", stageData))
+	string file = GetStageFile(curDoor.room);
+	if (file.empty() || !StageDataIO::Load(file, stageData))
 	{
-		stageData.mapFile = "ProjectMaps/Chapter1_02.map";
-		stageData.playerSpawn = { CENTER_X, 1010.0f };
+		stageData = StageData();
+		if (StageDataIO::Load(stageFiles[RoomType::Combat][0], stageData))
+		{
+			stageData.waves.clear();
+		}
+		else
+		{
+			stageData.mapFile = "ProjectMaps/Chapter1_02.map";
+			stageData.playerSpawn = { CENTER_X, 1010.0f };
+		}
 	}
 
 	stage = new Stage(stageData.mapFile);
@@ -156,6 +177,31 @@ RoomType TestCharacterScene::GetNextRoom()
 	return RoomType::Combat;
 }
 
+void TestCharacterScene::ResetStagePool()
+{
+	combatPool = stageFiles[RoomType::Combat];
+
+	for (int i = (int)combatPool.size() - 1; i > 0; i--)
+		swap(combatPool[i], combatPool[Random(0, i + 1)]);
+}
+
+string TestCharacterScene::GetStageFile(RoomType room)
+{
+	if (room == RoomType::Combat)
+	{
+		if (combatPool.empty()) ResetStagePool();
+
+		string file = combatPool.back();
+		combatPool.pop_back();
+		return file;
+	}
+
+	vector<string>& files = stageFiles[room];
+	if (files.empty()) return "";
+
+	return files[Random(0, (int)files.size())];
+}
+
 void TestCharacterScene::Update()
 {
 	player->UpdateWorld();
@@ -243,6 +289,7 @@ void TestCharacterScene::Start()
 	curDoor = DoorInfo();
 	changeStage = false;
 
+	ResetStagePool();
 	BuildStage();
 
 	CAM->SetTarget(player);
