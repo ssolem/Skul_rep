@@ -146,10 +146,14 @@ void TestCharacterScene::SpawnReward(RewardType reward)
 	switch (reward)
 	{
 	case RewardType::Gold:
+		//골드 뿌리기
 		break;
 	case RewardType::Skul:
+		//1. thief 머리 없을때 thief 머리 아이템 뿌리기.
+		//2. 있으면 skulbone 뿌리기
 		break;
 	case RewardType::Item:
+		//아직 아이템이 없음, darkquartz뿌리기
 		break;
 	}
 }

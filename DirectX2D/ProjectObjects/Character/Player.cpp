@@ -346,6 +346,8 @@ void Player::CreateEffects()
 	animator->CreateEffectByAtlas("DashSmoke_Public_Small", L"ProjectTextures/Effects/DashSmoke_Public_Small/DashSmoke_Public_Small.png", 4, SKUL_DEFAULT_ASSET_SIZE);
 	animator->CreateEffectByAtlas("DoubleJump_Smoke", L"ProjectTextures/Effects/DoubleJump_Smoke/DoubleJump_Smoke.png", 5, SKUL_DEFAULT_ASSET_SIZE);
 	animator->CreateEffectByAtlas("Enemy_Appearance", L"ProjectTextures/Effects/Enemy_Appearance/Enemy_Appearance.png", 20, SKUL_DEFAULT_ASSET_SIZE);
+	animator->CreateEffectByAtlas("MapReward_Spawn", L"ProjectTextures/Common/Reward/Effect_MapReward_Spawn/MapReward_Spawn.png", 1, SKUL_DEFAULT_ASSET_SIZE);	
+	
 	SetEffectDetails();
 }
 
