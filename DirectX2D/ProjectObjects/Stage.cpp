@@ -171,6 +171,14 @@ void Stage::SpawnItem(DropItem* item, Vector2 pos)
 	items.push_back(item);
 }
 
+DropItem* Stage::FindInteractableItem(Collider* collider)
+{
+	for (DropItem* item : items)
+		if (item->IsInteractable(collider)) return item;
+
+	return nullptr;
+}
+
 void Stage::RegisterEnemy(Enemy* enemy)
 {
 	enemies.push_back(enemy);

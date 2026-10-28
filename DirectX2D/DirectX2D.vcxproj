@@ -288,6 +288,7 @@
     <ClInclude Include="ProjectObjects\StageBackground.h" />
     <ClInclude Include="ProjectScenes\SpawnEditScene.h" />
     <ClInclude Include="ProjectObjects\Objects\StageReward.h" />
+    <ClInclude Include="ProjectObjects\Objects\SkulItem.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\TestObject\TestQuad.h" />
     <ClInclude Include="Objects\TestObject\TestTarget.h" />
@@ -459,6 +460,7 @@
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefSkulSwitch.cpp" />
     <ClCompile Include="ProjectScenes\SpawnEditScene.cpp" />
     <ClCompile Include="ProjectObjects\Objects\StageReward.cpp" />
+    <ClCompile Include="ProjectObjects\Objects\SkulItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX2D.rc" />

@@ -51,6 +51,7 @@ public:
 
 	//DropItem
 	void SpawnItem(DropItem* item, Vector2 pos);
+	DropItem* FindInteractableItem(Collider* collider);	//F키 획득 아이템
 
 	//웨이브 - StageData로 Build 후 Start
 	WaveSpawner* GetWaveSpawner() { return waveSpawner; }

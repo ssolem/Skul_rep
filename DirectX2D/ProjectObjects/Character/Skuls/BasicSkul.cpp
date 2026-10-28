@@ -14,6 +14,7 @@
 BasicSkul::BasicSkul()
 {
 	SetTag("BasicSkul");
+	dropImage = L"ProjectTextures/Skul_Images/Skul.png";
 }
 
 BasicSkul::~BasicSkul()

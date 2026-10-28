@@ -45,6 +45,17 @@ public:
 	void SetRefreshPlayerInfo(Event event) { refreshPlayerInfo = event; }
 	float GetSwitchCoolDownRatio();
 
+	//반환: 슬롯이 꽉 차서 빠진 스컬
+	SkulClass* AcquireSkul(SkulClass* skul);
+
+	template<typename T>
+	bool HasSkul()
+	{
+		for (SkulClass* skul : skuls)
+			if (dynamic_cast<T*>(skul)) return true;
+		return false;
+	}
+
 protected:
 	void UpdateControl() override;
 	void PostUpdate() override;
@@ -65,6 +76,7 @@ private:
 	void CancelAction();
 	bool CanAction(ActionType type);
 	void SwitchSkul();
+	void ApplyCurSkul();	
 
 	void UpdatePreInput();
 

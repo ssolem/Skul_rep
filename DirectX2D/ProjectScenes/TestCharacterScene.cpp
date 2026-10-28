@@ -10,6 +10,8 @@
 #include "ProjectObjects/Objects/BoneItem.h"
 #include "ProjectObjects/Objects/DarkQuartzItem.h"
 #include "ProjectObjects/Objects/StageReward.h"
+#include "ProjectObjects/Objects/SkulItem.h"
+#include "ProjectObjects/Character/Skuls/ThiefSkul.h"
 
 
 TestCharacterScene::TestCharacterScene()
@@ -174,8 +176,14 @@ void TestCharacterScene::SpawnReward(RewardType reward)
 			stage->SpawnItem(new GoldItem(10), spawnPos);
 		break;
 	case RewardType::Skul:
-		//1. thief 머리 없을때 thief 머리 아이템 뿌리기.
-		//2. 있으면 skulbone 뿌리기
+		//Thief 없으면 머리, 있으면 뼈
+		if (!player->HasSkul<ThiefSkul>())
+			stage->SpawnItem(new SkulItem(new ThiefSkul()), spawnPos);
+		else
+		{
+			for (int i = 0; i < 4; i++)
+				stage->SpawnItem(new BoneItem(1), spawnPos);
+		}
 		break;
 	case RewardType::Item:
 		//아직 아이템이 없음 - darkquartz 뿌리기
@@ -267,6 +275,12 @@ void TestCharacterScene::Update()
 		{
 			stageReward->Open();
 		}
+		else if (DropItem* item = stage->FindInteractableItem(player->GetCollider()))
+		{
+			//액션 중엔 교체 안 함
+			if (!player->IsPlayingAction())
+				item->Interact();
+		}
 		else if (hasExit)
 		{
 			int index = exitDoors->GetEnterDoor(player->GetCollider());
@@ -331,6 +345,7 @@ void TestCharacterScene::Start()
 {
 	roomCount = 1;
 	curDoor = DoorInfo();
+	curDoor.reward = RewardType::Skul;	//첫 방은 무덤 보상
 	changeStage = false;
 
 	ResetStagePool();

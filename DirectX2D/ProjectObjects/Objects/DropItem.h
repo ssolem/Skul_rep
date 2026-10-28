@@ -24,6 +24,9 @@ public:
 	//Stage::SpawnItem에서 호출
 	void Spawn(Stage* stage, Vector2 pos);
 
+	bool IsInteractable(Collider* other) { return Active() && !autoAcquire && collider->IsCollision(other); }
+	void Interact() { Acquire(); }
+
 protected:
 	void SetIdleClip(const wstring& atlasPath);
 	//애니메이션 없이 아틀라스 프레임 중 하나를 Spawn마다 돌아가며 고름 (뼈/다크쿼츠)
@@ -32,6 +35,7 @@ protected:
 	void SetAcquireEffect(const string& key, const wstring& atlasPath, float speed = 3.0f);
 
 	virtual void OnAcquire(Character* player) = 0;
+	void SetImage(const wstring& texturePath);
 
 private:
 	void UpdateDrop();
@@ -48,6 +52,7 @@ protected:
 	Clip* idleClip = nullptr;			//반복 애니메이션 (골드)
 	vector<Frame*>* images = nullptr;	//낱장 후보 - 프레임은 Animator 캐시 소유
 	Frame* image = nullptr;				//이번 Spawn에 고른 낱장
+	Frame* ownedImage = nullptr;
 	string acquireEffectKey;
 	RectCollider* collider = nullptr;
 	Stage* stage = nullptr;
@@ -71,4 +76,5 @@ protected:
 
 	//자동 획득
 	float acquireDelay = 1.5f;
+	bool autoAcquire = true;
 };

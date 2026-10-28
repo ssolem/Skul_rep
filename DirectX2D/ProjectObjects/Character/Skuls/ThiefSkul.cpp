@@ -22,18 +22,23 @@ namespace
 		//UI_Icons 파일명이 단계마다 규칙이 달라서 크기 기준으로 짝지음 (main 45x45, sub 21x21, info 높이 68~76)
 
 		wstring mainPortrait, subPortrait, infoPortrait;
+		wstring dropImage;	//Head 폴더 - 바닥에 떨어진 머리
 	};
 
 	const ThiefTierData tiers[] =
 	{
 		{ "Thief_1", L"ProjectTextures/Thief/Thief_Thief/Atlas", 30.0f, 60.0f,
-			L"ProjectTextures/Thief/UI_Icons/Thief_1.png", L"ProjectTextures/Thief/UI_Icons/Thief_2.png", L"ProjectTextures/Thief/UI_Icons/Thief.png" },
+			L"ProjectTextures/Thief/UI_Icons/Thief_1.png", L"ProjectTextures/Thief/UI_Icons/Thief_2.png", L"ProjectTextures/Thief/UI_Icons/Thief.png",
+			L"ProjectTextures/Thief/Head/Thief.png" },
 		{ "Thief_2", L"ProjectTextures/Thief/Thief_2/Atlas",     30.0f, 60.0f,
-			L"ProjectTextures/Thief/UI_Icons/Thief_2_1.png", L"ProjectTextures/Thief/UI_Icons/Thief_2_3.png", L"ProjectTextures/Thief/UI_Icons/Thief_2_2.png" },
+			L"ProjectTextures/Thief/UI_Icons/Thief_2_1.png", L"ProjectTextures/Thief/UI_Icons/Thief_2_3.png", L"ProjectTextures/Thief/UI_Icons/Thief_2_2.png",
+			L"ProjectTextures/Thief/Head/Thief_2.png" },
 		{ "Thief_3", L"ProjectTextures/Thief/Thief_3/Atlas",     35.0f, 40.0f,
-			L"ProjectTextures/Thief/UI_Icons/Thief_3_2.png", L"ProjectTextures/Thief/UI_Icons/Thief_3_1.png", L"ProjectTextures/Thief/UI_Icons/Thief_3.png" },
+			L"ProjectTextures/Thief/UI_Icons/Thief_3_2.png", L"ProjectTextures/Thief/UI_Icons/Thief_3_1.png", L"ProjectTextures/Thief/UI_Icons/Thief_3.png",
+			L"ProjectTextures/Thief/Head/Thief_3.png" },
 		{ "Thief_4", L"ProjectTextures/Thief/Thief_4/Atlas",     40.0f, 45.0f,
-			L"ProjectTextures/Thief/UI_Icons/Thief_4_2.png", L"ProjectTextures/Thief/UI_Icons/Thief_4.png", L"ProjectTextures/Thief/UI_Icons/Thief_4_1.png" },
+			L"ProjectTextures/Thief/UI_Icons/Thief_4_2.png", L"ProjectTextures/Thief/UI_Icons/Thief_4.png", L"ProjectTextures/Thief/UI_Icons/Thief_4_1.png",
+			L"ProjectTextures/Thief/Head/Thief_4.png" },
 	};
 	const int tierCount = sizeof(tiers) / sizeof(tiers[0]);
 }
@@ -41,6 +46,7 @@ namespace
 ThiefSkul::ThiefSkul()
 {
 	SetTag(tiers[0].tag);
+	dropImage = tiers[0].dropImage;
 }
 
 ThiefSkul::~ThiefSkul()
@@ -150,6 +156,7 @@ void ThiefSkul::SetImages()
 	mainPortrait = Texture::Add(data.mainPortrait);
 	subPortrait = Texture::Add(data.subPortrait);
 	infoPortrait = Texture::Add(data.infoPortrait);
+	dropImage = data.dropImage;
 }
 
 void ThiefSkul::CreateSkills()

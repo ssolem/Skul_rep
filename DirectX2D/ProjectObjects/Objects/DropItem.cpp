@@ -16,6 +16,7 @@ DropItem::DropItem()
 DropItem::~DropItem()
 {
 	delete idleClip;
+	delete ownedImage;
 	delete collider;
 }
 
@@ -29,7 +30,7 @@ void DropItem::Update()
 		UpdateDrop();
 
 	//시간이 지나면 떨어지는 중이어도 그 자리에서 획득
-	if (lifeTime >= acquireDelay)
+	if (autoAcquire && lifeTime >= acquireDelay)
 	{
 		Acquire();
 		return;
@@ -111,6 +112,24 @@ void DropItem::SetAcquireEffect(const string& key, const wstring& atlasPath, flo
 	EffectManager::Get()->SetScale(key, SKUL_DEFAULT_ASSET_SIZE);
 }
 
+void DropItem::SetImage(const wstring& texturePath)
+{
+	delete ownedImage;
+	ownedImage = new Frame(texturePath);
+	image = ownedImage;
+
+	//이미지 크기로 콜라이더 갱신
+	if (collider == nullptr)
+	{
+		collider = new RectCollider(image->GetSize());
+		collider->SetParent(this);
+	}
+	else
+	{
+		collider->SetSize(image->GetSize());
+	}
+}
+
 void DropItem::CreateCollider(const vector<Frame*>& frames)
 {
 	Vector2 size;
@@ -150,8 +169,9 @@ void DropItem::Acquire()
 	if (!acquireEffectKey.empty())
 		EffectManager::Get()->Play(acquireEffectKey, GlobalPos());	//아이템 위치에서 재생
 
-	OnAcquire(stage->GetPlayer());
+	//OnAcquire에서 다시 Spawn할 수 있도록 먼저 끔
 	SetActive(false);
+	OnAcquire(stage->GetPlayer());
 }
 
 void DropItem::ResolveTileCollision()
