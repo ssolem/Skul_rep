@@ -6,6 +6,7 @@ class Enemy;
 class Stage;
 class PlayerInfoUI;
 class StageBackground;
+class StageReward;
 
 class TestCharacterScene : public Scene
 {
@@ -27,6 +28,7 @@ private:
 
 	void SetExitDoors();
 	void SpawnReward(RewardType reward);
+	void OpenExitDoors();
 	void ChangeStage();
 	RoomType GetNextRoom();
 
@@ -41,6 +43,7 @@ private:
 
 	ExitDoors* exitDoors;
 	bool hasExit = false;
+	StageReward* stageReward;
 
 	int roomCount = 1;
 	DoorInfo curDoor;

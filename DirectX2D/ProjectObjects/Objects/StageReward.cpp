@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include "StageReward.h"
 #include "ProjectObjects/Objects/AnimObject.h"
 
@@ -50,36 +50,54 @@ void StageReward::Setup(RewardType rewardType, Vector2 pos)
 
 	Pos() = pos;
 	isOpen = false;
+	isRewarded = false;
 	type = rewardType;
 
 	rewardObject->Stop();
 	rewardObject->Play(GetRewardTag() + "Activate", rewardObject->Pos());
-	EffectManager::Get()->Play("MapReward_Spawn", rewardCollider->Pos());
 
 	position->UpdateWorld();
 	rewardCollider->UpdateWorld();
 	rewardCollider->SetActive(true);
+
+	//등장 이펙트 - 중앙 기준이라 셀 높이 절반만큼 올려 바닥에 맞춤
+	EffectManager::Get()->Play("MapReward_Spawn", pos);
 }
 
 void StageReward::Open()
 {
 	if (isOpen) return;
+
 	isOpen = true;
-	rewardObject->Play(GetRewardTag() + "Deactivate", rewardObject->Pos());
 	rewardCollider->SetActive(false);
+
+	string key = GetRewardTag() + "Deactivate";
+	Clip* clip = rewardObject->FindClip(key);
+
+	if (clip == nullptr)
+	{
+		isRewarded = true;
+		if (onOpened) onOpened(type);
+		return;
+	}
+
+	clip->ClearEvents();
+	clip->SetEvent([this]()
+		{
+			if (isRewarded) return;
+
+			isRewarded = true;
+			if (onOpened) onOpened(type);
+		});
+
+	rewardObject->Play(key, rewardObject->Pos());
 }
 
 bool StageReward::IsInteractable(Collider* player)
 {
-	if (rewardCollider->IsCollision(player))
-	{
-		if (KEY_DOWN('F'))
-		{
-			Open();
-		}
-	}
+	if (isOpen || !rewardCollider->Active()) return false;
 
-	return false;
+	return rewardCollider->IsCollision(player);
 }
 
 void StageReward::CreateRewardAnim()

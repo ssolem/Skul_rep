@@ -9,6 +9,7 @@
 #include "ProjectObjects/Objects/GoldItem.h"
 #include "ProjectObjects/Objects/BoneItem.h"
 #include "ProjectObjects/Objects/DarkQuartzItem.h"
+#include "ProjectObjects/Objects/StageReward.h"
 
 
 TestCharacterScene::TestCharacterScene()
@@ -34,7 +35,15 @@ TestCharacterScene::TestCharacterScene()
 
 	exitDoors = new ExitDoors();
 
-	//스테이지 등록 
+	//보상
+	stageReward = new StageReward();
+	stageReward->SetOnOpened([this](RewardType reward)
+		{
+			SpawnReward(reward);
+			OpenExitDoors();
+		});
+
+	//스테이지 등록
 	for (int i = 1; i <= 23; i++)
 	{
 		char name[64];
@@ -50,6 +59,7 @@ TestCharacterScene::TestCharacterScene()
 
 TestCharacterScene::~TestCharacterScene()
 {
+	delete stageReward;
 	delete exitDoors;
 	delete playerInfoUI;
 	delete stage;		
@@ -89,14 +99,23 @@ void TestCharacterScene::BuildStage()
 		SetExitDoors();
 	}
 
+	stageReward->Setup(RewardType::None, Vector2());	//이전 방 보상 숨김
+
 	WaveSpawner* spawner = stage->GetWaveSpawner();
 	spawner->Build(stageData);
 	spawner->SetOnClear([this]()
 		{
-			//문 열기, 보상 드랍
-			if (hasExit) exitDoors->Open();
-			SpawnReward(curDoor.reward);
-			exitDoors->Update();
+			if (!hasExit) return;
+
+			//보상 없는 방(첫 방, 상점 출구 등)은 바로 문 열기
+			if (curDoor.reward == RewardType::None)
+			{
+				OpenExitDoors();
+				return;
+			}
+
+			//보상 있는 방은 상자를 열어야 문이 열림 (SetOnOpened)
+			stageReward->Setup(curDoor.reward, exitDoors->RewardPos());
 		});
 	spawner->Start();
 
@@ -137,23 +156,31 @@ void TestCharacterScene::SetExitDoors()
 	exitDoors->Setup(ExitDoors::RandomRewardDoors(), true);
 }
 
+void TestCharacterScene::OpenExitDoors()
+{
+	exitDoors->Open();
+	exitDoors->Update();
+}
+
+//보상 오브젝트가 열린 뒤 실제 드랍
 void TestCharacterScene::SpawnReward(RewardType reward)
 {
-	//상자,골드더미,무덤 소환
-
-	Vector2 spawnPos = exitDoors->RewardPos();
+	Vector2 spawnPos = stageReward->Pos() + Vector2(0.0f, 80.0f);
 
 	switch (reward)
 	{
 	case RewardType::Gold:
-		//골드 뿌리기
+		for (int i = 0; i < 5; i++)
+			stage->SpawnItem(new GoldItem(10), spawnPos);
 		break;
 	case RewardType::Skul:
 		//1. thief 머리 없을때 thief 머리 아이템 뿌리기.
 		//2. 있으면 skulbone 뿌리기
 		break;
 	case RewardType::Item:
-		//아직 아이템이 없음, darkquartz뿌리기
+		//아직 아이템이 없음 - darkquartz 뿌리기
+		for (int i = 0; i < 4; i++)
+			stage->SpawnItem(new DarkQuartzItem(1), spawnPos);
 		break;
 	}
 }
@@ -215,6 +242,7 @@ void TestCharacterScene::Update()
 	if (hasExit)
 		exitDoors->Update();
 
+	stageReward->Update();
 
 	if (KEY_DOWN(VK_F2))
 	{
@@ -232,14 +260,22 @@ void TestCharacterScene::Update()
 		SceneManager::Get()->Remove("TestCharacter Scene");
 	}
 
-	if (hasExit && KEY_DOWN('F'))
+	if (KEY_DOWN('F'))
 	{
-		int index = exitDoors->GetEnterDoor(player->GetCollider());
-		if (index >= 0)
+		//보상과 문 판정이 겹치면 보상 먼저 (문은 보상을 열어야 열림)
+		if (stageReward->IsInteractable(player->GetCollider()))
 		{
-			nextDoor = exitDoors->GetDoors()[index];
-			nextDoor.room = GetNextRoom();
-			changeStage = true;
+			stageReward->Open();
+		}
+		else if (hasExit)
+		{
+			int index = exitDoors->GetEnterDoor(player->GetCollider());
+			if (index >= 0)
+			{
+				nextDoor = exitDoors->GetDoors()[index];
+				nextDoor.room = GetNextRoom();
+				changeStage = true;
+			}
 		}
 	}
 
@@ -274,6 +310,8 @@ void TestCharacterScene::Render()
 
 	if (hasExit)
 		exitDoors->Render();
+
+	stageReward->Render();
 
 	player->Render();
 	EffectManager::Get()->Render();

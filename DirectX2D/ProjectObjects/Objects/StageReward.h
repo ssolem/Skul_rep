@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class AnimObject;
 
 class StageReward
@@ -14,7 +14,11 @@ public:
 
 	void Setup(RewardType rewardType, Vector2 pos);
 	void Open();
+
 	bool IsInteractable(Collider* player);
+
+	void SetOnOpened(function<void(RewardType)> callback) { onOpened = callback; }
+
 private:
 	void CreateRewardAnim();
 	string GetRewardTag();
@@ -29,6 +33,9 @@ private:
 	AnimObject* rewardObject = nullptr;
 
 	bool isOpen = false;
+	bool isRewarded = false;	//비루프 클립은 마지막 프레임 이벤트가 두 번 불려서 드랍 중복 방지
+
+	function<void(RewardType)> onOpened;
 
 };
 
