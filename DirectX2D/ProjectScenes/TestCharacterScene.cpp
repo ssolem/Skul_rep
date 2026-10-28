@@ -90,7 +90,7 @@ void TestCharacterScene::BuildStage()
 
 	player->SetStage(stage);
 	stage->SetPlayer(player);
-	player->Pos() = stage->GetGroundPos(stageData.playerSpawn);	//Pos()가 발 위치라 바닥에 바로 세움
+	player->Teleport(stage->GetGroundPos(stageData.playerSpawn));
 
 	hasExit = stageData.hasDoor;
 	if (hasExit)
@@ -306,12 +306,14 @@ void TestCharacterScene::Update()
 
 void TestCharacterScene::Render()
 {
-	stage->Render();
+	stage->RenderMap();
 
 	if (hasExit)
 		exitDoors->Render();
 
 	stageReward->Render();
+
+	stage->RenderObjects();
 
 	player->Render();
 	EffectManager::Get()->Render();

@@ -196,7 +196,8 @@ void Enemy::Appear(Vector2 pos)
 {
 	spawnEffect = nullptr;	//이펙트가 끝나면 반납
 
-	Pos() = pos;
+	Teleport(pos);
+
 	SetActive(true);
 	state = State::Alive;
 }

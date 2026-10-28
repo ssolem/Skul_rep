@@ -21,7 +21,9 @@ public:
 	~Stage();
 
 	void Update();
-	void Render();
+	void Render();			//RenderMap + RenderObjects
+	void RenderMap();		//배경, 타일 - 사이에 Scene이 문/보상을 그림
+	void RenderObjects();	//스컬 오브젝트, 적, 아이템, 투사체
 
 	SkulTileMap* GetTileMap() { return tileMap; }
 

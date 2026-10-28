@@ -36,6 +36,9 @@ public:
 	virtual Vector2 GetHitPos() override { return GlobalPos(); }
 	virtual void TakeDamage(int amount) override;
 
+	//순간이동 - 콜라이더까지 새 위치로 갱신 (안 하면 다음 프레임 prevBottom이 이전 위치라 착지 판정 실패)
+	void Teleport(Vector2 pos);
+
 	//getset
 	Vector2 GetDirection() const { return dir; }
 	Collider* GetCollider() const { return collider; }

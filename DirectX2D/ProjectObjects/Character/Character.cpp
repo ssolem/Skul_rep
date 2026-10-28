@@ -60,6 +60,18 @@ void Character::Init()
 	curMoveState = MoveState::IDLE;
 }
 
+void Character::Teleport(Vector2 pos)
+{
+	Pos() = pos;
+
+	//부모 → 자식 순서로 월드 갱신
+	UpdateWorld();
+	collider->UpdateWorld();
+	groundSensor->UpdateWorld();
+
+	prevBottom = ((RectCollider*)collider)->B();
+}
+
 void Character::Update()
 {
 	prevBottom = ((RectCollider*)collider)->B();

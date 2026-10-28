@@ -77,13 +77,22 @@ void Stage::Update()
 
 void Stage::Render()
 {
+	RenderMap();
+	RenderObjects();
+}
+
+void Stage::RenderMap()
+{
 	if (background) background->Render();
 
 	tileMap->Render();
 
 	for (Tile* wall : boundWalls)
-		wall->GetCollider()->Render();	
+		wall->GetCollider()->Render();
+}
 
+void Stage::RenderObjects()
+{
 	for (SkulObject* obj : objects)
 		if (obj->Active()) obj->Render();
 
