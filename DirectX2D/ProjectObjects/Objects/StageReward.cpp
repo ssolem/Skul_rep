@@ -1,4 +1,4 @@
-﻿#include "Framework.h"
+#include "Framework.h"
 #include "StageReward.h"
 #include "ProjectObjects/Objects/AnimObject.h"
 
@@ -60,7 +60,6 @@ void StageReward::Setup(RewardType rewardType, Vector2 pos)
 	rewardCollider->UpdateWorld();
 	rewardCollider->SetActive(true);
 
-	//등장 이펙트 - 중앙 기준이라 셀 높이 절반만큼 올려 바닥에 맞춤
 	EffectManager::Get()->Play("MapReward_Spawn", pos);
 }
 

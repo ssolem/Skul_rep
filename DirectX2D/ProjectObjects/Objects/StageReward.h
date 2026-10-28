@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 class AnimObject;
 
 class StageReward
@@ -33,7 +33,7 @@ private:
 	AnimObject* rewardObject = nullptr;
 
 	bool isOpen = false;
-	bool isRewarded = false;	//비루프 클립은 마지막 프레임 이벤트가 두 번 불려서 드랍 중복 방지
+	bool isRewarded = false;
 
 	function<void(RewardType)> onOpened;
 
