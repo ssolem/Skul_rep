@@ -46,6 +46,9 @@ GameManager::~GameManager()
 
 void GameManager::Update()
 {
+    if (KEY_DOWN('P'))
+        Collider::isRender = !Collider::isRender;
+
     Keyboard::Get()->Update();
     Timer::Get()->Update();
 

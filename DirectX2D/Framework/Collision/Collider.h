@@ -23,6 +23,9 @@ public:
 
     Float4& GetColor() { return colorBuffer->Get(); }
 
+public:
+    static bool isRender;
+
 protected:
 
     virtual bool IsRectCollision(class RectCollider* rect, Vector2* overlap = nullptr) = 0;

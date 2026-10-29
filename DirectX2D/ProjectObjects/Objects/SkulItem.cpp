@@ -24,7 +24,8 @@ void SkulItem::OnAcquire(Character* player)
 	if (dropped == nullptr) return;
 
 	SetSkul(dropped);
-	Spawn(stage, owner->GlobalPos());
+	Vector2 pos = owner->GlobalPos();
+	SpawnTo(stage, pos, pos + Vector2(owner->FacingRight() ? 100.0f : -100.0f, 0.0f));
 }
 
 void SkulItem::SetSkul(SkulClass* skul)

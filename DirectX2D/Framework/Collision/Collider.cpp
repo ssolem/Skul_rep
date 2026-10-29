@@ -1,5 +1,7 @@
 ﻿#include "Framework.h"
 
+bool Collider::isRender = true;
+
 Collider::Collider()
 {
     vertexShader = Shader::AddVS(L"VertexPos.hlsl");
@@ -20,6 +22,7 @@ Collider::~Collider()
 
 void Collider::Render()
 {
+    if (!isRender) return;
     if (!isActive) return;
 
     worldBuffer->Set(world);
