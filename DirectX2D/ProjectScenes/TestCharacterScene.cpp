@@ -109,14 +109,14 @@ void TestCharacterScene::BuildStage()
 		{
 			if (!hasExit) return;
 
-			//보상 없는 방(첫 방, 상점 출구 등)은 바로 문 열기
+			//보상 없는 방은 바로 문 열기
 			if (curDoor.reward == RewardType::None)
 			{
 				OpenExitDoors();
 				return;
 			}
 
-			//보상 있는 방은 상자를 열어야 문이 열림 (SetOnOpened)
+			//보상 있는 방은 상자를 열어야 문이 열림 
 			stageReward->Setup(curDoor.reward, exitDoors->RewardPos());
 		});
 	spawner->Start();
@@ -178,7 +178,7 @@ void TestCharacterScene::SpawnReward(RewardType reward)
 	case RewardType::Skul:
 		//Thief 없으면 머리, 있으면 뼈
 		if (!player->HasSkul<ThiefSkul>())
-			stage->SpawnItem(new SkulItem(new ThiefSkul()), spawnPos);
+			stage->SpawnItem(new SkulItem(new ThiefSkul()), spawnPos, stageReward->Pos() + Vector2(150.0f, 0.0f));
 		else
 		{
 			for (int i = 0; i < 4; i++)

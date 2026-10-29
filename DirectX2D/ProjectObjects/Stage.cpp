@@ -171,6 +171,12 @@ void Stage::SpawnItem(DropItem* item, Vector2 pos)
 	items.push_back(item);
 }
 
+void Stage::SpawnItem(DropItem* item, Vector2 start, Vector2 target)
+{
+	item->SpawnTo(this, start, target);
+	items.push_back(item);
+}
+
 DropItem* Stage::FindInteractableItem(Collider* collider)
 {
 	for (DropItem* item : items)

@@ -27,7 +27,10 @@ void DropItem::Update()
 	lifeTime += DELTA;
 
 	if (state == State::Drop)
-		UpdateDrop();
+	{
+		if (isArc) UpdateArc();
+		else UpdateDrop();
+	}
 
 	//시간이 지나면 떨어지는 중이어도 그 자리에서 획득
 	if (autoAcquire && lifeTime >= acquireDelay)
@@ -61,6 +64,7 @@ void DropItem::Spawn(Stage* stage, Vector2 pos)
 	velocity = Vector2(cos(angle), sin(angle)) * power;
 
 	state = State::Drop;
+	isArc = false;
 	bounceCount = 0;
 	lifeTime = 0.0f;
 
@@ -77,6 +81,25 @@ void DropItem::Spawn(Stage* stage, Vector2 pos)
 	prevBottom = collider->B();
 
 	if (idleClip) idleClip->Play();
+}
+
+void DropItem::SpawnTo(Stage* stage, Vector2 start, Vector2 target)
+{
+	Spawn(stage, start);
+
+	float bottomOffset = GlobalPos().y - collider->B();
+	arcStart = start;
+	arcTarget = stage->GetGroundPos(target) + Vector2(0.0f, bottomOffset);
+
+	float y = max(arcStart.y, arcTarget.y) + arcHeight;
+	float riseTime = sqrt(2.0f * (y - arcStart.y) / GRAVITY);
+	float fallTime = sqrt(2.0f * (y - arcTarget.y) / GRAVITY);
+	arcTime = riseTime + fallTime;
+
+	arcVelocity.x = (arcTarget.x - arcStart.x) / arcTime;
+	arcVelocity.y = GRAVITY * riseTime;
+
+	isArc = true;
 }
 
 void DropItem::SetIdleClip(const wstring& atlasPath)
@@ -164,6 +187,20 @@ void DropItem::UpdateDrop()
 	ResolveTileCollision();
 }
 
+void DropItem::UpdateArc()
+{
+	float t = min(lifeTime, arcTime);
+	Pos().x = arcStart.x + arcVelocity.x * t;
+	Pos().y = arcStart.y + arcVelocity.y * t - 0.5f * GRAVITY * t * t;
+
+	if (lifeTime >= arcTime)
+	{
+		Pos() = arcTarget;
+		velocity = Vector2::Zero;
+		state = State::Rest;
+	}
+}
+
 void DropItem::Acquire()
 {
 	if (!acquireEffectKey.empty())
@@ -237,7 +274,7 @@ void DropItem::PushOut(Tile* tile, Vector2 overlap)
 
 void DropItem::Land()
 {
-	if (velocity.y > 0.0f) return;	//튕겨 올라가는 중엔 다시 세지 않음
+	if (velocity.y > 0.0f) return;	
 
 	bounceCount++;
 
@@ -248,7 +285,6 @@ void DropItem::Land()
 		return;
 	}
 
-	//살짝 튕김
 	velocity.y = -velocity.y * bounceRate;
 	velocity.x *= groundFriction;
 }

@@ -23,6 +23,7 @@ public:
 
 	//Stage::SpawnItem에서 호출
 	void Spawn(Stage* stage, Vector2 pos);
+	void SpawnTo(Stage* stage, Vector2 start, Vector2 target);
 
 	bool IsInteractable(Collider* other) { return Active() && !autoAcquire && collider->IsCollision(other); }
 	void Interact() { Acquire(); }
@@ -39,6 +40,7 @@ protected:
 
 private:
 	void UpdateDrop();
+	void UpdateArc();
 	void Acquire();
 
 	void ResolveTileCollision();
@@ -72,7 +74,14 @@ protected:
 	float bounceRate = 0.4f;		
 	float groundFriction = 0.6f;	
 	float wallBounceRate = 0.5f;	
-	int maxBounce = 2;				
+	int maxBounce = 2;
+
+	//포물선 이동
+	bool isArc = false;
+	Vector2 arcStart, arcTarget;
+	Vector2 arcVelocity;		
+	float arcTime = 0.0f;		
+	float arcHeight = 150.0f;	
 
 	//자동 획득
 	float acquireDelay = 1.5f;
