@@ -1,0 +1,24 @@
+{
+  "note": "Title-screen sprites from Assets/Images/UI/Main. The scene's own animations (alpha only, no sprites) are: LogoFadeInOut, PressAnyKeyFlick, TitleAlphaFadeIn, TitleTextAlphaFadeIn. Skipped atlas duplicates: Title_Art_1, Title_Logo_1.",
+  "files": {
+    "Background": [
+      "Title_Art.png",
+      "Title_Art2.png"
+    ],
+    "Logo": [
+      "Title_Logo2.png",
+      "Title_Logo.png"
+    ],
+    "DarkMirror": [
+      "DarkMirror_Title_Art_1.png",
+      "DarkMirror_Title_Art_Logo.png"
+    ],
+    "Splash": [
+      "Logo_Neowiz.png",
+      "Logo_SouthPAW.png"
+    ],
+    "Etc": [
+      "EA_Popup.png"
+    ]
+  }
+}

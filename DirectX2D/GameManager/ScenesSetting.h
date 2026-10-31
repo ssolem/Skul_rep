@@ -22,3 +22,4 @@
 #include "Scenes/TestMapScene.h"
 #include "ProjectScenes/SkulMapEditScene.h"
 #include "ProjectScenes/SpawnEditScene.h"
+#include "ProjectScenes/TitleScene.h"

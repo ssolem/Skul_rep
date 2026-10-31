@@ -287,6 +287,7 @@
     <ClInclude Include="ProjectObjects\Character\Stat.h" />
     <ClInclude Include="ProjectObjects\StageBackground.h" />
     <ClInclude Include="ProjectScenes\SpawnEditScene.h" />
+    <ClInclude Include="ProjectScenes\TitleScene.h" />
     <ClInclude Include="ProjectObjects\Objects\StageReward.h" />
     <ClInclude Include="ProjectObjects\Objects\SkulItem.h" />
     <ClInclude Include="targetver.h" />
@@ -459,6 +460,7 @@
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\BasicSkulSwitch.cpp" />
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefSkulSwitch.cpp" />
     <ClCompile Include="ProjectScenes\SpawnEditScene.cpp" />
+    <ClCompile Include="ProjectScenes\TitleScene.cpp" />
     <ClCompile Include="ProjectObjects\Objects\StageReward.cpp" />
     <ClCompile Include="ProjectObjects\Objects\SkulItem.cpp" />
   </ItemGroup>
