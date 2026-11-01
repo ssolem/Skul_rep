@@ -7,6 +7,7 @@ class Stage;
 class PlayerInfoUI;
 class StageBackground;
 class StageReward;
+class UpgradeUI;
 
 class TestCharacterScene : public Scene
 {
@@ -41,6 +42,7 @@ private:
 	Stage* stage = nullptr;
 	StageBackground* background;
 	PlayerInfoUI* playerInfoUI;
+	UpgradeUI* upgradeUI;
 
 	ExitDoors* exitDoors;
 	bool hasExit = false;

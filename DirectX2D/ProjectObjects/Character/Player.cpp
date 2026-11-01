@@ -6,6 +6,7 @@
 #include "Stat.h"
 #include "Skuls/BasicSkul.h"
 #include "Skuls/ThiefSkul.h"
+#include "PlayerUpgrade.h"
 
 Player::Player()
 	: Character()
@@ -14,6 +15,7 @@ Player::Player()
 	SetPlayer();
 	SetupInput();
 	SetStats();		//플레이어 공통 기본 스탯 (스컬과 무관)
+	upgrade = new PlayerUpgrade(this);
 
 	//BasicSkul로 시작
 	SkulClass* basicSkul = new BasicSkul();
@@ -42,6 +44,7 @@ void Player::SetStats()
 
 Player::~Player()
 {
+	delete upgrade;
 	delete actionComponent;
 	delete controller;
 

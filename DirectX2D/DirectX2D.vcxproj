@@ -306,6 +306,8 @@
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefPocketTear.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\BasicSkulSwitch.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefSkulSwitch.h" />
+    <ClInclude Include="ProjectObjects\UI\UpgradeUI.h" />
+    <ClInclude Include="ProjectObjects\Character\PlayerUpgrade.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Manager\DamageTextManager.cpp" />
@@ -463,6 +465,8 @@
     <ClCompile Include="ProjectScenes\TitleScene.cpp" />
     <ClCompile Include="ProjectObjects\Objects\StageReward.cpp" />
     <ClCompile Include="ProjectObjects\Objects\SkulItem.cpp" />
+    <ClCompile Include="ProjectObjects\UI\UpgradeUI.cpp" />
+    <ClCompile Include="ProjectObjects\Character\PlayerUpgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX2D.rc" />

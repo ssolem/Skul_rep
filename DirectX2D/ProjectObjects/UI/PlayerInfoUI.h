@@ -14,7 +14,7 @@ public:
 
 	void Update();
 	void Render();
-	void RenderUI();	//각 요소 위치를 ImGui로 조정 (PostRender에서 호출)
+	void RenderUI();	//각 요소 위치를 ImGui로 조정
 
 	//EnemyHealthBar와 같은 인터페이스 - 값은 Character::SetOnHPChanged 콜백으로 들어옴
 	void Init(float maxHP, float curHP);    // 연출 없이 즉시 맞춤

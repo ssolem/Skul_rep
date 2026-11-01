@@ -507,6 +507,18 @@
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefPocketTear.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectObjects\Objects\StageReward.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Objects\SkulItem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\UI\UpgradeUI.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectObjects\Character\PlayerUpgrade.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX2D.cpp">
@@ -960,6 +972,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ProjectObjects\Character\Skuls\Skills\ThiefPocketTear.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Objects\StageReward.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Objects\SkulItem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\UI\UpgradeUI.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectObjects\Character\PlayerUpgrade.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

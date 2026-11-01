@@ -5,6 +5,7 @@ class ObjectController;
 class ActionComponent;
 class PlayerInfoUI;
 class SkulClass;
+class PlayerUpgrade;
 
 class Player : public Character
 {
@@ -45,6 +46,8 @@ public:
 	void SetRefreshPlayerInfo(Event event) { refreshPlayerInfo = event; }
 	void SetOnDie(Event event) { onDie = event; }	
 	float GetSwitchCoolDownRatio();
+
+	PlayerUpgrade* GetUpgrade() { return upgrade; }
 
 	//반환: 슬롯이 꽉 차서 빠진 스컬
 	SkulClass* AcquireSkul(SkulClass* skul);
@@ -97,6 +100,7 @@ private:
 private:
 	ObjectController* controller = nullptr;
 	ActionComponent* actionComponent = nullptr;
+	PlayerUpgrade* upgrade = nullptr;	//거점 영구 강화 - 사망해도 유지
 
 	vector<SkulClass*> skuls;
 	int curSkulIndex = 0;

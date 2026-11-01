@@ -12,6 +12,7 @@
 #include "ProjectObjects/Objects/StageReward.h"
 #include "ProjectObjects/Objects/SkulItem.h"
 #include "ProjectObjects/Character/Skuls/ThiefSkul.h"
+#include "ProjectObjects/UI/UpgradeUI.h"
 
 
 TestCharacterScene::TestCharacterScene()
@@ -60,6 +61,8 @@ TestCharacterScene::TestCharacterScene()
 
 	//거점 - 1번 맵과 같은 지형/플레이어/문 위치, 웨이브 없음
 	stageFiles[RoomType::Home] = { "ProjectMaps/Chapter1_home.stage.json" };
+
+	upgradeUI = new UpgradeUI(player);
 }
 
 TestCharacterScene::~TestCharacterScene()
@@ -67,6 +70,7 @@ TestCharacterScene::~TestCharacterScene()
 	delete stageReward;
 	delete exitDoors;
 	delete playerInfoUI;
+	delete upgradeUI;
 	delete stage;		
 	delete background;	
 	delete player;
@@ -278,8 +282,12 @@ string TestCharacterScene::GetStageFile(RoomType room)
 
 void TestCharacterScene::Update()
 {
+	//강화창이 열려 있으면 플레이어 조작/상호작용 막음 (위치 갱신은 유지)
+	bool isUIOpen = upgradeUI->IsOpen();
+
 	player->UpdateWorld();
-	player->Update();
+	if (!isUIOpen)
+		player->Update();
 	stage->Update();	//등록된 스컬 오브젝트(head 등)를 액션 상태와 무관하게 매 프레임 갱신
 
 	if (hasExit)
@@ -303,7 +311,7 @@ void TestCharacterScene::Update()
 		SceneManager::Get()->Remove("TestCharacter Scene");
 	}
 
-	if (KEY_DOWN('F'))
+	if (!isUIOpen && KEY_DOWN('F'))
 	{
 		//보상과 문 판정이 겹치면 보상 먼저 (문은 보상을 열어야 열림)
 		if (stageReward->IsInteractable(player->GetCollider()))
@@ -346,9 +354,13 @@ void TestCharacterScene::Update()
 			stage->SpawnItem(new DarkQuartzItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
 	}
 
+	if (KEY_DOWN(VK_F8)/* && curDoor.room == RoomType::Home*/)
+		upgradeUI->OpenUI();
+
 	EffectManager::Get()->Update();
 	DamageTextManager::Get()->Update();
 	playerInfoUI->Update();
+	upgradeUI->Update();
 
 	ChangeStage();
 }
@@ -373,6 +385,7 @@ void TestCharacterScene::PostRender()
 	DamageTextManager::Get()->Render();
 	playerInfoUI->Render();
 	playerInfoUI->RenderUI();
+	upgradeUI->Render();
 	player->PostRender();
 }
 
