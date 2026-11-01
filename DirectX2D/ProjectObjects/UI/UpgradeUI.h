@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 class Player;
 
 class UpgradeUI : public GameObject
@@ -24,21 +24,22 @@ private:
 private:
 
 	Quad* background = nullptr;
+
+	Quad* healthIcon = nullptr;
+	Quad* physicAttackIcon = nullptr;
+	Quad* magicAttackIcon = nullptr;
+	Quad* critChanceIcon = nullptr;
+
 	Button* healthButton = nullptr;
 	Button* physicAttackButton = nullptr;
 	Button* magicAttackButton = nullptr;
 	Button* critChanceButton = nullptr;
 
-	const string healthButtonTag = "Ã¼·Â Áõ°¡ +20";
-	const string physicAttackButtonTag = "¹°¸® °ø°İ Áõ°¡ +2%";
-	const string magicAttackButtonTag = "¸¶¹ı °ø°İ Áõ°¡ +2%";
-	const string critChanceButtonTag = "Ä¡¸íÅ¸ È®·ü Áõ°¡ +1%";
-
-	int healthCount = 0;
-	int physicAttackCount = 0;
-	int magicAttackCount = 0;
-	int critChanceCount = 0;
+	const string titleTag = "ê°•í™” íŠ¹ì„±";
+	const string healthButtonTag = "ì²´ë ¥ ì¦ê°€ +20";
+	const string physicAttackButtonTag = "ë¬¼ë¦¬ ê³µê²© ì¦ê°€ +2%";
+	const string magicAttackButtonTag = "ë§ˆë²• ê³µê²© ì¦ê°€ +2%";
+	const string critChanceButtonTag = "ì¹˜ëª…íƒ€ í™•ë¥  ì¦ê°€ +1%";
 
 	Player* player = nullptr;
 };
-

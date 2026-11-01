@@ -197,13 +197,13 @@ void TestCharacterScene::SpawnReward(RewardType reward)
 		else
 		{
 			for (int i = 0; i < 4; i++)
-				stage->SpawnItem(new BoneItem(1), spawnPos);
+				stage->SpawnItem(new BoneItem(10), spawnPos);
 		}
 		break;
 	case RewardType::Item:
 		//아직 아이템이 없음 - darkquartz 뿌리기
 		for (int i = 0; i < 4; i++)
-			stage->SpawnItem(new DarkQuartzItem(1), spawnPos);
+			stage->SpawnItem(new DarkQuartzItem(10), spawnPos);
 		break;
 	}
 }
