@@ -28,6 +28,7 @@ TestCharacterScene::TestCharacterScene()
 			playerInfoUI->SetHP(curHP);
 		});
 	player->SetRefreshPlayerInfo([this]() {playerInfoUI->Refresh(); });
+	player->SetOnDie([this]() { returnHome = true; });
 
 	background = new StageBackground();
 	background->AddLayer(L"ProjectTextures/Backgrounds/Chapter1/layer03.png", 0.0f);
@@ -53,10 +54,12 @@ TestCharacterScene::TestCharacterScene()
 		stageFiles[RoomType::Combat].push_back(name);
 	}
 
-	//json 만들면 주석 해제 (.map만 있고 적/문 위치가 없음)
 	//stageFiles[RoomType::Elite] = { "ProjectMaps/Chapter1_elite.stage.json" };
 	//stageFiles[RoomType::Boss] = { "ProjectMaps/Chapter1_boss.stage.json" };
 	//stageFiles[RoomType::Shop] = { "ProjectMaps/Chapter1_shop.stage.json" };
+
+	//거점 - 1번 맵과 같은 지형/플레이어/문 위치, 웨이브 없음
+	stageFiles[RoomType::Home] = { "ProjectMaps/Chapter1_home.stage.json" };
 }
 
 TestCharacterScene::~TestCharacterScene()
@@ -138,6 +141,14 @@ void TestCharacterScene::ClearStage()
 
 void TestCharacterScene::SetExitDoors()
 {
+	if (curDoor.room == RoomType::Home)
+	{
+		DoorInfo door;
+		door.reward = RewardType::Skul;
+		exitDoors->Setup({ door }, false);
+		return;
+	}
+
 	RoomType nextRoom = GetNextRoom();
 
 	if (nextRoom != RoomType::Combat)
@@ -193,8 +204,32 @@ void TestCharacterScene::SpawnReward(RewardType reward)
 	}
 }
 
+void TestCharacterScene::GoHome()
+{
+	returnHome = false;
+	changeStage = false;
+
+	ClearStage();
+
+	roomCount = 0;
+	curDoor = DoorInfo();
+	curDoor.room = RoomType::Home;
+	ResetStagePool();
+
+	player->SetCurHP(player->GetMaxHP());
+
+	BuildStage();
+	stage->SetCameraBounds();
+}
+
 void TestCharacterScene::ChangeStage()
 {
+	if (returnHome)
+	{
+		GoHome();
+		return;
+	}
+
 	if (!changeStage) return;
 	changeStage = false;
 
@@ -347,6 +382,7 @@ void TestCharacterScene::Start()
 	curDoor = DoorInfo();
 	curDoor.reward = RewardType::Skul;	//첫 방은 무덤 보상
 	changeStage = false;
+	returnHome = false;
 
 	ResetStagePool();
 	BuildStage();

@@ -130,6 +130,7 @@ void Player::TakeDamage(int amount)
 
 void Player::Die()
 {
+	if (onDie) onDie();
 }
 
 void Player::StartKnockBack(const HitData& hit)

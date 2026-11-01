@@ -43,6 +43,7 @@ public:
 	int GetBoneChip() { return boneChip; }
 
 	void SetRefreshPlayerInfo(Event event) { refreshPlayerInfo = event; }
+	void SetOnDie(Event event) { onDie = event; }	
 	float GetSwitchCoolDownRatio();
 
 	//반환: 슬롯이 꽉 차서 빠진 스컬
@@ -109,4 +110,5 @@ private:
 	int boneChip = 0;
 
 	Event refreshPlayerInfo;
+	Event onDie;
 };

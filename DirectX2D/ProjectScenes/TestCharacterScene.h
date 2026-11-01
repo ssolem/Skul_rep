@@ -30,6 +30,7 @@ private:
 	void SpawnReward(RewardType reward);
 	void OpenExitDoors();
 	void ChangeStage();
+	void GoHome();
 	RoomType GetNextRoom();
 
 	string GetStageFile(RoomType room);	
@@ -49,8 +50,8 @@ private:
 	DoorInfo curDoor;
 	DoorInfo nextDoor;
 	bool changeStage = false;
+	bool returnHome = false;	
 
-	//엘리트/보스/상점 맵이 아직 없어서 비워 둠
 	map<int, RoomType> chapterOne = {
 		//{4, RoomType::Elite},
 		//{8, RoomType::Boss},

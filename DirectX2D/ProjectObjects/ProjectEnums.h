@@ -155,7 +155,7 @@ struct ProjectileData
 };
 
 //방 종류
-enum class RoomType { Combat, Shop, Elite, Boss };
+enum class RoomType { Combat, Shop, Elite, Boss, Home };
 
 //보상 종류
 enum class RewardType { None, Gold, Skul, Item, Max };
