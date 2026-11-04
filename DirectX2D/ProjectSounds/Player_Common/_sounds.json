@@ -1,0 +1,10 @@
+{
+  "folder": "Player_Common",
+  "actions": {
+    "대시": "Default_Dash.wav",
+    "점프": "Default_Jump.wav",
+    "공중점프": "Default_Jump_Air.wav",
+    "교대": "Default_Switch.wav",
+    "사망": "Default_Dead.wav"
+  }
+}

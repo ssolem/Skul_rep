@@ -135,6 +135,7 @@ void GameManager::Delete()
 
     SceneManager::Delete();
     EffectManager::Delete();
+    ProjectileManager::Delete();   // 투사체 풀 정리 - Texture/Device 삭제 전에
     Animator::ClearFrameCache();   // 공유 프레임(GPU 버퍼) 정리 - Device 삭제 전에
     Keyboard::Delete();
     Timer::Delete();

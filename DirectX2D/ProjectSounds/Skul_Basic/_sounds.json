@@ -1,0 +1,23 @@
+{
+  "folder": "Skul_Basic",
+  "actions": {
+    "평타(콤보 1/2)": [
+      "Skul_Atk 1.wav",
+      "Skul_Atk 2.wav"
+    ],
+    "점프공격": "Skul_Jump_Atk.wav",
+    "스킬1 머리 투척 시전": "Atk_BluntWeapon_Small 1.wav",
+    "스킬2 부활(Rebone)": "Skul_Reborn_Rise.wav",
+    "교대 공격": "Atk_BluntWeapon_Large.wav",
+    "등장(Spawn)": [
+      "Skul_Reborn_Rise.wav",
+      "Skul_Reborn_Cape.wav"
+    ],
+    "머리 투척/회수(사용 위치 미확인)": [
+      "Skul_SkullThrowing.wav",
+      "Skul_SkullBack.wav"
+    ],
+    "타격": "Hit/Hit_Blunt_Small.wav",
+    "대시/점프/교대": "Player_Common/"
+  }
+}
