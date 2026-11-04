@@ -52,6 +52,7 @@ void GameManager::Update()
 
     Keyboard::Get()->Update();
     Timer::Get()->Update();
+    Audio::Get()->Update();
 
     //scene->Update();
     SceneManager::Get()->Update();
@@ -145,6 +146,7 @@ void GameManager::Delete()
     Environment::Delete();    
     Observer::Delete();
     Font::Delete();
+    Audio::Delete();
 
     //빠른편, 자원 안정성 조금 떨어짐
     //ImGui_ImplDX11_Shutdown();

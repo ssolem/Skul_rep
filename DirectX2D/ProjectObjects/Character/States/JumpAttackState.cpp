@@ -49,6 +49,10 @@ void JumpAttackState::Start()
 	Clip* clip = owner->FindClip(curClipName);
 	clip->SetEvent([this]() { owner->SetCancellable(true); }, 0);
 	clip->SetEvent([this]() { End(); });
+
+	if (!data.soundKey.empty())
+		Audio::Get()->Play(data.soundKey);
+
 	PlayClip();
 }
 

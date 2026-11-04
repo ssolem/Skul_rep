@@ -60,6 +60,8 @@ void BasicSkul::RetrieveHead()
 	head->SetActive(false);
 	canRetrieveHead = false;
 
+	Audio::Get()->Play("BasicSkul_HeadBack");
+
 	//같은 이동 상태(걷는 중 등)로 주우면 PlayAnim이 클립을 안 바꾸므로 머리 있는 클립으로 강제 교체
 	owner->RefreshMoveClip();
 }
@@ -79,6 +81,13 @@ void BasicSkul::Render()
 void BasicSkul::Init(Character* owner, Animator* animator)
 {
 	this->owner = owner;
+
+	Audio::Get()->Add("BasicSkul_Atk1", "ProjectSounds/Skul_Basic/Skul_Atk 1.wav");
+	Audio::Get()->Add("BasicSkul_Atk2", "ProjectSounds/Skul_Basic/Skul_Atk 2.wav");
+	Audio::Get()->Add("BasicSkul_JumpAtk", "ProjectSounds/Skul_Basic/Skul_Jump_Atk.wav");
+	Audio::Get()->Add("BasicSkul_Switch", "ProjectSounds/Skul_Basic/Atk_BluntWeapon_Large.wav");
+	Audio::Get()->Add("BasicSkul_HeadThrow", "ProjectSounds/Skul_Basic/Skul_SkullThrowing.wav");
+	Audio::Get()->Add("BasicSkul_HeadBack", "ProjectSounds/Skul_Basic/Skul_SkullBack.wav");
 
 	CreateAnimations(animator);
 	SetStats();
@@ -165,14 +174,14 @@ void BasicSkul::CreateComboAttacks(Animator* animator)
 	basicAttackCombos =
 	{
 		{ "AttackA", 30.0f, 0.10f, 8, AttackType::Melee,
-		animator->FindClip(tag + "AttackA")->GetFrame(2)->GetSize()},
+		animator->FindClip(tag + "AttackA")->GetFrame(2)->GetSize(), Vector2::Zero, "BasicSkul_Atk1"},
 
 		{ "AttackB", 60.0f, 0.10f, 10, AttackType::Melee,
-		animator->FindClip(tag + "AttackB")->GetFrame(1)->GetSize()},
+		animator->FindClip(tag + "AttackB")->GetFrame(1)->GetSize(), Vector2::Zero, "BasicSkul_Atk2"},
 	};
 
 	jumpAttack = { "JumpAttack", 0.0f, 0.0f, 8, AttackType::Melee,
-		animator->FindClip(tag + "JumpAttack")->GetFrame(1)->GetSize() };
+		animator->FindClip(tag + "JumpAttack")->GetFrame(1)->GetSize(), Vector2::Zero, "BasicSkul_JumpAtk" };
 }
 
 void BasicSkul::CreateEffects(Animator* animator)

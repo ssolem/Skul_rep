@@ -83,6 +83,9 @@ void BasicAttackState::Start()
 	clip->SetEvent([this]() { owner->SetCancellable(true); }, 0);
 	clip->SetEvent([this]() { End(); });
 
+	if (!data.soundKey.empty())
+		Audio::Get()->Play(data.soundKey);
+
 	PlayClip();
 }
 

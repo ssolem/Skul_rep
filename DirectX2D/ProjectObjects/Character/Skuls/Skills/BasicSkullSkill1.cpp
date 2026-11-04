@@ -77,6 +77,8 @@ void BasicSkullSkill1::Start()
 	Vector2 launchVelocity = { dirX * headSpeed, 0.0f };
 	head->SetVelocity(launchVelocity);
 
+	Audio::Get()->Play("BasicSkul_HeadThrow");
+
 	head->StartLaunch([startPos, launchVelocity, this](SkulObject* self, float dt)
 		{
 			self->Pos() += launchVelocity * dt;

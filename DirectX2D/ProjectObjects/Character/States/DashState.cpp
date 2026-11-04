@@ -66,6 +66,7 @@ void DashState::Start()
 
 	dashEffectPos = owner->GlobalPos() - (dashDirection * dashEffectLocationOffset);
 	EffectManager::Get()->Play("DashSmoke_Public_Small", dashEffectPos, owner->FacingRight());
+	Audio::Get()->Play("Player_Dash");	
 	owner->SetVelocity(Vector2::Zero);
 
 	Clip* clip = owner->FindClip(curClipName);

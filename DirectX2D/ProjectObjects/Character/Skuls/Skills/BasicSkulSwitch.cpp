@@ -66,6 +66,7 @@ void BasicSkulSwitch::Start()
 	attackCollider->SetActive(true);
 
 	owner->PlayClip(spinClip);
+	Audio::Get()->Play("BasicSkul_Switch");
 }
 
 void BasicSkulSwitch::End()

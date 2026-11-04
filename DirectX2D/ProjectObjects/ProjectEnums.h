@@ -103,6 +103,8 @@ struct AttackData
 	AttackType type;
 	Vector2 hitboxSize;
 	Vector2 hitboxOffset = Vector2::Zero;
+
+	string soundKey;
 };
 
 //damage가 0이면 무데미지 - OnHit()이 이 값으로 판단

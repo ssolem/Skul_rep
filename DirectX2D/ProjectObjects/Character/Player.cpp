@@ -17,6 +17,12 @@ Player::Player()
 	SetStats();		//플레이어 공통 기본 스탯 (스컬과 무관)
 	upgrade = new PlayerUpgrade(this);
 
+	//스컬 공통 효과음
+	Audio::Get()->Add("Player_Dash", "ProjectSounds/Player_Common/Default_Dash.wav");
+	Audio::Get()->Add("Player_Jump", "ProjectSounds/Player_Common/Default_Jump.wav");
+	Audio::Get()->Add("Player_JumpAir", "ProjectSounds/Player_Common/Default_Jump_Air.wav");
+	Audio::Get()->Add("Player_Dead", "ProjectSounds/Player_Common/Default_Dead.wav");
+
 	//BasicSkul로 시작
 	SkulClass* basicSkul = new BasicSkul();
 	skuls.push_back(basicSkul);
@@ -133,6 +139,7 @@ void Player::TakeDamage(int amount)
 
 void Player::Die()
 {
+	Audio::Get()->Play("Player_Dead");
 	if (onDie) onDie();
 }
 
@@ -287,10 +294,15 @@ void Player::DoJump()
 
 	bool wasGrounded = isGrounded;
 
-	if (!Jump()) return;    
+	if (!Jump()) return;
 
-	if (!wasGrounded)      
+	if (!wasGrounded)
+	{
 		EffectManager::Get()->Play("DoubleJump_Smoke", GlobalPos() + jumpEffectOffset);
+		Audio::Get()->Play("Player_JumpAir");
+	}
+	else
+		Audio::Get()->Play("Player_Jump");
 }
 
 
