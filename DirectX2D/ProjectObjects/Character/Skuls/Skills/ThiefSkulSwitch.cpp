@@ -49,6 +49,7 @@ void ThiefSkulSwitch::Start()
 	attackCollider->SetActive(true);
 
 	owner->PlayClip(slashClip);
+	Audio::Get()->Play("Thief_SlashUp");
 }
 
 void ThiefSkulSwitch::End()

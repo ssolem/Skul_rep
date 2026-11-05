@@ -29,6 +29,7 @@ public:
 private:
 	virtual void CreateSkills() override;
 	virtual void CreateComboAttacks(Animator* animator) override;
+	void CreateSounds();
 
 private:
 	Animator* animator = nullptr;

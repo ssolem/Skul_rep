@@ -94,6 +94,10 @@ void ThiefBackRoll::Start()
 		clip->SetSpeed(clipDuration / rollDuration);
 	}
 
+	//1~2단계 Small, 3~4단계 Medium
+	Audio::Get()->Play("Thief_Roll");
+	Audio::Get()->Play(thiefSkul->GetTier() >= 2 ? "Thief_SmokeMedium" : "Thief_SmokeSmall");
+
 	switch (curData.smokeType)
 	{
 	case BackRollType::Smoke:       OnSmokeAction();        break;

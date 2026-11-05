@@ -60,6 +60,7 @@ void ThiefPocketTear::Start()
 
 	EffectManager::Get()->Play(smokeKey, owner->GlobalPos() + Vector2(0.0f, owner->GetDefaultSize().y * 0.5f), owner->FacingRight());
 	owner->PlayClip(readyClip);
+	Audio::Get()->Play("Thief_SmokeSmall");
 }
 
 void ThiefPocketTear::End()
@@ -88,6 +89,8 @@ void ThiefPocketTear::ApplyTier(int newTier)
 void ThiefPocketTear::OnReadyEnd()
 {
 	owner->PlayClip(attackClip);
+	Audio::Get()->Play("Thief_SlashDown");
+	Audio::Get()->Play("Thief_Sword5");
 	Slash();
 }
 

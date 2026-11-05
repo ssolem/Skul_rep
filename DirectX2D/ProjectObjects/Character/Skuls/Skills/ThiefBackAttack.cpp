@@ -64,6 +64,9 @@ void ThiefBackAttack::Start()
 	owner->FindClip(attackClip)->SetEvent([this]() { Finish(); });
 
 	owner->PlayClip(readyClip);
+
+	//연막: 1~2단계 Small, 3~4단계 Medium
+	Audio::Get()->Play(thiefSkul->GetTier() >= 2 ? "Thief_SmokeMedium" : "Thief_SmokeSmall");
 }
 
 void ThiefBackAttack::End()
@@ -101,6 +104,8 @@ void ThiefBackAttack::OnReadyEnd()
 	}
 
 	owner->PlayClip(attackClip);
+	Audio::Get()->Play("Thief_Sword4");
+	Audio::Get()->Play("Thief_Sword5");
 	Slash();
 }
 

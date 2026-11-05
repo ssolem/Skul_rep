@@ -70,6 +70,8 @@ void ThiefGoldAttack::Start()
 	fireDir = owner->FacingRight() ? 1.0f : -1.0f;
 	remainShots = curData.cost;
 	fireTimer = 0.0f;		
+
+	Audio::Get()->Play("Thief_GoldThrow");
 }
 
 void ThiefGoldAttack::End()
@@ -135,6 +137,7 @@ void ThiefGoldAttack::FireGoldProjectile()
 		ProjectileManager::Get()->Fire(goldTag, pos, dir, CreateHitData(0.0f), ProjectileTarget::Enemy,
 			0, [this](Character* target) { GoldExplode(target->GetHitPos()); });
 
+	Audio::Get()->Play("Thief_GainGold");	
 	remainShots--;
 }
 
@@ -153,5 +156,6 @@ void ThiefGoldAttack::GoldExplode(Vector2 pos)
 	}
 
 	EffectManager::Get()->Play("ThiefGoldExplosion", pos);
+	Audio::Get()->Play("Thief_GoldExplode");
 	hitbox->SetActive(false);
 }

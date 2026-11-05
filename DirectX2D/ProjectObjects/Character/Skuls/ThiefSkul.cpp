@@ -70,6 +70,7 @@ void ThiefSkul::Init(Character* owner, Animator* animator)
 	this->owner = owner;
 	this->animator = animator;
 
+	CreateSounds();
 	CreateAnimations(animator);
 	CreateEffects(animator);	//뒤구르기 연막/가스 이펙트 등록
 	SetAnimations();
@@ -102,6 +103,9 @@ void ThiefSkul::CreateAnimations(Animator* animator)
 
 		string repeatKey = data.tag + "FallRepeat";
 		animator->FindClip(data.tag + "Fall")->SetEvent([animator, repeatKey]() { animator->PlayClip(repeatKey); });
+
+		Clip* jumpAttack = animator->FindClip(data.tag + "JumpAttack");
+		jumpAttack->SetEvent([]() { Audio::Get()->Play("Thief_SlashUp"); }, jumpAttack->GetFrameCount() / 2);
 	}
 }
 
@@ -198,12 +202,32 @@ void ThiefSkul::CreateComboAttacks(Animator* animator)
 	basicAttackCombos =
 	{
 		{ "AttackA", data.attackA, 0.10f, 9, AttackType::Melee,
-		animator->FindClip(tag + "AttackA")->GetFrame(2)->GetSize()},
+		animator->FindClip(tag + "AttackA")->GetFrame(2)->GetSize(), Vector2::Zero, "Thief_Atk1"},
 
 		{ "AttackB", data.attackB, 0.10f, 9, AttackType::Melee,
-		animator->FindClip(tag + "AttackB")->GetFrame(2)->GetSize()},
+		animator->FindClip(tag + "AttackB")->GetFrame(2)->GetSize(), Vector2::Zero, "Thief_Atk2"},
 	};
 
 	jumpAttack = { "JumpAttack", 0.0f, 0.0f, 8, AttackType::Melee,
-		animator->FindClip(tag + "JumpAttack")->GetFrame(1)->GetSize() };
+		animator->FindClip(tag + "JumpAttack")->GetFrame(1)->GetSize(), Vector2::Zero, "Thief_JumpAtk" };
+}
+
+//효과음 등록 - 키가 이미 있으면 Audio::Add가 무시 (BasicSkul과 파일명이 겹쳐서 Thief_ 접두어)
+void ThiefSkul::CreateSounds()
+{
+	const string path = "ProjectSounds/Thief/";
+
+	Audio::Get()->Add("Thief_Atk1", path + "Atk_Sword_Small 1.wav");
+	Audio::Get()->Add("Thief_Atk2", path + "Atk_Sword_Small 2.wav");
+	Audio::Get()->Add("Thief_JumpAtk", path + "Atk_BluntWeapon_Small 2.wav");
+	Audio::Get()->Add("Thief_SlashUp", path + "Atk_Sword_Large (Slash Up).wav");
+	Audio::Get()->Add("Thief_SlashDown", path + "Atk_Sword_Large (Slash Down).wav");
+	Audio::Get()->Add("Thief_Sword4", path + "Atk_Sword_Small 4.wav");
+	Audio::Get()->Add("Thief_Sword5", path + "Atk_Sword_Small 5.wav");
+	Audio::Get()->Add("Thief_SmokeSmall", path + "Atk_Smoke_Small.wav");
+	Audio::Get()->Add("Thief_SmokeMedium", path + "Atk_Smoke_Medium.wav");
+	Audio::Get()->Add("Thief_Roll", path + "Atk_BluntWeapon_Large.wav");
+	Audio::Get()->Add("Thief_GoldThrow", path + "Atk_BluntWeapon_Small 1.wav");
+	Audio::Get()->Add("Thief_GainGold", path + "Object_GainGold.wav");
+	Audio::Get()->Add("Thief_GoldExplode", path + "Atk_Explosion_Small.wav");
 }
