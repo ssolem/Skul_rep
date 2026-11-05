@@ -1,5 +1,5 @@
 ﻿#include "Framework.h"
-#include "TestCharacterScene.h"
+#include "MainScene.h"
 #include "ProjectObjects/Character/Player.h"
 #include "ProjectObjects/Stage.h"
 #include "ProjectObjects/StageData.h"
@@ -15,7 +15,7 @@
 #include "ProjectObjects/UI/UpgradeUI.h"
 
 
-TestCharacterScene::TestCharacterScene()
+MainScene::MainScene()
 {
 	player = new Player();	//"Enemy_Appearance" 이펙트를 등록하므로 적 생성(Build)보다 먼저
 
@@ -65,7 +65,7 @@ TestCharacterScene::TestCharacterScene()
 	upgradeUI = new UpgradeUI(player);
 }
 
-TestCharacterScene::~TestCharacterScene()
+MainScene::~MainScene()
 {
 	delete stageReward;
 	delete exitDoors;
@@ -77,7 +77,7 @@ TestCharacterScene::~TestCharacterScene()
 }
 
 //json을 읽어 맵/플레이어 위치/웨이브를 새로 구성
-void TestCharacterScene::BuildStage()
+void MainScene::BuildStage()
 {
 	StageData stageData;
 	string file = GetStageFile(curDoor.room);
@@ -135,7 +135,7 @@ void TestCharacterScene::BuildStage()
 }
 
 //적/아이템/타일맵을 지움 - 등장 중인 적의 이펙트 콜백은 Enemy 소멸자가 끊음
-void TestCharacterScene::ClearStage()
+void MainScene::ClearStage()
 {
 	player->SetStage(nullptr);
 
@@ -143,7 +143,7 @@ void TestCharacterScene::ClearStage()
 	stage = nullptr;
 }
 
-void TestCharacterScene::SetExitDoors()
+void MainScene::SetExitDoors()
 {
 	if (curDoor.room == RoomType::Home)
 	{
@@ -173,14 +173,14 @@ void TestCharacterScene::SetExitDoors()
 	exitDoors->Setup(ExitDoors::RandomRewardDoors(), true);
 }
 
-void TestCharacterScene::OpenExitDoors()
+void MainScene::OpenExitDoors()
 {
 	exitDoors->Open();
 	exitDoors->Update();
 }
 
 //보상 오브젝트가 열린 뒤 실제 드랍
-void TestCharacterScene::SpawnReward(RewardType reward)
+void MainScene::SpawnReward(RewardType reward)
 {
 	Vector2 spawnPos = stageReward->Pos() + Vector2(0.0f, 80.0f);
 
@@ -208,7 +208,7 @@ void TestCharacterScene::SpawnReward(RewardType reward)
 	}
 }
 
-void TestCharacterScene::GoHome()
+void MainScene::GoHome()
 {
 	returnHome = false;
 	changeStage = false;
@@ -226,7 +226,7 @@ void TestCharacterScene::GoHome()
 	stage->SetCameraBounds();
 }
 
-void TestCharacterScene::ChangeStage()
+void MainScene::ChangeStage()
 {
 	if (returnHome)
 	{
@@ -246,7 +246,7 @@ void TestCharacterScene::ChangeStage()
 	stage->SetCameraBounds();
 }
 
-RoomType TestCharacterScene::GetNextRoom()
+RoomType MainScene::GetNextRoom()
 {
 	auto it = chapterOne.find(roomCount);
 	if (it != chapterOne.end())
@@ -255,7 +255,7 @@ RoomType TestCharacterScene::GetNextRoom()
 	return RoomType::Combat;
 }
 
-void TestCharacterScene::ResetStagePool()
+void MainScene::ResetStagePool()
 {
 	combatPool = stageFiles[RoomType::Combat];
 
@@ -263,7 +263,7 @@ void TestCharacterScene::ResetStagePool()
 		swap(combatPool[i], combatPool[Random(0, i + 1)]);
 }
 
-string TestCharacterScene::GetStageFile(RoomType room)
+string MainScene::GetStageFile(RoomType room)
 {
 	if (room == RoomType::Combat)
 	{
@@ -280,7 +280,7 @@ string TestCharacterScene::GetStageFile(RoomType room)
 	return files[Random(0, (int)files.size())];
 }
 
-void TestCharacterScene::Update()
+void MainScene::Update()
 {
 	//강화창이 열려 있으면 플레이어 조작/상호작용 막음 (위치 갱신은 유지)
 	bool isUIOpen = upgradeUI->IsOpen();
@@ -298,17 +298,17 @@ void TestCharacterScene::Update()
 	if (KEY_DOWN(VK_F2))
 	{
 		SceneManager::Get()->Add("Atlas Scene");
-		SceneManager::Get()->Remove("TestCharacter Scene");
+		SceneManager::Get()->Remove("Main Scene");
 	}
 	if (KEY_DOWN(VK_F3))
 	{
 		SceneManager::Get()->Add("SkulMapEdit Scene");
-		SceneManager::Get()->Remove("TestCharacter Scene");
+		SceneManager::Get()->Remove("Main Scene");
 	}
 	if (KEY_DOWN(VK_F4))
 	{
 		SceneManager::Get()->Add("SpawnEdit Scene");
-		SceneManager::Get()->Remove("TestCharacter Scene");
+		SceneManager::Get()->Remove("Main Scene");
 	}
 
 	if (!isUIOpen && KEY_DOWN('F'))
@@ -365,7 +365,7 @@ void TestCharacterScene::Update()
 	ChangeStage();
 }
 
-void TestCharacterScene::Render()
+void MainScene::Render()
 {
 	stage->RenderMap();
 
@@ -380,7 +380,7 @@ void TestCharacterScene::Render()
 	EffectManager::Get()->Render();
 }
 
-void TestCharacterScene::PostRender()
+void MainScene::PostRender()
 {
 	DamageTextManager::Get()->Render();
 	playerInfoUI->Render();
@@ -389,7 +389,7 @@ void TestCharacterScene::PostRender()
 	player->PostRender();
 }
 
-void TestCharacterScene::Start()
+void MainScene::Start()
 {
 	roomCount = 1;
 	curDoor = DoorInfo();
@@ -402,13 +402,18 @@ void TestCharacterScene::Start()
 
 	CAM->SetTarget(player);
 	stage->SetCameraBounds();
+	
+	//bgm
+	Audio::Get()->Add("BGM_Chapter1", "ProjectSounds/BGM/Chapter1.wav", true);	
+	Audio::Get()->Play("BGM_Chapter1");
 }
 
-void TestCharacterScene::End()
+void MainScene::End()
 {
+	Audio::Get()->Stop("BGM_Chapter1");
 	ClearStage();
 }
 
-void TestCharacterScene::Reset()
+void MainScene::Reset()
 {
 }

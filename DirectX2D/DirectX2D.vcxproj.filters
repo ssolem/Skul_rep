@@ -300,7 +300,7 @@
     <ClInclude Include="Framework\Utilities\Audio.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectScenes\TestCharacterScene.h">
+    <ClInclude Include="ProjectScenes\MainScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GameManager\SceneManager.h">
@@ -776,7 +776,7 @@
     <ClCompile Include="Framework\Utilities\Audio.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectScenes\TestCharacterScene.cpp">
+    <ClCompile Include="ProjectScenes\MainScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="GameManager\SceneManager.cpp">

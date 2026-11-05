@@ -4,7 +4,7 @@
 
 
 //Project
-#include "ProjectScenes/TestCharacterScene.h"
+#include "ProjectScenes/MainScene.h"
 #include "ProjectScenes/AtlasMakerScene.h"
 
 

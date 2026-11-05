@@ -10,6 +10,9 @@ TitleScene::TitleScene()
 	logo = new Quad(L"ProjectTextures/UI/Title/Logo/Title_Logo.png");
 	logo->Pos() = { CENTER_X,  WIN_HEIGHT * 0.4f };
 	logo->UpdateWorld();
+
+	//bgm
+	Audio::Get()->Add("BGM_MainTitle", "ProjectSounds/BGM/MainTitle.wav", true);	
 }
 
 TitleScene::~TitleScene()
@@ -24,7 +27,7 @@ void TitleScene::Update()
 
 	if (IsAnyKeyDown())
 	{
-		SceneManager::Get()->Add("TestCharacter Scene");
+		SceneManager::Get()->Add("Main Scene");
 		SceneManager::Get()->Remove("Title Scene");
 	}
 }
@@ -47,10 +50,13 @@ void TitleScene::Start()
 {
 	time = 0.0f;
 	CAM->SetTarget(nullptr);
+
+	Audio::Get()->Play("BGM_MainTitle");
 }
 
 void TitleScene::End()
 {
+	Audio::Get()->Stop("BGM_MainTitle");
 }
 
 void TitleScene::Reset()

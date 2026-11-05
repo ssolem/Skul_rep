@@ -20,12 +20,12 @@ GameManager::GameManager()
     //scene = new AStarScene();
     //scene = new TestMapScene();
     //scene = new TankScene();
-    //scene = new TestCharacterScene();
+    //scene = new MainScene();
 
     //¾À ¸Å´ÏÀú·Î ¾À »ý¼º
     //SceneManager::Get()->Create("AStar Scene", new AStarScene());
     //SceneManager::Get()->Create("Tank Scene", new TankScene());
-    SceneManager::Get()->Create("TestCharacter Scene", new TestCharacterScene());
+    SceneManager::Get()->Create("Main Scene", new MainScene());
     SceneManager::Get()->Create("Atlas Scene", new AtlasMakerScene());
 	SceneManager::Get()->Create("SkulMapEdit Scene", new SkulMapEditScene());
 	SceneManager::Get()->Create("SpawnEdit Scene", new SpawnEditScene());

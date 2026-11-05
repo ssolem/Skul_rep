@@ -9,11 +9,11 @@ class StageBackground;
 class StageReward;
 class UpgradeUI;
 
-class TestCharacterScene : public Scene
+class MainScene : public Scene
 {
 public:
-	TestCharacterScene();
-	~TestCharacterScene();
+	MainScene();
+	~MainScene();
 
 	virtual void Update() override;
 	virtual void Render() override;

@@ -298,7 +298,7 @@
     <ClInclude Include="Scenes\TileMapEditScene.h" />
     <ClInclude Include="Objects\TestObject\TestTracker.h" />
     <ClInclude Include="Scenes\TestMapScene.h" />
-    <ClInclude Include="ProjectScenes\TestCharacterScene.h" />
+    <ClInclude Include="ProjectScenes\MainScene.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\ThiefSkul.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefBackRoll.h" />
     <ClInclude Include="ProjectObjects\Character\Skuls\Skills\ThiefGoldAttack.h" />
@@ -434,7 +434,7 @@
     <ClCompile Include="Scenes\TankScene.cpp" />
     <ClCompile Include="Objects\Character\Tank\TankAttack.cpp" />
     <ClCompile Include="Scenes\TestMapScene.cpp" />
-    <ClCompile Include="ProjectScenes\TestCharacterScene.cpp" />
+    <ClCompile Include="ProjectScenes\MainScene.cpp" />
     <ClCompile Include="ProjectObjects\Character\States\SwitchState.cpp" />
     <ClCompile Include="ProjectObjects\Character\States\SkillState.cpp" />
     <ClCompile Include="ProjectScenes\SkulMapEditScene.cpp" />

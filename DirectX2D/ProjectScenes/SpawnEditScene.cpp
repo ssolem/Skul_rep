@@ -46,7 +46,7 @@ void SpawnEditScene::Update()
 
 	if (KEY_DOWN(VK_F1))
 	{
-		SceneManager::Get()->Add("TestCharacter Scene");
+		SceneManager::Get()->Add("Main Scene");
 		SceneManager::Get()->Remove("SpawnEdit Scene");
 	}
 }
