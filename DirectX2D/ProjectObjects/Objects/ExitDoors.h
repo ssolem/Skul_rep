@@ -32,7 +32,7 @@ public:
 
 	int GetEnterDoor(Collider* collider);
 	bool IsOpen() { return isOpen; }
-	Vector2 RewardPos() { return gateTable->GlobalPos() + Vector2(0.0f, gateTable->GetSize().y * 0.5f * gateTable->GlobalScale().y); }
+	Vector2 RewardPos() { return gateTable->GlobalPos(); }
 
 private:
 	void CreateDoorAnim(AnimObject* door);
