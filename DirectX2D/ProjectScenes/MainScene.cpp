@@ -134,9 +134,10 @@ void MainScene::BuildStage()
 	stage->SetBackground(background);
 }
 
-//적/아이템/타일맵을 지움 - 등장 중인 적의 이펙트 콜백은 Enemy 소멸자가 끊음
+//적/아이템/타일맵을 지움
 void MainScene::ClearStage()
 {
+	player->OnLeaveStage();	
 	player->SetStage(nullptr);
 
 	delete stage;

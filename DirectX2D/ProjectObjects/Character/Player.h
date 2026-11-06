@@ -52,6 +52,8 @@ public:
 	//반환: 슬롯이 꽉 차서 빠진 스컬
 	SkulClass* AcquireSkul(SkulClass* skul);
 
+	void OnLeaveStage();
+
 	template<typename T>
 	bool HasSkul()
 	{

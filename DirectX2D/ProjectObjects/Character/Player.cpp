@@ -224,6 +224,12 @@ SkulClass* Player::AcquireSkul(SkulClass* skul)
 	return dropped;
 }
 
+void Player::OnLeaveStage()
+{
+	for (SkulClass* skul : skuls)
+		skul->OnLeaveStage();
+}
+
 void Player::ApplyCurSkul()
 {
 	SkulClass* skul = skuls[curSkulIndex];

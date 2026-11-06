@@ -28,6 +28,7 @@ public:
 	void RegisterHeadToStage(Stage* stage);
 	void RetrieveHead();	//머리 회수 
 	virtual void OnSwitchOut() override;
+	virtual void OnLeaveStage() override;
 
 	virtual const vector<AttackData>& GetComboAttacks() const override { return basicAttackCombos; }
 

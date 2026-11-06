@@ -73,6 +73,13 @@ void BasicSkul::OnSwitchOut()
 		RetrieveHead();
 }
 
+//날려둔 머리는 이전 스테이지에 남지 않게 방을 나갈 때 회수
+void BasicSkul::OnLeaveStage()
+{
+	if (head->Active())
+		RetrieveHead();
+}
+
 void BasicSkul::Render()
 {
 	SkulClass::Render();
