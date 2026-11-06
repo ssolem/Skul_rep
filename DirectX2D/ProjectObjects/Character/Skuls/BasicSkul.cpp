@@ -69,6 +69,8 @@ void BasicSkul::RetrieveHead()
 //던져둔 머리는 교체 시 바로 회수
 void BasicSkul::OnSwitchOut()
 {
+	SkulClass::OnSwitchOut();
+
 	if (head->Active())
 		RetrieveHead();
 }

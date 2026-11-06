@@ -47,7 +47,10 @@ void ThiefGoldAttack::UpdateCoolDown()
 {
 	if (coolDownTime > 0.0f)
 		coolDownTime -= DELTA;
+}
 
+void ThiefGoldAttack::UpdateEffect()
+{
 	//모션이 끝나도 남은 금화는 계속 발사
 	if (remainShots <= 0) return;
 
@@ -56,6 +59,12 @@ void ThiefGoldAttack::UpdateCoolDown()
 
 	FireGoldProjectile();
 	fireTimer += fireInterval;
+}
+
+//교체되면 남은 금화 취소
+void ThiefGoldAttack::OnSwitchOut()
+{
+	remainShots = 0;
 }
 
 void ThiefGoldAttack::Render()

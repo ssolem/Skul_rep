@@ -103,6 +103,11 @@ void Player::UpdateControl()
 void Player::PostUpdate()
 {
 	UpdatePreInput();
+
+	//쿨다운은 보조 스컬 포함 전부
+	for (SkulClass* skul : skuls)
+		if (skul) skul->UpdateCoolDown();
+
 	skuls[curSkulIndex]->Update();	//isPlayingAction과 무관하게 매 프레임 갱신
 }
 

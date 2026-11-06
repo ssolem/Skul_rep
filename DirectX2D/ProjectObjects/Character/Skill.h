@@ -11,7 +11,9 @@ public:
 	virtual void Init() = 0;
 
 	virtual void Update();
-	virtual void UpdateCoolDown();
+	virtual void UpdateCoolDown();	//숫자만 감소
+	virtual void UpdateEffect() {}	//모션이 끝나도 이어지는 효과
+	virtual void OnSwitchOut() {}	//스컬이 교체되어 빠질 때
 	virtual void Render();
 
 	virtual void Start();

@@ -11,9 +11,10 @@ public:
 	SkulClass();
 	virtual ~SkulClass();
 
-	virtual void Update();
+	virtual void Update();			//현재 스컬일 때만
+	void UpdateCoolDown();			//보조 스컬이어도 매 프레임
 	virtual void Render();
-	virtual void OnSwitchOut() {}	//교체되어 빠질 때
+	virtual void OnSwitchOut();		//교체되어 빠질 때
 	virtual void OnLeaveStage() {}  //스테이지 변경될 때
 
 	virtual void Init(Character* owner, Animator* animator) = 0;	//owner는 여기서 멤버에 저장하고, 이후 함수들은 멤버를 사용

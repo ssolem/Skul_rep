@@ -13,6 +13,8 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 	virtual void UpdateCoolDown() override;
+	virtual void UpdateEffect() override;
+	virtual void OnSwitchOut() override;
 	virtual void Render() override;
 
 	virtual void Start() override;

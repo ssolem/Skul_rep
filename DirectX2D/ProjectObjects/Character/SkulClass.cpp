@@ -18,10 +18,27 @@ SkulClass::~SkulClass()
 
 void SkulClass::Update()
 {
-	//장착한 스킬은 사용 여부와 상관없이 매 프레임 쿨다운/지속 효과 갱신
+	//이어지는 효과는 현재 스컬일 때만
+	for (Skill* skill : curSkills)
+	{
+		if (skill) skill->UpdateEffect();
+	}
+}
+
+void SkulClass::UpdateCoolDown()
+{
+	//장착한 스킬 쿨다운은 보조 스컬이어도 계속 감소
 	for (Skill* skill : curSkills)
 	{
 		if (skill) skill->UpdateCoolDown();
+	}
+}
+
+void SkulClass::OnSwitchOut()
+{
+	for (Skill* skill : skills)
+	{
+		if (skill) skill->OnSwitchOut();
 	}
 }
 
