@@ -33,6 +33,6 @@ private:
 
 private:
 	Animator* animator = nullptr;
-	int tier = 1;
+	int tier = 0;
 };
 
