@@ -23,6 +23,10 @@ Player::Player()
 	Audio::Get()->Add("Player_JumpAir", "ProjectSounds/Player_Common/Default_Jump_Air.wav");
 	Audio::Get()->Add("Player_Dead", "ProjectSounds/Player_Common/Default_Dead.wav");
 
+	//히트 사운드
+	Audio::Get()->Add("Hit_Blunt_Small", "ProjectSounds/Hit/Hit_Blunt_Small.wav");
+	Audio::Get()->Add("Hit_Sword_Small", "ProjectSounds/Hit/Hit_Sword_Small.wav");
+
 	//BasicSkul로 시작
 	SkulClass* basicSkul = new BasicSkul();
 	skuls.push_back(basicSkul);
@@ -134,7 +138,12 @@ void Player::InitBody()
 
 void Player::OnHit(const HitData& hit)
 {
-	Character::OnHit(hit);
+	//적 공격은 공통 히트 사운드
+	HitData data = hit;
+	if (data.hitSoundKey.empty())
+		data.hitSoundKey = "Hit_Blunt_Small";
+
+	Character::OnHit(data);
 }
 
 void Player::TakeDamage(int amount)

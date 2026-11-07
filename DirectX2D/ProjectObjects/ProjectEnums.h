@@ -120,6 +120,7 @@ struct HitData
 	float launchHeight = 0.0f; 
 	float stunTime = 0.0f;		
 	float goldMarkTime = 0.0f;	
+	string hitSoundKey;	
 };
 
 enum class TileHitType

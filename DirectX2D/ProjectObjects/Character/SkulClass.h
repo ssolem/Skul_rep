@@ -34,6 +34,7 @@ public:
 	Texture* GetSubPortrait() { return subPortrait; }
 	Texture* GetInfoPortrait() { return infoPortrait; }
 	const wstring& GetDropImage() { return dropImage; }
+	const string& GetHitSoundKey() { return hitSoundKey; }
 	bool IsInitialized() { return initialized; }
 
 	//기본 공격 콤보 데이터가 없는 SkulClass는 그냥 빈 벡터 (BasicSkul처럼 콤보가 있는 쪽만 오버라이드)
@@ -68,6 +69,7 @@ protected:
 	Texture* subPortrait = nullptr;
 	Texture* infoPortrait = nullptr;
 	wstring dropImage;	//드랍 머리 이미지 - 생성자에서 설정
+	string hitSoundKey;	//평타/점프공격 히트 사운드 - 생성자에서 설정
 
 	DamageType basicAttackDamageType = DamageType::Physical;   // 기본값 - Magic/Fixed 무기인 Skul은 SetStats()에서 재설정
 

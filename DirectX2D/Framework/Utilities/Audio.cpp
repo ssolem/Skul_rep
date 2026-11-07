@@ -17,6 +17,9 @@ Audio::~Audio()
 void Audio::Update()
 {
     soundSystem->update();
+
+    for (pair<const string, float>& coolTime : soundCoolTimes)
+        coolTime.second -= DELTA;
 }
 
 void Audio::Add(string key, string file, bool bgm, bool loop)
@@ -54,6 +57,14 @@ void Audio::Play(string key, float volume)
     soundSystem->playSound(sounds[key]->sound,
         nullptr, false, &sounds[key]->channel);
     sounds[key]->channel->setVolume(volume);
+}
+
+void Audio::PlayWithCoolTime(string key, float coolTime, float volume)
+{
+    if (soundCoolTimes[key] > 0.0f) return;
+
+    soundCoolTimes[key] = coolTime;
+    Play(key, volume);
 }
 
 void Audio::Stop(string key)

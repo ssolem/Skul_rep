@@ -86,6 +86,7 @@ void ThiefSkulSwitch::CheckHit()
 			hitData = { stat->CalculateFinalAttack(damage, DamageType::Magic, AttackType::Melee, AttackActionType::Skill),
 				stat->GetStat(Attribute::CriticalChance), stat->GetStat(Attribute::CriticalDamage),
 				DamageType::Magic, owner->FacingRight() ? 1.0f : -1.0f, this };
+			hitData.hitSoundKey = "Hit_Sword_Small";
 			hasHitData = true;
 		}
 

@@ -47,6 +47,7 @@ ThiefSkul::ThiefSkul()
 {
 	SetTag(tiers[0].tag);
 	dropImage = tiers[0].dropImage;
+	hitSoundKey = "Hit_Sword_Small";
 }
 
 ThiefSkul::~ThiefSkul()

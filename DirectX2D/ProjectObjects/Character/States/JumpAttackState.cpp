@@ -2,6 +2,8 @@
 #include "JumpAttackState.h"
 #include "../../Stage.h"
 #include "../Stat.h"
+#include "../Player.h"
+#include "../SkulClass.h"
 
 JumpAttackState::JumpAttackState(Character* character, ActionType type, const AttackData& data, DamageType damageType, const vector<string>& clipNames)
 	: ActionState(character, type, clipNames), data(data), damageType(damageType)
@@ -92,6 +94,8 @@ void JumpAttackState::CheckHit()
 			hitData = { stat->CalculateFinalAttack(data.damage, damageType, data.type, AttackActionType::Basic),
 				stat->GetStat(Attribute::CriticalChance), stat->GetStat(Attribute::CriticalDamage),
 				damageType, owner->FacingRight() ? 1.0f : -1.0f, this };
+			if (Player* player = (Player*)(owner))
+				hitData.hitSoundKey = player->GetCurSkul()->GetHitSoundKey();
 			hasHitData = true;
 		}
 

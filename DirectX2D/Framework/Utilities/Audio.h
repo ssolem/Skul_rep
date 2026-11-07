@@ -30,6 +30,7 @@ public:
         bool bgm = false, bool loop = false);
 
     void Play(string key, float volume = 1.0f);
+    void PlayWithCoolTime(string key, float coolTime, float volume = 1.0f);
     void Stop(string key);
     void Pause(string key);
     void Resume(string key);
@@ -40,4 +41,5 @@ private:
     System* soundSystem;
 
     unordered_map<string, SoundInfo*> sounds;
+    unordered_map<string, float> soundCoolTimes;
 };

@@ -2,6 +2,8 @@
 #include "BasicAttackState.h"
 #include "../../Stage.h"
 #include "../Stat.h"
+#include "../Player.h"
+#include "../SkulClass.h"
 
 BasicAttackState::BasicAttackState(Character* character, ActionType type, const vector<AttackData>& combos, DamageType damageType)
 	: ActionState(character, type, ExtractClipNames(combos)),
@@ -167,6 +169,8 @@ void BasicAttackState::CheckHit()
 			hitData = { stat->CalculateFinalAttack(data.damage, damageType, data.type, AttackActionType::Basic),
 				stat->GetStat(Attribute::CriticalChance), stat->GetStat(Attribute::CriticalDamage),
 				damageType, owner->FacingRight() ? 1.0f : -1.0f, this };
+			if (Player* player = (Player*)(owner))
+				hitData.hitSoundKey = player->GetCurSkul()->GetHitSoundKey();
 			hasHitData = true;
 		}
 

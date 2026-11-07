@@ -149,7 +149,9 @@ HitData ThiefBackAttack::CreateHitData(float attackDir)
 	float damage = stat->CalculateFinalAttack(curData.damage, curData.damageType, curData.attackType, AttackActionType::Skill);
 	float criticalChance = curData.alwaysCritical ? 1.0f : stat->GetStat(Attribute::CriticalChance);
 
-	return { damage, criticalChance, stat->GetStat(Attribute::CriticalDamage),
+	HitData data = { damage, criticalChance, stat->GetStat(Attribute::CriticalDamage),
 	curData.damageType, attackDir, this };
+	data.hitSoundKey = "Hit_Sword_Small";
+	return data;
 }
 

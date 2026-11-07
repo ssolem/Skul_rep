@@ -15,6 +15,7 @@ BasicSkul::BasicSkul()
 {
 	SetTag("BasicSkul");
 	dropImage = L"ProjectTextures/Skul_Images/Skul.png";
+	hitSoundKey = "Hit_Blunt_Small";
 }
 
 BasicSkul::~BasicSkul()

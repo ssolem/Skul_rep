@@ -226,7 +226,9 @@ HitData ThiefBackRoll::CreateHitData(float attackDir)
 	Stat* stat = owner->GetStatComponent();
 	float damage = stat->CalculateFinalAttack(curData.damage, curData.damageType, curData.attackType, AttackActionType::Skill);
 
-	return { damage, stat->GetStat(Attribute::CriticalChance), stat->GetStat(Attribute::CriticalDamage),
+	HitData data = { damage, stat->GetStat(Attribute::CriticalChance), stat->GetStat(Attribute::CriticalDamage),
 	curData.damageType, attackDir, this };
+	data.hitSoundKey = "Hit_Sword_Small";
+	return data;
 }
 

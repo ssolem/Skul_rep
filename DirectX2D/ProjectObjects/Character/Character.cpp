@@ -498,6 +498,9 @@ void Character::OnHit(const HitData& hit)
 {
 	if (isInvincible) return;
 
+	if (!hit.hitSoundKey.empty())
+		Audio::Get()->PlayWithCoolTime(hit.hitSoundKey, 0.05f);
+
 	if (hit.damage > 0.0f)
 	{
 		bool isCritical = Random(0.0f, 1.0f) < hit.criticalChance;

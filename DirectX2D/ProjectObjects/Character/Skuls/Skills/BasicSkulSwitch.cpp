@@ -100,6 +100,7 @@ void BasicSkulSwitch::CheckHit()
 			hitData = { stat->CalculateFinalAttack(damage, DamageType::Physical, AttackType::Melee, AttackActionType::Skill),
 				stat->GetStat(Attribute::CriticalChance), stat->GetStat(Attribute::CriticalDamage),
 				DamageType::Physical, 0.0f, this };
+			hitData.hitSoundKey = "Hit_Blunt_Small";
 			hasHitData = true;
 		}
 

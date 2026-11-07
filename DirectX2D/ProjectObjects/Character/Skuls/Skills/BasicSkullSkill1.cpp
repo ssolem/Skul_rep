@@ -35,6 +35,7 @@ void BasicSkullSkill1::OnHeadHit(IHittable* target)
 	data.criticalDamage = stat->GetStat(Attribute::CriticalDamage);
 	data.damageType = skillDamageType;
 	data.source = this;
+	data.hitSoundKey = "Hit_Blunt_Small";
 
 	target->OnHit(data);
 
