@@ -25,6 +25,9 @@ public:
 
 	void ApplyTier(int newTier);	//단계 변경: 태그, 콤보, 아이콘 교체
 	int GetTier() const { return tier; }
+	void UpgradeTier();
+	bool IsMaxTier() const;
+	int GetUpgradeCost() const;	
 
 private:
 	virtual void CreateSkills() override;

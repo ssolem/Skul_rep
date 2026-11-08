@@ -2,6 +2,7 @@
 #include "UpgradeUI.h"
 #include "ProjectObjects/Character/PlayerUpgrade.h"
 #include "ProjectObjects/Character/Player.h"
+#include "ProjectObjects/Character/Skuls/ThiefSkul.h"
 
 UpgradeUI::UpgradeUI(Player* player)
 {
@@ -31,6 +32,10 @@ UpgradeUI::UpgradeUI(Player* player)
 	critChanceIcon->SetParent(background);
 	critChanceIcon->Pos() = Vector2(-160, -98);
 
+	thiefSkulUpgradeIcon = new Quad(L"ProjectTextures/UI/StatUpgrade/ThiefSkul_Upgrade.png");
+	thiefSkulUpgradeIcon->SetParent(background);
+	thiefSkulUpgradeIcon->Pos() = Vector2(-160, -150);
+
 	//강화 버튼
 	healthButton = new Button(L"Textures/Tile/tile.png");
 	healthButton->SetParent(background);
@@ -56,6 +61,12 @@ UpgradeUI::UpgradeUI(Player* player)
 	critChanceButton->Scale() = Vector2(0.5f, 0.5f);
 	critChanceButton->SetEvent(std::bind(&UpgradeUI::OnCritChanceUpgrade, this));
 
+	thiefSkulUpgradeButton = new Button(L"Textures/Tile/tile.png");
+	thiefSkulUpgradeButton->SetParent(background);
+	thiefSkulUpgradeButton->Pos() = Vector2(160, -150);
+	thiefSkulUpgradeButton->Scale() = Vector2(0.5f, 0.5f);
+	thiefSkulUpgradeButton->SetEvent(std::bind(&UpgradeUI::OnThiefSkulUpgrade, this));
+
 	isActive = false;
 }
 
@@ -70,6 +81,8 @@ UpgradeUI::~UpgradeUI()
 	delete physicAttackButton;
 	delete magicAttackButton;
 	delete critChanceButton;
+	delete thiefSkulUpgradeIcon;
+	delete thiefSkulUpgradeButton;
 }
 
 void UpgradeUI::Update()
@@ -77,7 +90,7 @@ void UpgradeUI::Update()
 	if (!isActive)
 		return;
 
-	if(KEY_DOWN(VK_ESCAPE))
+	if (KEY_DOWN(VK_ESCAPE))
 	{
 		CloseUI();
 		return;
@@ -89,11 +102,13 @@ void UpgradeUI::Update()
 	physicAttackIcon->UpdateWorld();
 	magicAttackIcon->UpdateWorld();
 	critChanceIcon->UpdateWorld();
+	thiefSkulUpgradeIcon->UpdateWorld();
 
 	healthButton->Update();
 	physicAttackButton->Update();
 	magicAttackButton->Update();
 	critChanceButton->Update();
+	thiefSkulUpgradeButton->Update();
 }
 
 void UpgradeUI::Render()
@@ -135,6 +150,17 @@ void UpgradeUI::Render()
 	Font::Get()->RenderText(critChanceButtonTag, { textPos.x, textPos.y }, { 220, 30 }, "Default", "White");
 	textPos = critChanceButton->GlobalPos() + Vector2(10, 0);
 	Font::Get()->RenderText("Lv." + to_string(upgrade->GetLevel(UpgradeType::CriticalChance)), { textPos.x, textPos.y }, { 60, 30 }, "Default", "Black");
+
+	thiefSkulUpgradeIcon->Render();
+	thiefSkulUpgradeButton->Render();
+	textPos = thiefSkulUpgradeIcon->GlobalPos() + Vector2(160, 0);
+	Font::Get()->RenderText(thiefSkulUpgradeButtonTag, { textPos.x, textPos.y }, { 220, 30 }, "Default", "White");
+	textPos = thiefSkulUpgradeButton->GlobalPos() + Vector2(10, 0);
+
+	string thiefLevelText = "-";
+	if (ThiefSkul* thief = dynamic_cast<ThiefSkul*>(player->GetCurSkul()))
+		thiefLevelText = thief->IsMaxTier() ? "MAX" : "Lv." + to_string(thief->GetTier());
+	Font::Get()->RenderText(thiefLevelText, { textPos.x, textPos.y }, { 60, 30 }, "Default", "Black");
 }
 
 void UpgradeUI::OpenUI()
@@ -165,4 +191,18 @@ void UpgradeUI::OnMagicAttackUpgrade()
 void UpgradeUI::OnCritChanceUpgrade()
 {
 	player->GetUpgrade()->TryUpgrade(UpgradeType::CriticalChance);
+}
+
+void UpgradeUI::OnThiefSkulUpgrade()
+{
+	ThiefSkul* thief = dynamic_cast<ThiefSkul*>(player->GetCurSkul());
+	if (thief == nullptr || thief->IsMaxTier())
+		return;
+
+	int cost = thief->GetUpgradeCost();
+	if (player->GetBoneChip() < cost)
+		return;
+
+	player->AddBoneChip(-cost);
+	thief->UpgradeTier();
 }

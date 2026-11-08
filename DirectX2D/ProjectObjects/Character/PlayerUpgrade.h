@@ -11,8 +11,15 @@ enum class UpgradeType
 	Max,
 };
 
+enum class CurrencyType
+{
+	Gold,
+	DarkQuartz,
+};
+
 struct UpgradeInfo
 {
+	CurrencyType currency;
 	Attribute attribute;
 	StatType statType;
 	float valuePerLevel;
@@ -40,6 +47,8 @@ public:
 
 private:
 	void RefreshHP();
+	int GetOwnedCurrency(CurrencyType currency);	//플레이어가 가진 해당 재화 양
+	void SpendCurrency(CurrencyType currency, int amount);
 
 private:
 	Player* owner = nullptr;

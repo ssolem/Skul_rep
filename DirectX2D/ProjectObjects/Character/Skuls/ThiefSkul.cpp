@@ -41,6 +41,8 @@ namespace
 			L"ProjectTextures/Thief/Head/Thief_4.png" },
 	};
 	const int tierCount = sizeof(tiers) / sizeof(tiers[0]);
+
+	const int tierUpgradeCost[tierCount - 1] = { 30, 40, 50 };
 }
 
 ThiefSkul::ThiefSkul()
@@ -122,6 +124,21 @@ void ThiefSkul::ApplyTier(int newTier)
 	}
 	CreateComboAttacks(animator);
 	SetImages();
+}
+
+bool ThiefSkul::IsMaxTier() const
+{
+	return tier >= tierCount - 1;
+}
+
+int ThiefSkul::GetUpgradeCost() const
+{
+	return IsMaxTier() ? 0 : tierUpgradeCost[tier];
+}
+
+void ThiefSkul::UpgradeTier()
+{
+	if (!IsMaxTier()) ApplyTier(tier + 1);
 }
 
 void ThiefSkul::SetAnimations()

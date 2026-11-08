@@ -20,7 +20,7 @@ private:
 	void OnPhysicAttackUpgrade();
 	void OnMagicAttackUpgrade();
 	void OnCritChanceUpgrade();
-
+	void OnThiefSkulUpgrade();
 private:
 
 	Quad* background = nullptr;
@@ -29,17 +29,20 @@ private:
 	Quad* physicAttackIcon = nullptr;
 	Quad* magicAttackIcon = nullptr;
 	Quad* critChanceIcon = nullptr;
+	Quad* thiefSkulUpgradeIcon = nullptr;
 
 	Button* healthButton = nullptr;
 	Button* physicAttackButton = nullptr;
 	Button* magicAttackButton = nullptr;
 	Button* critChanceButton = nullptr;
+	Button* thiefSkulUpgradeButton = nullptr;
 
 	const string titleTag = "강화 특성";
 	const string healthButtonTag = "체력 증가 +20";
 	const string physicAttackButtonTag = "물리 공격 증가 +2%";
 	const string magicAttackButtonTag = "마법 공격 증가 +2%";
 	const string critChanceButtonTag = "치명타 확률 증가 +1%";
+	const string thiefSkulUpgradeButtonTag = "좀도둑 업그레이드";
 
 	Player* player = nullptr;
 };
