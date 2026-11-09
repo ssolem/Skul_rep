@@ -13,59 +13,62 @@ UpgradeUI::UpgradeUI(Player* player)
 	background->Pos() = Vector2(CENTER_X, CENTER_Y);
 
 	Font::Get()->AddColor("Black", 0, 0, 0);
+	Font::Get()->AddColor("Red", 1.0f, 0.3f, 0.3f);
 	Font::Get()->AddStyle("UpgradeTitle", L"맑은 고딕", 36, DWRITE_FONT_WEIGHT_BOLD);
 
 	//아이콘
 	healthIcon = new Quad(L"ProjectTextures/UI/StatUpgrade/Health.png");
-	healthIcon->SetParent(background);
-	healthIcon->Pos() = Vector2(-160, 58);
-
 	physicAttackIcon = new Quad(L"ProjectTextures/UI/StatUpgrade/PhysicalAttack.png");
-	physicAttackIcon->SetParent(background);
-	physicAttackIcon->Pos() = Vector2(-160, 6);
-
 	magicAttackIcon = new Quad(L"ProjectTextures/UI/StatUpgrade/MagicAttack.png");
-	magicAttackIcon->SetParent(background);
-	magicAttackIcon->Pos() = Vector2(-160, -46);
-
 	critChanceIcon = new Quad(L"ProjectTextures/UI/StatUpgrade/CriticalChance.png");
-	critChanceIcon->SetParent(background);
-	critChanceIcon->Pos() = Vector2(-160, -98);
-
 	thiefSkulUpgradeIcon = new Quad(L"ProjectTextures/UI/StatUpgrade/ThiefSkul_Upgrade.png");
-	thiefSkulUpgradeIcon->SetParent(background);
-	thiefSkulUpgradeIcon->Pos() = Vector2(-160, -150);
 
 	//강화 버튼
 	healthButton = new Button(L"Textures/Tile/tile.png");
-	healthButton->SetParent(background);
-	healthButton->Pos() = Vector2(160, 58);
-	healthButton->Scale() = Vector2(0.5f, 0.5f);
 	healthButton->SetEvent(std::bind(&UpgradeUI::OnHealthUpgrade, this));
 
 	physicAttackButton = new Button(L"Textures/Tile/tile.png");
-	physicAttackButton->SetParent(background);
-	physicAttackButton->Pos() = Vector2(160, 6);
-	physicAttackButton->Scale() = Vector2(0.5f, 0.5f);
 	physicAttackButton->SetEvent(std::bind(&UpgradeUI::OnPhysicAttackUpgrade, this));
 
 	magicAttackButton = new Button(L"Textures/Tile/tile.png");
-	magicAttackButton->SetParent(background);
-	magicAttackButton->Pos() = Vector2(160, -46);
-	magicAttackButton->Scale() = Vector2(0.5f, 0.5f);
 	magicAttackButton->SetEvent(std::bind(&UpgradeUI::OnMagicAttackUpgrade, this));
 
 	critChanceButton = new Button(L"Textures/Tile/tile.png");
-	critChanceButton->SetParent(background);
-	critChanceButton->Pos() = Vector2(160, -98);
-	critChanceButton->Scale() = Vector2(0.5f, 0.5f);
 	critChanceButton->SetEvent(std::bind(&UpgradeUI::OnCritChanceUpgrade, this));
 
 	thiefSkulUpgradeButton = new Button(L"Textures/Tile/tile.png");
-	thiefSkulUpgradeButton->SetParent(background);
-	thiefSkulUpgradeButton->Pos() = Vector2(160, -150);
-	thiefSkulUpgradeButton->Scale() = Vector2(0.5f, 0.5f);
 	thiefSkulUpgradeButton->SetEvent(std::bind(&UpgradeUI::OnThiefSkulUpgrade, this));
+
+	const wstring costPath = L"ProjectTextures/Common/UI/";
+	auto CurrencyIconFile = [&](UpgradeType type)
+	{
+		return PlayerUpgrade::GetInfo(type).currency == CurrencyType::Gold ? L"Gold_Icon.png" : L"DarkQuartz_Icon.png";
+	};
+
+	costIcons[0] = new Quad(costPath + CurrencyIconFile(UpgradeType::Health));
+	costIcons[1] = new Quad(costPath + CurrencyIconFile(UpgradeType::PhysicalAttack));
+	costIcons[2] = new Quad(costPath + CurrencyIconFile(UpgradeType::MagicAttack));
+	costIcons[3] = new Quad(costPath + CurrencyIconFile(UpgradeType::CriticalChance));
+	costIcons[4] = new Quad(costPath + L"BoneChip_Icon.png");
+
+	Quad* icons[ROW_COUNT] = { healthIcon, physicAttackIcon, magicAttackIcon, critChanceIcon, thiefSkulUpgradeIcon };
+	Button* buttons[ROW_COUNT] = { healthButton, physicAttackButton, magicAttackButton, critChanceButton, thiefSkulUpgradeButton };
+
+	for (int i = 0; i < ROW_COUNT; i++)
+	{
+		float y = rowTopY - rowGap * i;
+
+		icons[i]->SetParent(background);
+		icons[i]->Pos() = Vector2(iconX, y);
+
+		buttons[i]->SetParent(background);
+		buttons[i]->Pos() = Vector2(buttonX, y);
+		buttons[i]->Scale() = Vector2(0.5f, 0.5f);
+
+		costIcons[i]->SetParent(background);
+		costIcons[i]->Pos() = Vector2(costIconX, y);
+		costIcons[i]->Scale() = Vector2(costIconScale, costIconScale);
+	}
 
 	isActive = false;
 }
@@ -83,6 +86,9 @@ UpgradeUI::~UpgradeUI()
 	delete critChanceButton;
 	delete thiefSkulUpgradeIcon;
 	delete thiefSkulUpgradeButton;
+
+	for (Quad* costIcon : costIcons)
+		delete costIcon;
 }
 
 void UpgradeUI::Update()
@@ -104,6 +110,9 @@ void UpgradeUI::Update()
 	critChanceIcon->UpdateWorld();
 	thiefSkulUpgradeIcon->UpdateWorld();
 
+	for (Quad* costIcon : costIcons)
+		costIcon->UpdateWorld();
+
 	healthButton->Update();
 	physicAttackButton->Update();
 	magicAttackButton->Update();
@@ -123,44 +132,46 @@ void UpgradeUI::Render()
 	Vector2 titlePos = background->GlobalPos() + Vector2(0, 230);
 	Font::Get()->RenderText(titleTag, { titlePos.x, titlePos.y }, { 160, 50 }, "UpgradeTitle", "White");
 
-	healthIcon->Render();
-	healthButton->Render();
-	Vector2 textPos = healthIcon->GlobalPos() + Vector2(160, 0);
-	Font::Get()->RenderText(healthButtonTag, { textPos.x, textPos.y }, { 220, 30 }, "Default", "White");
-	textPos = healthButton->GlobalPos() + Vector2(10, 0);
-	Font::Get()->RenderText("Lv." + to_string(upgrade->GetLevel(UpgradeType::Health)), { textPos.x, textPos.y }, { 60, 30 }, "Default", "Black");
+	Quad* statIcons[] = { healthIcon, physicAttackIcon, magicAttackIcon, critChanceIcon };
+	Button* statButtons[] = { healthButton, physicAttackButton, magicAttackButton, critChanceButton };
+	const string* statNames[] = { &healthButtonTag, &physicAttackButtonTag, &magicAttackButtonTag, &critChanceButtonTag };
 
-	physicAttackIcon->Render();
-	physicAttackButton->Render();
-	textPos = physicAttackIcon->GlobalPos() + Vector2(160, 0);
-	Font::Get()->RenderText(physicAttackButtonTag, { textPos.x, textPos.y }, { 220, 30 }, "Default", "White");
-	textPos = physicAttackButton->GlobalPos() + Vector2(10, 0);
-	Font::Get()->RenderText("Lv." + to_string(upgrade->GetLevel(UpgradeType::PhysicalAttack)), { textPos.x, textPos.y }, { 60, 30 }, "Default", "Black");
+	for (int i = 0; i < (int)UpgradeType::Max; i++)
+	{
+		UpgradeType type = (UpgradeType)i;
+		int cost = upgrade->IsMaxLevel(type) ? 0 : upgrade->GetCost(type);
 
-	magicAttackIcon->Render();
-	magicAttackButton->Render();
-	textPos = magicAttackIcon->GlobalPos() + Vector2(160, 0);
-	Font::Get()->RenderText(magicAttackButtonTag, { textPos.x, textPos.y }, { 220, 30 }, "Default", "White");
-	textPos = magicAttackButton->GlobalPos() + Vector2(10, 0);
-	Font::Get()->RenderText("Lv." + to_string(upgrade->GetLevel(UpgradeType::MagicAttack)), { textPos.x, textPos.y }, { 60, 30 }, "Default", "Black");
-
-	critChanceIcon->Render();
-	critChanceButton->Render();
-	textPos = critChanceIcon->GlobalPos() + Vector2(160, 0);
-	Font::Get()->RenderText(critChanceButtonTag, { textPos.x, textPos.y }, { 220, 30 }, "Default", "White");
-	textPos = critChanceButton->GlobalPos() + Vector2(10, 0);
-	Font::Get()->RenderText("Lv." + to_string(upgrade->GetLevel(UpgradeType::CriticalChance)), { textPos.x, textPos.y }, { 60, 30 }, "Default", "Black");
-
-	thiefSkulUpgradeIcon->Render();
-	thiefSkulUpgradeButton->Render();
-	textPos = thiefSkulUpgradeIcon->GlobalPos() + Vector2(160, 0);
-	Font::Get()->RenderText(thiefSkulUpgradeButtonTag, { textPos.x, textPos.y }, { 220, 30 }, "Default", "White");
-	textPos = thiefSkulUpgradeButton->GlobalPos() + Vector2(10, 0);
+		RenderRow(i, statIcons[i], statButtons[i], *statNames[i],
+			"Lv." + to_string(upgrade->GetLevel(type)), cost, upgrade->CanUpgrade(type));
+	}
 
 	string thiefLevelText = "-";
+	int thiefCost = 0;
 	if (ThiefSkul* thief = dynamic_cast<ThiefSkul*>(player->GetCurSkul()))
+	{
 		thiefLevelText = thief->IsMaxTier() ? "MAX" : "Lv." + to_string(thief->GetTier());
-	Font::Get()->RenderText(thiefLevelText, { textPos.x, textPos.y }, { 60, 30 }, "Default", "Black");
+		thiefCost = thief->GetUpgradeCost();
+	}
+	RenderRow(4, thiefSkulUpgradeIcon, thiefSkulUpgradeButton, thiefSkulUpgradeButtonTag,
+		thiefLevelText, thiefCost, thiefCost > 0 && player->GetBoneChip() >= thiefCost);
+}
+
+void UpgradeUI::RenderRow(int row, Quad* icon, Button* button, const string& name, const string& levelText, int cost, bool canAfford)
+{
+	icon->Render();
+	button->Render();
+	costIcons[row]->Render();
+
+	Vector2 textPos = icon->GlobalPos() + nameTextOffset;
+	Font::Get()->RenderText(name, { textPos.x, textPos.y }, { 220, 30 }, "Default", "White");
+
+	textPos = button->GlobalPos() + levelTextOffset;
+	Font::Get()->RenderText(levelText, { textPos.x, textPos.y }, { 60, 30 }, "Default", "Black");
+
+	//재화가 모자라면 빨간색
+	textPos = costIcons[row]->GlobalPos() + costTextOffset;
+	string costText = cost > 0 ? to_string(cost) : "-";
+	Font::Get()->RenderText(costText, { textPos.x, textPos.y }, { 80, 30 }, "Default", canAfford ? "White" : "Red");
 }
 
 void UpgradeUI::OpenUI()
@@ -205,4 +216,6 @@ void UpgradeUI::OnThiefSkulUpgrade()
 
 	player->AddBoneChip(-cost);
 	thief->UpgradeTier();
+
+	player->RefreshSkulUI();
 }

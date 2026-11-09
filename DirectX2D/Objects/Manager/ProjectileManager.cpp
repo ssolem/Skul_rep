@@ -103,3 +103,9 @@ Projectile* ProjectileManager::GetAvailableProjectile()
 	}
 	return projectile;
 }
+
+void ProjectileManager::Clear()
+{
+	for (Projectile* projectile : projectiles)
+		projectile->Reset();
+}

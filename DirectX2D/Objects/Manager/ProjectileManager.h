@@ -24,6 +24,8 @@ public:
 
 	void CheckCollision(Character* character, ProjectileTarget side);
 	void CheckTileCollision(Stage* stage);
+
+	void Clear();
 	
 private:
 	Projectile* GetAvailableProjectile();

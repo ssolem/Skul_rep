@@ -53,6 +53,7 @@ public:
 	SkulClass* AcquireSkul(SkulClass* skul);
 
 	void OnLeaveStage();
+	void RefreshSkulUI() { ApplyCurSkul(); }
 
 	template<typename T>
 	bool HasSkul()

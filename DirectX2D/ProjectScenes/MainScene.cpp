@@ -140,6 +140,8 @@ void MainScene::ClearStage()
 	player->OnLeaveStage();	
 	player->SetStage(nullptr);
 
+	ProjectileManager::Get()->Clear();
+
 	delete stage;
 	stage = nullptr;
 }
