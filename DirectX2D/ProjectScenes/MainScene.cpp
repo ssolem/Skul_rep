@@ -137,7 +137,9 @@ void MainScene::BuildStage()
 //적/아이템/타일맵을 지움
 void MainScene::ClearStage()
 {
-	player->OnLeaveStage();	
+	stage->AcquireRemainingItems();
+
+	player->OnLeaveStage();
 	player->SetStage(nullptr);
 
 	ProjectileManager::Get()->Clear();

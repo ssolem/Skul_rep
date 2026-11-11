@@ -185,6 +185,12 @@ DropItem* Stage::FindInteractableItem(Collider* collider)
 	return nullptr;
 }
 
+void Stage::AcquireRemainingItems()
+{
+	for (DropItem* item : items)
+		item->ForceAcquire();
+}
+
 void Stage::RegisterEnemy(Enemy* enemy)
 {
 	enemies.push_back(enemy);

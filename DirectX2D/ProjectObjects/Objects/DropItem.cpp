@@ -211,6 +211,14 @@ void DropItem::Acquire()
 	OnAcquire(stage->GetPlayer());
 }
 
+void DropItem::ForceAcquire()
+{
+	if (!Active() || !autoAcquire) return;
+
+	SetActive(false);
+	OnAcquire(stage->GetPlayer());
+}
+
 void DropItem::ResolveTileCollision()
 {
 	Vector2 overlap;

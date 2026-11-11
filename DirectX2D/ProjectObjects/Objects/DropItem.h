@@ -27,6 +27,7 @@ public:
 
 	bool IsInteractable(Collider* other) { return Active() && !autoAcquire && collider->IsCollision(other); }
 	void Interact() { Acquire(); }
+	void ForceAcquire();
 
 protected:
 	void SetIdleClip(const wstring& atlasPath);
