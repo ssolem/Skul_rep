@@ -1,6 +1,10 @@
 ﻿#include "Framework.h"
 #include "DirectX2D.h"
 
+#ifdef _DEBUG
+#pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
+#endif
+
 #define MAX_LOADSTRING 100
 
 HINSTANCE hInst;

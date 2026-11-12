@@ -7,6 +7,7 @@
 #include "Skuls/BasicSkul.h"
 #include "Skuls/ThiefSkul.h"
 #include "PlayerUpgrade.h"
+#include "ProjectUtilities/ScopedTimer.h"
 
 Player::Player()
 	: Character()
@@ -218,7 +219,10 @@ void Player::SwitchSkul()
 SkulClass* Player::AcquireSkul(SkulClass* skul)
 {
 	if (!skul->IsInitialized())
-		skul->Init(this, animator);	
+	{
+		ScopedTimer t("Init Total");
+		skul->Init(this, animator);
+	}
 
 	SkulClass* dropped = nullptr;
 	skuls[curSkulIndex]->OnSwitchOut();

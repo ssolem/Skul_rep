@@ -330,6 +330,9 @@
     <ClInclude Include="ProjectUtilities\AtlasMaker.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectUtilities\ScopedTimer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="ProjectScenes\AtlasMakerScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

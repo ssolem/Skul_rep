@@ -8,18 +8,16 @@
 #include "Skills/ThiefBackAttack.h"
 #include "Skills/ThiefPocketTear.h"
 #include "Skills/ThiefSkulSwitch.h"
+#include "ProjectUtilities/ScopedTimer.h"
 
 namespace
 {
 	//단계별로 달라지는 값만 모아 둠
-
 	struct ThiefTierData
 	{
 		string tag;
 		wstring atlas;
 		float attackA, attackB;
-
-		//UI_Icons 파일명이 단계마다 규칙이 달라서 크기 기준으로 짝지음 (main 45x45, sub 21x21, info 높이 68~76)
 
 		wstring mainPortrait, subPortrait, infoPortrait;
 		wstring dropImage;	//Head 폴더 - 바닥에 떨어진 머리
@@ -73,15 +71,13 @@ void ThiefSkul::Init(Character* owner, Animator* animator)
 	this->owner = owner;
 	this->animator = animator;
 
-	CreateSounds();
-	CreateAnimations(animator);
-	CreateEffects(animator);	//뒤구르기 연막/가스 이펙트 등록
+	{ ScopedTimer t("CreateSounds");     CreateSounds(); }
+	{ ScopedTimer t("CreateAnimations"); CreateAnimations(animator); }
+	{ ScopedTimer t("CreateEffects");    CreateEffects(animator); }	//뒤구르기 연막/가스 이펙트 등록
 	SetAnimations();
 	SetStats();
-	CreateSkills();
-	ApplyTier(tier);
-
-	//TODO: 1번 스킬 생성 후 curSkills[1] 연결 (비어 있으면 SkillState::IsReady가 false라 사용만 안 됨)
+	{ ScopedTimer t("CreateSkills");     CreateSkills(); }
+	{ ScopedTimer t("ApplyTier");        ApplyTier(tier); }
 
 	curSkills[0] = skills[0];
 	curSkills[1] = skills[3];
@@ -110,6 +106,27 @@ void ThiefSkul::CreateAnimations(Animator* animator)
 		Clip* jumpAttack = animator->FindClip(data.tag + "JumpAttack");
 		jumpAttack->SetEvent([]() { Audio::Get()->Play("Thief_SlashUp"); }, jumpAttack->GetFrameCount() / 2);
 	}
+}
+
+void ThiefSkul::LoadResources(Animator* animator)
+{
+	SkulClass::LoadResources(animator);
+
+	for (const ThiefTierData& data : tiers)
+	{
+		Texture::Add(data.mainPortrait);
+		Texture::Add(data.subPortrait);
+		Texture::Add(data.infoPortrait);
+		Texture::Add(data.dropImage);
+	}
+
+	Animator::GetAtlasFrames(L"ProjectTextures/Thief/Projectile\\Thief_Caltrap.png");
+	Animator::GetAtlasFrames(L"ProjectTextures/Thief/Projectile\\Thief_GoldExplosion_Projectile.png");
+
+	Texture::Add(L"ProjectTextures/Thief/UI_Skill_Icons/BackRoll.png");
+	Texture::Add(L"ProjectTextures/Thief/UI_Skill_Icons/GoldExplosion.png");
+	Texture::Add(L"ProjectTextures/Thief/UI_Skill_Icons/Backattack.png");
+	Texture::Add(L"ProjectTextures/Thief/UI_Skill_Icons/PocketTear.png");
 }
 
 void ThiefSkul::ApplyTier(int newTier)

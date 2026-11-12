@@ -19,6 +19,8 @@ MainScene::MainScene()
 {
 	player = new Player();	//"Enemy_Appearance" 이펙트를 등록하므로 적 생성(Build)보다 먼저
 
+	ThiefSkul().Preload();
+
 	playerInfoUI = new PlayerInfoUI(player);
 	playerInfoUI->Scale() = SKUL_DEFAULT_ASSET_SIZE;
 	playerInfoUI->Pos() = Vector2(168.0f, 66.0f);

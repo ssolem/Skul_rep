@@ -1,6 +1,7 @@
 ﻿#include "Framework.h"
 #include "SkulClass.h"
 #include "Skill.h"
+#include "Animator.h"
 
 SkulClass::SkulClass()
 {
@@ -14,6 +15,20 @@ SkulClass::~SkulClass()
 			delete skill;
 
 	delete switchSkill;
+}
+
+void SkulClass::Preload()
+{
+	Animator animator;
+	LoadResources(&animator);
+}
+
+void SkulClass::LoadResources(Animator* animator)
+{
+	CreateSounds();
+	CreateAnimations(animator);
+	CreateEffects(animator);
+	SetImages();
 }
 
 void SkulClass::Update()

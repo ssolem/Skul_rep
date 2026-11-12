@@ -49,9 +49,13 @@ public:
 
 	void SetTag(const string& tagName) { tag = tagName; }
 
+	void Preload();
+
 protected:
 	virtual void CreateSkills() = 0;
 	virtual void CreateComboAttacks(Animator* animator) = 0;
+	virtual void LoadResources(Animator* animator);
+	virtual void CreateSounds() {}
 
 protected:
 	string tag = "";

@@ -170,6 +170,7 @@
     <ClInclude Include="ProjectObjects\Stage.h" />
     <ClInclude Include="ProjectScenes\AtlasMakerScene.h" />
     <ClInclude Include="ProjectUtilities\AtlasMaker.h" />
+    <ClInclude Include="ProjectUtilities\ScopedTimer.h" />
     <ClInclude Include="ProjectObjects\Character\States\JumpAttackState.h" />
     <ClInclude Include="ProjectObjects\Character\States\BasicAttackState.h" />
     <ClInclude Include="ProjectObjects\Character\States\DashState.h" />
