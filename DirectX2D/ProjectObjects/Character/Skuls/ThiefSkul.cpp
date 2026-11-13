@@ -8,7 +8,7 @@
 #include "Skills/ThiefBackAttack.h"
 #include "Skills/ThiefPocketTear.h"
 #include "Skills/ThiefSkulSwitch.h"
-#include "ProjectUtilities/ScopedTimer.h"
+//#include "ProjectUtilities/ScopedTimer.h"
 
 namespace
 {
@@ -71,13 +71,13 @@ void ThiefSkul::Init(Character* owner, Animator* animator)
 	this->owner = owner;
 	this->animator = animator;
 
-	{ ScopedTimer t("CreateSounds");     CreateSounds(); }
-	{ ScopedTimer t("CreateAnimations"); CreateAnimations(animator); }
-	{ ScopedTimer t("CreateEffects");    CreateEffects(animator); }	//뒤구르기 연막/가스 이펙트 등록
+	{ /*ScopedTimer t("CreateSounds");*/     CreateSounds(); }
+	{ /*ScopedTimer t("CreateAnimations");*/ CreateAnimations(animator); }
+	{ /*ScopedTimer t("CreateEffects");*/    CreateEffects(animator); }	//뒤구르기 연막/가스 이펙트 등록
 	SetAnimations();
 	SetStats();
-	{ ScopedTimer t("CreateSkills");     CreateSkills(); }
-	{ ScopedTimer t("ApplyTier");        ApplyTier(tier); }
+	{ /*ScopedTimer t("CreateSkills");*/     CreateSkills(); }
+	{ /*ScopedTimer t("ApplyTier");*/        ApplyTier(tier); }
 
 	curSkills[0] = skills[0];
 	curSkills[1] = skills[3];

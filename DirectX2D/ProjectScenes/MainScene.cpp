@@ -302,6 +302,7 @@ void MainScene::Update()
 
 	stageReward->Update();
 
+#ifdef _DEBUG
 	if (KEY_DOWN(VK_F2))
 	{
 		SceneManager::Get()->Add("Atlas Scene");
@@ -317,6 +318,7 @@ void MainScene::Update()
 		SceneManager::Get()->Add("SpawnEdit Scene");
 		SceneManager::Get()->Remove("Main Scene");
 	}
+#endif
 
 	if (!isUIOpen && KEY_DOWN('F'))
 	{
@@ -343,23 +345,23 @@ void MainScene::Update()
 		}
 	}
 
-	//테스트: 플레이어 위에 골드 뿌리기
-	if (KEY_DOWN(VK_F5))
-	{
-		for (int i = 0; i < 5; i++)
-			stage->SpawnItem(new GoldItem(10), player->GlobalPos() + Vector2(0.0f, 80.0f));
-	}
-	//테스트: 뼈 조각 / 다크쿼츠
-	if (KEY_DOWN(VK_F6))
-	{
-		for (int i = 0; i < 4; i++)
-			stage->SpawnItem(new BoneItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
-	}
-	if (KEY_DOWN(VK_F7))
-	{
-		for (int i = 0; i < 4; i++)
-			stage->SpawnItem(new DarkQuartzItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
-	}
+	////테스트: 플레이어 위에 골드 뿌리기
+	//if (KEY_DOWN(VK_F5))
+	//{
+	//	for (int i = 0; i < 5; i++)
+	//		stage->SpawnItem(new GoldItem(10), player->GlobalPos() + Vector2(0.0f, 80.0f));
+	//}
+	////테스트: 뼈 조각 / 다크쿼츠
+	//if (KEY_DOWN(VK_F6))
+	//{
+	//	for (int i = 0; i < 4; i++)
+	//		stage->SpawnItem(new BoneItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
+	//}
+	//if (KEY_DOWN(VK_F7))
+	//{
+	//	for (int i = 0; i < 4; i++)
+	//		stage->SpawnItem(new DarkQuartzItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
+	//}
 
 	if (KEY_DOWN(VK_F8)/* && curDoor.room == RoomType::Home*/)
 		upgradeUI->OpenUI();

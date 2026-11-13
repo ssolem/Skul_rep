@@ -26,9 +26,11 @@ GameManager::GameManager()
     //SceneManager::Get()->Create("AStar Scene", new AStarScene());
     //SceneManager::Get()->Create("Tank Scene", new TankScene());
     SceneManager::Get()->Create("Main Scene", new MainScene());
+#ifdef _DEBUG
     SceneManager::Get()->Create("Atlas Scene", new AtlasMakerScene());
 	SceneManager::Get()->Create("SkulMapEdit Scene", new SkulMapEditScene());
 	SceneManager::Get()->Create("SpawnEdit Scene", new SpawnEditScene());
+#endif
 	SceneManager::Get()->Create("Title Scene", new TitleScene());
 
     //원하는 씬을 골라 시작

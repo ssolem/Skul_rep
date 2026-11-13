@@ -7,7 +7,7 @@
 #include "Skuls/BasicSkul.h"
 #include "Skuls/ThiefSkul.h"
 #include "PlayerUpgrade.h"
-#include "ProjectUtilities/ScopedTimer.h"
+//#include "ProjectUtilities/ScopedTimer.h"
 
 Player::Player()
 	: Character()
@@ -220,7 +220,7 @@ SkulClass* Player::AcquireSkul(SkulClass* skul)
 {
 	if (!skul->IsInitialized())
 	{
-		ScopedTimer t("Init Total");
+		//ScopedTimer t("Init Total");
 		skul->Init(this, animator);
 	}
 
