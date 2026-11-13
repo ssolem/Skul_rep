@@ -105,6 +105,13 @@ void ThiefSkul::CreateAnimations(Animator* animator)
 
 		Clip* jumpAttack = animator->FindClip(data.tag + "JumpAttack");
 		jumpAttack->SetEvent([]() { Audio::Get()->Play("Thief_SlashUp"); }, jumpAttack->GetFrameCount() / 2);
+
+		//임시로 공격속도 느려짐 방지
+		for (const char* name : { "AttackA", "AttackB" })
+		{
+			Clip* clip = animator->FindClip(data.tag + name);
+			clip->SetSpeed(clip->GetFrameCount() / 5.0f);
+		}
 	}
 }
 

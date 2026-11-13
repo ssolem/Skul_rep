@@ -13,6 +13,7 @@
 #include "ProjectObjects/Objects/SkulItem.h"
 #include "ProjectObjects/Character/Skuls/ThiefSkul.h"
 #include "ProjectObjects/UI/UpgradeUI.h"
+#include "ProjectObjects/Objects/UpgradeSign.h"
 
 
 MainScene::MainScene()
@@ -49,6 +50,9 @@ MainScene::MainScene()
 			OpenExitDoors();
 		});
 
+	upgradeSign = new UpgradeSign();
+	controlsGuide = new Quad(L"ProjectTextures/UI/ControlsGuide/ControlsGuide.png");
+
 	//스테이지 등록
 	for (int i = 1; i <= 23; i++)
 	{
@@ -70,6 +74,8 @@ MainScene::MainScene()
 MainScene::~MainScene()
 {
 	delete stageReward;
+	delete upgradeSign;
+	delete controlsGuide;
 	delete exitDoors;
 	delete playerInfoUI;
 	delete upgradeUI;
@@ -111,6 +117,18 @@ void MainScene::BuildStage()
 	}
 
 	stageReward->Setup(RewardType::None, Vector2());	//이전 방 보상 숨김
+
+	if (curDoor.room == RoomType::Home)
+	{
+		upgradeSign->Show(stage->GetGroundPos(Vector2(UPGRADE_SIGN_X, stageData.playerSpawn.y)));
+
+		controlsGuide->Pos() = stage->GetGroundPos(Vector2(CONTROLS_GUIDE_X, stageData.playerSpawn.y)) + Vector2(0.0f, CONTROLS_GUIDE_HEIGHT);
+		controlsGuide->UpdateWorld();
+	}
+	else
+	{
+		upgradeSign->Hide();
+	}
 
 	WaveSpawner* spawner = stage->GetWaveSpawner();
 	spawner->Build(stageData);
@@ -301,6 +319,7 @@ void MainScene::Update()
 		exitDoors->Update();
 
 	stageReward->Update();
+	upgradeSign->Update();
 
 #ifdef _DEBUG
 	if (KEY_DOWN(VK_F2))
@@ -323,7 +342,11 @@ void MainScene::Update()
 	if (!isUIOpen && KEY_DOWN('F'))
 	{
 		//보상과 문 판정이 겹치면 보상 먼저 (문은 보상을 열어야 열림)
-		if (stageReward->IsInteractable(player->GetCollider()))
+		if (upgradeSign->IsInteractable(player->GetCollider()))
+		{
+			upgradeUI->OpenUI();
+		}
+		else if (stageReward->IsInteractable(player->GetCollider()))
 		{
 			stageReward->Open();
 		}
@@ -345,23 +368,23 @@ void MainScene::Update()
 		}
 	}
 
-	////테스트: 플레이어 위에 골드 뿌리기
-	//if (KEY_DOWN(VK_F5))
-	//{
-	//	for (int i = 0; i < 5; i++)
-	//		stage->SpawnItem(new GoldItem(10), player->GlobalPos() + Vector2(0.0f, 80.0f));
-	//}
-	////테스트: 뼈 조각 / 다크쿼츠
-	//if (KEY_DOWN(VK_F6))
-	//{
-	//	for (int i = 0; i < 4; i++)
-	//		stage->SpawnItem(new BoneItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
-	//}
-	//if (KEY_DOWN(VK_F7))
-	//{
-	//	for (int i = 0; i < 4; i++)
-	//		stage->SpawnItem(new DarkQuartzItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
-	//}
+	//테스트: 플레이어 위에 골드 뿌리기
+	if (KEY_DOWN(VK_F5))
+	{
+		for (int i = 0; i < 5; i++)
+			stage->SpawnItem(new GoldItem(10), player->GlobalPos() + Vector2(0.0f, 80.0f));
+	}
+	//테스트: 뼈 조각 / 다크쿼츠
+	if (KEY_DOWN(VK_F6))
+	{
+		for (int i = 0; i < 4; i++)
+			stage->SpawnItem(new BoneItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
+	}
+	if (KEY_DOWN(VK_F7))
+	{
+		for (int i = 0; i < 4; i++)
+			stage->SpawnItem(new DarkQuartzItem(1), player->GlobalPos() + Vector2(0.0f, 80.0f));
+	}
 
 	if (KEY_DOWN(VK_F8)/* && curDoor.room == RoomType::Home*/)
 		upgradeUI->OpenUI();
@@ -378,10 +401,14 @@ void MainScene::Render()
 {
 	stage->RenderMap();
 
+	if (curDoor.room == RoomType::Home)
+		controlsGuide->Render();
+
 	if (hasExit)
 		exitDoors->Render();
 
 	stageReward->Render();
+	upgradeSign->Render();
 
 	stage->RenderObjects();
 
@@ -400,9 +427,9 @@ void MainScene::PostRender()
 
 void MainScene::Start()
 {
-	roomCount = 1;
+	roomCount = 0;
 	curDoor = DoorInfo();
-	curDoor.reward = RewardType::Skul;	//첫 방은 무덤 보상
+	curDoor.room = RoomType::Home;
 	changeStage = false;
 	returnHome = false;
 

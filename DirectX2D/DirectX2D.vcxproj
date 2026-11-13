@@ -290,6 +290,7 @@
     <ClInclude Include="ProjectScenes\SpawnEditScene.h" />
     <ClInclude Include="ProjectScenes\TitleScene.h" />
     <ClInclude Include="ProjectObjects\Objects\StageReward.h" />
+    <ClInclude Include="ProjectObjects\Objects\UpgradeSign.h" />
     <ClInclude Include="ProjectObjects\Objects\SkulItem.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Objects\TestObject\TestQuad.h" />
@@ -465,6 +466,7 @@
     <ClCompile Include="ProjectScenes\SpawnEditScene.cpp" />
     <ClCompile Include="ProjectScenes\TitleScene.cpp" />
     <ClCompile Include="ProjectObjects\Objects\StageReward.cpp" />
+    <ClCompile Include="ProjectObjects\Objects\UpgradeSign.cpp" />
     <ClCompile Include="ProjectObjects\Objects\SkulItem.cpp" />
     <ClCompile Include="ProjectObjects\UI\UpgradeUI.cpp" />
     <ClCompile Include="ProjectObjects\Character\PlayerUpgrade.cpp" />

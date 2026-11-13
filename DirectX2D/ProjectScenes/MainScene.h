@@ -8,6 +8,7 @@ class PlayerInfoUI;
 class StageBackground;
 class StageReward;
 class UpgradeUI;
+class UpgradeSign;
 
 class MainScene : public Scene
 {
@@ -47,6 +48,12 @@ private:
 	ExitDoors* exitDoors;
 	bool hasExit = false;
 	StageReward* stageReward;
+	UpgradeSign* upgradeSign;
+	const float UPGRADE_SIGN_X = 900.0f;
+
+	Quad* controlsGuide;
+	const float CONTROLS_GUIDE_X = 1000.0f;
+	const float CONTROLS_GUIDE_HEIGHT = 300.0f;
 
 	int roomCount = 1;
 	DoorInfo curDoor;
