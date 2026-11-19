@@ -22,3 +22,6 @@ Release/
 
 # ImGui 창 배치 (실행할 때마다 바뀜)
 imgui.ini
+
+# Release용 프리빌드 라이브러리는 커밋 대상 (위 Release/ 규칙 예외)
+!DirectX2D/Libraries/Lib/Release/
