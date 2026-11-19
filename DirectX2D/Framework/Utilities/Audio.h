@@ -8,6 +8,7 @@ private:
     friend class Singleton;
 
     const int MAX_CHANNEL = 20;
+    const float MASTER_VOLUME = 0.6f;
 
     struct SoundInfo
     {

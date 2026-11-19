@@ -52,6 +52,7 @@ MainScene::MainScene()
 
 	upgradeSign = new UpgradeSign();
 	controlsGuide = new Quad(L"ProjectTextures/UI/ControlsGuide/ControlsGuide.png");
+	interactGuide = new Quad(L"ProjectTextures/UI/InteractGuide/InteractGuide.png");
 
 	//스테이지 등록
 	for (int i = 1; i <= 23; i++)
@@ -76,6 +77,7 @@ MainScene::~MainScene()
 	delete stageReward;
 	delete upgradeSign;
 	delete controlsGuide;
+	delete interactGuide;
 	delete exitDoors;
 	delete playerInfoUI;
 	delete upgradeUI;
@@ -124,6 +126,9 @@ void MainScene::BuildStage()
 
 		controlsGuide->Pos() = stage->GetGroundPos(Vector2(CONTROLS_GUIDE_X, stageData.playerSpawn.y)) + Vector2(0.0f, CONTROLS_GUIDE_HEIGHT);
 		controlsGuide->UpdateWorld();
+
+		interactGuide->Pos() = stage->GetGroundPos(Vector2(INTERACT_GUIDE_X, stageData.playerSpawn.y)) + Vector2(0.0f, CONTROLS_GUIDE_HEIGHT);
+		interactGuide->UpdateWorld();
 	}
 	else
 	{
@@ -403,7 +408,10 @@ void MainScene::Render()
 	stage->RenderMap();
 
 	if (curDoor.room == RoomType::Home)
+	{
 		controlsGuide->Render();
+		interactGuide->Render();
+	}
 
 	if (hasExit)
 		exitDoors->Render();

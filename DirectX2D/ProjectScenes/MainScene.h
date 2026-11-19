@@ -52,7 +52,9 @@ private:
 	const float UPGRADE_SIGN_X = 900.0f;
 
 	Quad* controlsGuide;
-	const float CONTROLS_GUIDE_X = 1000.0f;
+	Quad* interactGuide;	// 상호작용 안내판 (조작법 오른쪽에 나란히)
+	const float CONTROLS_GUIDE_X = 780.0f;
+	const float INTERACT_GUIDE_X = 1290.0f;	// 안내판 폭 492 + 간격 18, 오른쪽 단차(x≈1664) 전에 끝남
 	const float CONTROLS_GUIDE_HEIGHT = 300.0f;
 
 	int roomCount = 1;

@@ -4,6 +4,11 @@ Audio::Audio()
 {
     System_Create(&soundSystem);
     soundSystem->init(MAX_CHANNEL, FMOD_INIT_NORMAL, nullptr);
+
+    // 전체 기본 음량 (마스터 채널 그룹에 적용되어 모든 소리에 곱해짐)
+    ChannelGroup* master = nullptr;
+    soundSystem->getMasterChannelGroup(&master);
+    master->setVolume(MASTER_VOLUME);
 }
 
 Audio::~Audio()
