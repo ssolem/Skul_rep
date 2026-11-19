@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 
-bool Collider::isRender = true;
+bool Collider::isRender = false;
 
 Collider::Collider()
 {
