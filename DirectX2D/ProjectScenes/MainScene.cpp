@@ -321,7 +321,8 @@ void MainScene::Update()
 	stageReward->Update();
 	upgradeSign->Update();
 
-#ifdef _DEBUG
+	// 에디터 씬 전환은 디버그 빌드에서만 (GameManager의 씬 등록 조건과 동일)
+#ifndef NDEBUG
 	if (KEY_DOWN(VK_F2))
 	{
 		SceneManager::Get()->Add("Atlas Scene");

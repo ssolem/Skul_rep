@@ -1,7 +1,8 @@
 ﻿#include "Framework.h"
 #include "DirectX2D.h"
 
-#ifdef _DEBUG
+// 디버그 빌드에서만 콘솔 창 표시
+#ifndef NDEBUG
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 #endif
 
