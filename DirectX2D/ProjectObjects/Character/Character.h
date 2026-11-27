@@ -38,6 +38,8 @@ public:
 
 	//순간이동 - 콜라이더까지 새 위치로 갱신 (안 하면 다음 프레임 prevBottom이 이전 위치라 착지 판정 실패)
 	void Teleport(Vector2 pos);
+	//방 이동/부활 시 이전 방의 물리 상태 초기화
+	void ResetPhysics();
 
 	//getset
 	Vector2 GetDirection() const { return dir; }

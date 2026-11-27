@@ -72,6 +72,23 @@ void Character::Teleport(Vector2 pos)
 	prevBottom = ((RectCollider*)collider)->B();
 }
 
+void Character::ResetPhysics()
+{
+	velocity = Vector2::Zero;
+	isGrounded = true;
+	jumpCount = 0;
+	jumpIgnoreGroundTime = 0.0f;
+
+	//이전 Stage의 타일 포인터
+	groundFloor = nullptr;
+	dropThrough = nullptr;
+	isFalling = false;
+	dropTimer = 0.0f;
+
+	isKnockBack = false;
+	isLaunched = false;
+}
+
 void Character::Update()
 {
 	prevBottom = ((RectCollider*)collider)->B();

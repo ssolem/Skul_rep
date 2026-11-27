@@ -110,6 +110,7 @@ void MainScene::BuildStage()
 	player->SetStage(stage);
 	stage->SetPlayer(player);
 	player->Teleport(stage->GetGroundPos(stageData.playerSpawn));
+	player->ResetPhysics();
 
 	hasExit = stageData.hasDoor;
 	if (hasExit)
